@@ -329,6 +329,21 @@
     margin-bottom: 2px;
   }
   .item-desc { font-size: 12px; color: #777; line-height: 1.5; }
+  .map-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--sky);
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid var(--sky);
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(74,127,165,0.06);
+  }
+  .map-link:active { background: rgba(74,127,165,0.2); }
 
   /* 小贴士 */
   .tip-box {
@@ -596,8 +611,8 @@ const days = [
         header: '🌙 今夜安排',
         style: 'olive',
         items: [
-          { time: '落地后', name: '🏠 办理民宿入住', desc: 'Via Cairoli 61，从机场乘 Leonardo Express 到特米尼站后步行约5分钟即到，建议提前和房东确认晚到入住事宜' },
-          { time: '晚餐', name: '🍝 民宿附近觅食', desc: '今日不宜远行，Esquilino 街区有不少地道小馆。推荐 Trattoria Monti（Via di San Vito 13，罗马马尔凯地区菜，人均约30欧），需提前订座', tag: '待定' }
+          { time: '落地后', name: '🏠 办理民宿入住', mapName: 'Via Cairoli 61, 00185 Roma, Italy', desc: 'Via Cairoli 61，从机场乘 Leonardo Express 到特米尼站后步行约5分钟即到，建议提前和房东确认晚到入住事宜' },
+          { time: '晚餐', name: '🍝 Trattoria Monti', mapName: 'Trattoria Monti, Via di San Vito, Roma', desc: '今日不宜远行，Esquilino 街区有不少地道小馆。推荐 Trattoria Monti（Via di San Vito 13，罗马马尔凯地区菜，人均约30欧），需提前订座', tag: '待定' }
         ]
       }
     ]
@@ -634,12 +649,12 @@ const days = [
         header: '🏛️ 行程安排',
         style: '',
         items: [
-          { time: '上午', name: '🏟️ 罗马竞技场（Colosseo）', desc: '世界最伟大的建筑之一，建议开门第一批入场（9:00），站在角斗场中央感受历史的震撼，参观约1.5小时' },
-          { time: '午前', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', desc: '凯旋门、神庙、元老院遗址……漫步其中仿佛回到公元前，建议留出2小时慢慢走' },
-          { time: '午餐', name: '🍕 街边小馆（推荐区域：Testaccio）', desc: '罗马本地人的美食区，远离游客陷阱。推荐 Suppli（炸饭团）或 Pizza al Taglio（论斤切的罗马薄披萨）', tag: '待定' },
-          { time: '下午', name: '⛪ 真理之口 & 马切罗剧场', desc: '把手放进真理之口，是每个到罗马的人必做之事（来自电影《罗马假日》），周边步行即是古老剧场遗址' },
-          { time: '傍晚', name: '🌅 卡比托利欧广场看日落', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景，黄昏光线下极美' },
-          { time: '晚餐', name: '🍝 特拉斯提弗列区（Trastevere）', desc: '罗马最有灵魂的街区，鹅卵石小路、爬藤墙壁、烛光餐厅。推荐 Tonnarello 餐厅品尝 Carbonara 培根蛋面（真正的罗马版本不加奶油！）', tag: '待定' }
+          { time: '上午', name: '🏟️ 罗马竞技场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', desc: '世界最伟大的建筑之一，建议开门第一批入场（9:00），站在角斗场中央感受历史的震撼，参观约1.5小时' },
+          { time: '午前', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', desc: '凯旋门、神庙、元老院遗址……漫步其中仿佛回到公元前，建议留出2小时慢慢走' },
+          { time: '午餐', name: '🍕 街边小馆（Testaccio区）', mapName: 'Testaccio Market, Roma', desc: '罗马本地人的美食区，远离游客陷阱。推荐 Suppli（炸饭团）或 Pizza al Taglio（论斤切的罗马薄披萨）', tag: '待定' },
+          { time: '下午', name: '⛪ 真理之口', mapName: 'Bocca della Verità, Piazza della Bocca della Verità, Roma', desc: '把手放进真理之口，是每个到罗马的人必做之事（来自电影《罗马假日》），周边步行即是古老剧场遗址' },
+          { time: '傍晚', name: '🌅 卡比托利欧广场看日落', mapName: 'Piazza del Campidoglio, Roma', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景，黄昏光线下极美' },
+          { time: '晚餐', name: '🍝 Trastevere 区 Tonnarello', mapName: 'Tonnarello, Via della Lungaretta, Roma', desc: '罗马最有灵魂的街区，鹅卵石小路、爬藤墙壁、烛光餐厅。推荐 Tonnarello 餐厅品尝 Carbonara 培根蛋面（真正的罗马版本不加奶油！）', tag: '待定' }
         ]
       }
     ]
@@ -676,13 +691,13 @@ const days = [
         header: '⛪ 行程安排',
         style: '',
         items: [
-          { time: '09:00', name: '🏛️ 梵蒂冈博物馆', desc: '世界最重要的博物馆之一。重点：Gallery of Maps（地图展廊）→ Raphael Rooms（拉斐尔画室）→ 西斯廷礼拜堂，建议游览3小时' },
-          { time: '午前', name: '⛪ 圣彼得大教堂', desc: '文艺复兴与巴洛克建筑巅峰，进入免费。贝尼尼的青铜华盖、米开朗基罗的圣殇像……气势恢宏，无法言说' },
-          { time: '可选', name: '🔭 登上圣彼得穹顶', desc: '约8欧，步行300+台阶可到穹顶，俯瞰整个罗马全景，天气好时极为壮观' },
-          { time: '午餐', name: '🥗 博物馆附近觅食', desc: '梵蒂冈附近不推荐用餐（贵且难吃），建议走到 Prati 街区，当地人聚集，性价比更高', tag: '待定' },
-          { time: '下午', name: '🌉 圣天使堡', desc: '从圣彼得步行10分钟，俯瞰台伯河绝佳位置，曾是教皇的逃生通道，如今是博物馆（约15欧）' },
-          { time: '傍晚', name: '⛲ 纳沃纳广场 & 许愿池', desc: '罗马最美的广场，贝尼尼的《四河喷泉》惊为天人。随后步行至特雷维喷泉（许愿池），入夜后灯光打亮更美，别忘了向后抛硬币' },
-          { time: '晚餐', name: '🍦 冰淇淋 + 随走随吃', desc: '罗马街头 Gelato 是最好的甜品，找标有 Artigianale（手工）的店，非常不同！', tag: '待定' }
+          { time: '09:00', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', desc: '世界最重要的博物馆之一。重点：Gallery of Maps（地图展廊）→ Raphael Rooms（拉斐尔画室）→ 西斯廷礼拜堂，建议游览3小时' },
+          { time: '午前', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', desc: '文艺复兴与巴洛克建筑巅峰，进入免费。贝尼尼的青铜华盖、米开朗基罗的圣殇像……气势恢宏，无法言说' },
+          { time: '可选', name: '🔭 登上圣彼得穹顶', mapName: 'Cupola di San Pietro, Vaticano', desc: '约8欧，步行300+台阶可到穹顶，俯瞰整个罗马全景，天气好时极为壮观' },
+          { time: '午餐', name: '🥗 Prati 街区觅食', mapName: 'Prati, Roma', desc: '梵蒂冈附近不推荐用餐（贵且难吃），建议走到 Prati 街区，当地人聚集，性价比更高', tag: '待定' },
+          { time: '下午', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Lungotevere Castello 50, Roma', desc: '从圣彼得步行10分钟，俯瞰台伯河绝佳位置，曾是教皇的逃生通道，如今是博物馆（约15欧）' },
+          { time: '傍晚', name: '⛲ 纳沃纳广场 & 许愿池', mapName: 'Piazza Navona, Roma', desc: '罗马最美的广场，贝尼尼的《四河喷泉》惊为天人。随后步行至特雷维喷泉（许愿池），入夜后灯光打亮更美，别忘了向后抛硬币' },
+          { time: '晚餐', name: '🍦 Gelateria del Teatro', mapName: 'Gelateria del Teatro, Via della Coronari, Roma', desc: '罗马街头 Gelato 是最好的甜品，找标有 Artigianale（手工）的店，非常不同！', tag: '待定' }
         ]
       }
     ]
@@ -744,12 +759,12 @@ const days = [
         header: '🌸 行程安排',
         style: '',
         items: [
-          { time: '上午', name: '🚄 高铁抵达佛罗伦萨', desc: '建议上午抵达，办理酒店入住（部分酒店下午才可入住，可寄存行李先出发）' },
-          { time: '午前', name: '🏛️ 乌菲兹美术馆（Uffizi）', desc: '波提切利《维纳斯的诞生》《春》、达·芬奇、拉斐尔真迹！<strong>必须提前网购</strong>（uffizi.it，约25欧），现场可能等待3小时以上，建议游览2-3小时' },
-          { time: '午餐', name: '🥩 佛罗伦萨丁骨牛排', desc: 'Bistecca alla Fiorentina，佛罗伦萨特产，论重量点的丁骨牛排。Buca Mario（1886年开业的老餐厅）或 Il Latini，提前订座！', tag: '待定' },
-          { time: '下午', name: '⛪ 圣母百花大教堂（Duomo）', desc: '外观彩色大理石花纹如同梦境，布鲁内莱斯基的穹顶是工程奇迹。登顶穹顶（预约约18欧）可俯瞰红屋顶的佛罗伦萨，令人屏息' },
-          { time: '傍晚', name: '🌉 米开朗基罗广场看日落', desc: '巴士或步行上山，整个佛罗伦萨尽收眼底，是城市最美的视角，日落时分橙色天空倒映在阿尔诺河中' },
-          { time: '晚餐', name: '🍷 奥尔特拉诺区（Oltrarno）', desc: '阿尔诺河南岸，当地人区，更真实的佛罗伦萨。街角的 Enoteca（葡萄酒吧）配托斯卡纳奶酪火腿，是最棒的晚餐', tag: '待定' }
+          { time: '上午', name: '🚄 高铁抵达佛罗伦萨', mapName: 'Firenze Santa Maria Novella, Piazza della Stazione, Firenze', desc: '建议上午抵达，办理酒店入住（部分酒店下午才可入住，可寄存行李先出发）' },
+          { time: '午前', name: '🏛️ 乌菲兹美术馆（Uffizi）', mapName: 'Galleria degli Uffizi, Piazzale degli Uffizi, Firenze', desc: '波提切利《维纳斯的诞生》《春》、达·芬奇、拉斐尔真迹！<strong>必须提前网购</strong>（uffizi.it，约25欧），现场可能等待3小时以上，建议游览2-3小时' },
+          { time: '午餐', name: '🥩 Buca Mario 丁骨牛排', mapName: 'Buca Mario, Piazza degli Ottaviani, Firenze', desc: 'Bistecca alla Fiorentina，佛罗伦萨特产，论重量点的丁骨牛排。Buca Mario（1886年开业的老餐厅）或 Il Latini，提前订座！', tag: '待定' },
+          { time: '下午', name: '⛪ 圣母百花大教堂（Duomo）', mapName: 'Cattedrale di Santa Maria del Fiore, Piazza del Duomo, Firenze', desc: '外观彩色大理石花纹如同梦境，布鲁内莱斯基的穹顶是工程奇迹。登顶穹顶（预约约18欧）可俯瞰红屋顶的佛罗伦萨，令人屏息' },
+          { time: '傍晚', name: '🌉 米开朗基罗广场看日落', mapName: 'Piazzale Michelangelo, Firenze', desc: '巴士或步行上山，整个佛罗伦萨尽收眼底，是城市最美的视角，日落时分橙色天空倒映在阿尔诺河中' },
+          { time: '晚餐', name: '🍷 奥尔特拉诺区（Oltrarno）', mapName: 'Oltrarno, Firenze', desc: '阿尔诺河南岸，当地人区，更真实的佛罗伦萨。街角的 Enoteca（葡萄酒吧）配托斯卡纳奶酪火腿，是最棒的晚餐', tag: '待定' }
         ]
       }
     ]
@@ -768,13 +783,13 @@ const days = [
         header: '🎨 行程安排',
         style: '',
         items: [
-          { time: '09:00', name: '🗿 学院美术馆（Galleria dell\'Accademia）', desc: '米开朗基罗《大卫》真迹！5.17米高的大理石雕像，在特别为他建造的穹顶下栩栩如生。同样必须提前购票（約13欧）' },
-          { time: '上午', name: '🛍️ 圣洛伦佐市场', desc: '皮革手套、丝巾、皮包……这里是购买托斯卡纳皮革制品的好地方，记得砍价！' },
-          { time: '午餐', name: '🥩 中央市场（Mercato Centrale）', desc: '两层市场，一楼是食材，二楼是美食广场。Lampredotto（牛肚包）是佛罗伦萨最有代表性的街头食物，勇敢的你一定要试试！', tag: '待定' },
-          { time: '下午', name: '🏰 韦奇奥宫（Palazzo Vecchio）', desc: '西尼奥里亚广场上的市政厅，内有瓦萨里的湿壁画，广场上陈列着大卫复制品和其他雕塑' },
-          { time: '下午', name: '🌉 老桥（Ponte Vecchio）', desc: '欧洲现存最古老的石桥，桥上全是金银首饰店，傍晚光线下的老桥是佛罗伦萨最上镜的风景' },
-          { time: '可选', name: '🍷 托斯卡纳葡萄酒品鉴', desc: '在 Enoteca 参加 Chianti 或 Brunello 葡萄酒品鉴，是了解托斯卡纳最愉快的方式', tag: '待定' },
-          { time: '晚餐', name: '🍝 传统托斯卡纳菜', desc: '野猪肉酱宽面（Pappardelle al cinghiale）、白豆炖汤（Ribollita）……朴实但令人难忘', tag: '待定' }
+          { time: '09:00', name: '🗿 学院美术馆（Galleria dell\'Accademia）', mapName: 'Galleria dell\'Accademia, Via Ricasoli, Firenze', desc: '米开朗基罗《大卫》真迹！5.17米高的大理石雕像，在特别为他建造的穹顶下栩栩如生。同样必须提前购票（約13欧）' },
+          { time: '上午', name: '🛍️ 圣洛伦佐市场', mapName: 'Mercato di San Lorenzo, Firenze', desc: '皮革手套、丝巾、皮包……这里是购买托斯卡纳皮革制品的好地方，记得砍价！' },
+          { time: '午餐', name: '🥩 中央市场（Mercato Centrale）', mapName: 'Mercato Centrale, Via dell\'Ariento, Firenze', desc: '两层市场，一楼是食材，二楼是美食广场。Lampredotto（牛肚包）是佛罗伦萨最有代表性的街头食物，勇敢的你一定要试试！', tag: '待定' },
+          { time: '下午', name: '🏰 韦奇奥宫（Palazzo Vecchio）', mapName: 'Palazzo Vecchio, Piazza della Signoria, Firenze', desc: '西尼奥里亚广场上的市政厅，内有瓦萨里的湿壁画，广场上陈列着大卫复制品和其他雕塑' },
+          { time: '下午', name: '🌉 老桥（Ponte Vecchio）', mapName: 'Ponte Vecchio, Firenze', desc: '欧洲现存最古老的石桥，桥上全是金银首饰店，傍晚光线下的老桥是佛罗伦萨最上镜的风景' },
+          { time: '可选', name: '🍷 托斯卡纳葡萄酒品鉴', mapName: 'Le Volpi e l\'Uva, Piazza dei Rossi, Firenze', desc: '在 Enoteca 参加 Chianti 或 Brunello 葡萄酒品鉴，是了解托斯卡纳最愉快的方式', tag: '待定' },
+          { time: '晚餐', name: '🍝 传统托斯卡纳菜', mapName: 'Trattoria Sostanza, Via del Porcellana, Firenze', desc: '野猪肉酱宽面（Pappardelle al cinghiale）、白豆炖汤（Ribollita）……朴实但令人难忘', tag: '待定' }
         ]
       },
       {
@@ -811,10 +826,10 @@ const days = [
         header: '🍇 方案A：托斯卡纳乡村',
         style: 'olive',
         items: [
-          { time: '上午', name: '🏰 锡耶纳（Siena）', desc: '中世纪最完整保存的城市，贝壳形的坎波广场（Piazza del Campo）是世界上最美的广场之一，曾举办著名的赛马节' },
-          { time: '午餐', name: '🍷 锡耶纳餐厅', desc: '猪肝香肠（Pici al ragù）配本地 Chianti Classico 葡萄酒', tag: '待定' },
-          { time: '下午', name: '🗼 圣吉米尼亚诺', desc: '14座中世纪塔楼直刺天空，小镇核心区15分钟能走完，但每一步都是历史。品尝 Vernaccia 白葡萄酒（当地特产）和世界冠军冰淇淋（Sergio Dondoli 店！）' },
-          { time: '傍晚', name: '🌄 在葡萄园看夕阳', desc: '10月正是葡萄收获季，金黄的叶子，沉甸甸的果实，托斯卡纳最美的季节', tag: '待定' }
+          { time: '上午', name: '🏰 锡耶纳（Siena）', mapName: 'Piazza del Campo, Siena', desc: '中世纪最完整保存的城市，贝壳形的坎波广场（Piazza del Campo）是世界上最美的广场之一，曾举办著名的赛马节' },
+          { time: '午餐', name: '🍷 锡耶纳餐厅', mapName: 'Osteria Le Logge, Siena', desc: '猪肝香肠（Pici al ragù）配本地 Chianti Classico 葡萄酒', tag: '待定' },
+          { time: '下午', name: '🗼 圣吉米尼亚诺', mapName: 'San Gimignano, Siena', desc: '14座中世纪塔楼直刺天空，小镇核心区15分钟能走完，但每一步都是历史。品尝 Vernaccia 白葡萄酒（当地特产）和世界冠军冰淇淋（Sergio Dondoli 店！）' },
+          { time: '傍晚', name: '🌄 在葡萄园看夕阳', mapName: 'Chianti Road, Toscana', desc: '10月正是葡萄收获季，金黄的叶子，沉甸甸的果实，托斯卡纳最美的季节', tag: '待定' }
         ]
       }
     ]
@@ -843,13 +858,13 @@ const days = [
         header: '🚤 行程安排',
         style: '',
         items: [
-          { time: '清晨', name: '🌅 黎明前的圣马可广场', desc: '早上7点前，广场几乎空无一人，这时的威尼斯属于你一个人。坐在咖啡馆台阶上喝杯浓缩咖啡，看鸽子起飞，是旅途中最安静的时刻' },
-          { time: '上午', name: '⛪ 圣马可大教堂 & 钟楼', desc: '拜占庭风格的金色马赛克教堂，钟楼（登顶约10欧）可俯瞰整个泻湖。建议早到，10点后人流极多' },
-          { time: '上午', name: '🏛️ 总督宫（Palazzo Ducale）', desc: '威尼斯共和国权力中心，叹息桥（Bridge of Sighs）就在旁边，囚犯从这里经过后就再也没有自由' },
-          { time: '午餐', name: '🦞 威尼斯海鲜', desc: '墨鱼汁意面（Spaghetti al nero di seppia）、烤蛤蜊……威尼斯的海鲜品质极高，找里巷深处的小馆子', tag: '待定' },
-          { time: '下午', name: '🎨 穿越小巷自由探索', desc: '故意不看地图，跟随本能穿行小巷，遇到桥就过，遇到运河就坐下来发呆。你会发现游客从未去过的威尼斯' },
-          { time: '傍晚', name: '🚤 冈多拉黄昏之旅', desc: '落日时分乘坐冈多拉，船夫轻摇，经过无数小桥，橙色天光倒映水中，这一刻值所有花费' },
-          { time: '晚餐', name: '🍷 Cicchetti（威尼斯小吃）', desc: '威尼斯版的 Tapas！站在酒吧（Bacaro）前，一口小食配一杯 Prosecco 起泡酒，这是当地人下班后的日常仪式', tag: '待定' }
+          { time: '清晨', name: '🌅 黎明前的圣马可广场', mapName: 'Piazza San Marco, Venezia', desc: '早上7点前，广场几乎空无一人，这时的威尼斯属于你一个人。坐在咖啡馆台阶上喝杯浓缩咖啡，看鸽子起飞，是旅途中最安静的时刻' },
+          { time: '上午', name: '⛪ 圣马可大教堂 & 钟楼', mapName: 'Basilica di San Marco, Piazza San Marco, Venezia', desc: '拜占庭风格的金色马赛克教堂，钟楼（登顶约10欧）可俯瞰整个泻湖。建议早到，10点后人流极多' },
+          { time: '上午', name: '🏛️ 总督宫（Palazzo Ducale）', mapName: 'Palazzo Ducale, Piazza San Marco, Venezia', desc: '威尼斯共和国权力中心，叹息桥（Bridge of Sighs）就在旁边，囚犯从这里经过后就再也没有自由' },
+          { time: '午餐', name: '🦞 威尼斯海鲜', mapName: 'Osteria al Squero, Venezia', desc: '墨鱼汁意面（Spaghetti al nero di seppia）、烤蛤蜊……威尼斯的海鲜品质极高，找里巷深处的小馆子', tag: '待定' },
+          { time: '下午', name: '🎨 穿越小巷自由探索', mapName: 'Cannaregio, Venezia', desc: '故意不看地图，跟随本能穿行小巷，遇到桥就过，遇到运河就坐下来发呆。你会发现游客从未去过的威尼斯' },
+          { time: '傍晚', name: '🚤 冈多拉黄昏之旅', mapName: 'Rialto Bridge, Venezia', desc: '落日时分乘坐冈多拉，船夫轻摇，经过无数小桥，橙色天光倒映水中，这一刻值所有花费' },
+          { time: '晚餐', name: '🍷 Cicchetti（威尼斯小吃）', mapName: 'Cantina Do Mori, Venezia', desc: '威尼斯版的 Tapas！站在酒吧（Bacaro）前，一口小食配一杯 Prosecco 起泡酒，这是当地人下班后的日常仪式', tag: '待定' }
         ]
       }
     ]
@@ -877,13 +892,13 @@ const days = [
         header: '🏙️ 行程安排',
         style: '',
         items: [
-          { time: '上午', name: '🚄 高铁前往米兰', desc: '威尼斯圣卢西亚站出发，抵达米兰中央火车站（Milano Centrale，一座壮观的法西斯时期建筑本身就值得欣赏）' },
-          { time: '午前', name: '🎨 达·芬奇《最后的晚餐》', desc: '世界上最重要的绘画之一，每次仅允许30人入场，参观时间15分钟。在圣玛利亚感恩教堂的餐厅墙壁上，亲眼看到真迹时，所有人都会沉默', tag: '⚠️ 务必预约' },
-          { time: '午餐', name: '🥩 米兰餐厅', desc: '米兰炸小牛肉排（Cotoletta alla Milanese），地道米兰菜。或去 Peck 熟食店买各种意式熟食拼盘', tag: '待定' },
-          { time: '下午', name: '⛪ 米兰大教堂（Duomo di Milano）', desc: '世界最大的哥特式大教堂之一，135根尖塔刺向天空，顶部可俯瞰城市（登顶约15欧）。广场是米兰的灵魂中心' },
-          { time: '下午', name: '🛍️ 艾曼纽二世拱廊（Galleria Vittorio Emanuele II）', desc: '世界最古老的购物中心，玻璃穹顶壮观华美，LV、Prada、Versace……即使不买，也值得进去仰望穹顶' },
-          { time: '傍晚', name: '🏰 斯福尔扎城堡', desc: '文艺复兴时期城堡，内有米开朗基罗最后未完成的作品《隆达尼尼的圣殇》' },
-          { time: '晚餐', name: '🍝 米兰最后的意式盛宴', desc: '明天就要回家了，今晚在米兰的餐厅，好好品味最后一顿意大利餐。搭配一瓶 Barolo 或 Amarone，为这段旅程画上句号', tag: '待定' }
+          { time: '上午', name: '🚄 高铁前往米兰', mapName: 'Milano Centrale, Piazza Duca d\'Aosta, Milano', desc: '威尼斯圣卢西亚站出发，抵达米兰中央火车站（Milano Centrale，一座壮观的法西斯时期建筑本身就值得欣赏）' },
+          { time: '午前', name: '🎨 达·芬奇《最后的晚餐》', mapName: 'Santa Maria delle Grazie, Milano', desc: '世界上最重要的绘画之一，每次仅允许30人入场，参观时间15分钟。在圣玛利亚感恩教堂的餐厅墙壁上，亲眼看到真迹时，所有人都会沉默', tag: '⚠️ 务必预约' },
+          { time: '午餐', name: '🥩 米兰餐厅', mapName: 'Peck, Via Spadari, Milano', desc: '米兰炸小牛肉排（Cotoletta alla Milanese），地道米兰菜。或去 Peck 熟食店买各种意式熟食拼盘', tag: '待定' },
+          { time: '下午', name: '⛪ 米兰大教堂（Duomo di Milano）', mapName: 'Duomo di Milano, Piazza del Duomo, Milano', desc: '世界最大的哥特式大教堂之一，135根尖塔刺向天空，顶部可俯瞰城市（登顶约15欧）。广场是米兰的灵魂中心' },
+          { time: '下午', name: '🛍️ 艾曼纽二世拱廊（Galleria Vittorio Emanuele II）', mapName: 'Galleria Vittorio Emanuele II, Milano', desc: '世界最古老的购物中心，玻璃穹顶壮观华美，LV、Prada、Versace……即使不买，也值得进去仰望穹顶' },
+          { time: '傍晚', name: '🏰 斯福尔扎城堡', mapName: 'Castello Sforzesco, Piazzale Castello, Milano', desc: '文艺复兴时期城堡，内有米开朗基罗最后未完成的作品《隆达尼尼的圣殇》' },
+          { time: '晚餐', name: '🍝 米兰最后的意式盛宴', mapName: 'Ristorante Berton, Milano', desc: '明天就要回家了，今晚在米兰的餐厅，好好品味最后一顿意大利餐。搭配一瓶 Barolo 或 Amarone，为这段旅程画上句号', tag: '待定' }
         ]
       }
     ]
@@ -927,7 +942,7 @@ const days = [
         items: [
           { time: '早晨', name: '☕ 米兰最后一杯咖啡', desc: '意大利人站着喝咖啡。在咖啡吧点一杯 Espresso，站在吧台，和旁边的米兰人一起开始最后一个意大利的早晨' },
           { time: '上午', name: '🛍️ 最后的购物/散步', desc: '还有想买的纪念品？Navigli 运河区的跳蚤市场（周日）或大教堂广场周边的精品店，留出最后1-2小时' },
-          { time: '10:00', name: '🚂 前往马尔彭萨机场', desc: '乘坐 Malpensa Express，中央火车站出发，约52分钟到达T1航站楼' },
+          { time: '10:00', name: '🚂 前往马尔彭萨机场', mapName: 'Malpensa Express, Milano Centrale', desc: '乘坐 Malpensa Express，中央火车站出发，约52分钟到达T1航站楼' },
           { time: '13:00', name: '✈️ CA446 起飞', desc: '向意大利挥手告别——Arrivederci, Italia！' }
         ]
       }
@@ -1019,16 +1034,21 @@ function renderTips(section) {
 }
 
 function renderItinerary(section) {
-  return section.items.map(item => `
+  return section.items.map(item => {
+    // 提取地点用于地图搜索（去掉emoji和括号内的中文说明）
+    let place = item.mapName || item.name.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}]/gu, '').trim();
+    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + ' Italia')}`;
+    return `
     <div class="itinerary-item">
       <div class="item-time">${item.time}</div>
       <div class="item-dot"></div>
       <div class="item-content">
         <div class="item-name">${item.name}${item.tag ? `<span class="tbd-badge">${item.tag}</span>` : ''}</div>
         <div class="item-desc">${item.desc}</div>
+        <a class="map-link" href="${mapUrl}" target="_blank">📍 在地图中查看 / 导航</a>
       </div>
     </div>
-  `).join('');
+  `;}).join('');
 }
 
 function renderSection(section) {
