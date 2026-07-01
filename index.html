@@ -195,7 +195,7 @@
     height: 100%;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: 14px 14px 56px;
+    padding: 14px 14px 24px;
   }
 
   /* 卡片内容块 */
@@ -540,21 +540,8 @@
     <div class="cards-track" id="cardsTrack"></div>
   </div>
 
-  <!-- 底部导航 -->
-  <div class="bottom-nav">
-    <button class="nav-btn active" id="navPrev">
-      <div class="nav-btn-icon">‹</div>
-      <div class="nav-btn-label">上一天</div>
-    </button>
-    <button class="nav-btn" id="navCover">
-      <div class="nav-btn-icon">🏛️</div>
-      <div class="nav-btn-label">封面</div>
-    </button>
-    <button class="nav-btn" id="navNext">
-      <div class="nav-btn-icon">›</div>
-      <div class="nav-btn-label">下一天</div>
-    </button>
-  </div>
+  <!-- 底部导航已移除（改用左右滑动 + 顶部日期胶囊切换） -->
+
 </div>
 
 <script>
@@ -1172,9 +1159,6 @@ function bindTouch(id, fn) {
   el.addEventListener('click', fn);
 }
 bindTouch('coverBtn', enterApp);
-bindTouch('navPrev',  function() { goTo(currentDay - 1); });
-bindTouch('navCover', showCover);
-bindTouch('navNext',  function() { goTo(currentDay + 1); });
 </script>
 </body>
 </html>
