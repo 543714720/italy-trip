@@ -388,6 +388,12 @@
     background: rgba(74,127,165,0.06);
   }
   .map-link:active { background: rgba(74,127,165,0.2); }
+  .map-link.nav-route {
+    color: white;
+    background: var(--olive);
+    border-color: var(--olive);
+    margin-right: 6px;
+  }
 
   /* 小贴士 */
   .tip-box {
@@ -648,6 +654,18 @@ const days = [
         ]
       },
       {
+        type: 'image',
+        header: '🗺️ 民宿位置 & 街景',
+        style: 'purple',
+        caption: '点击下方按钮查看民宿在地图上的位置 / 实景街景',
+        img: '',
+        customButtons: [
+          { text: '📍 查看民宿地图位置', url: 'https://www.google.com/maps/search/?api=1&query=Via%20Cairoli%2061%2C%2000185%20Roma' },
+          { text: '🖼️ 查看 Google 街景', url: 'https://www.google.com/maps/@41.8995,12.5020,3a,75y,90t/data=!3m7!1e1!3m5!1s!2e!6s!7i13312!8i6656' },
+          { text: '🚶 从特米尼站步行导航', url: 'https://www.google.com/maps/dir/?api=1&origin=Roma%20Termini&destination=Via%20Cairoli%2061%2C%20Roma&travelmode=walking' }
+        ]
+      },
+      {
         type: 'itinerary',
         header: '🌙 今夜安排',
         style: 'olive',
@@ -690,11 +708,11 @@ const days = [
         header: '🏛️ 行程安排',
         style: '',
         items: [
-          { time: '09:00', name: '🏟️ 罗马竞技场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Colosseo_2020.jpg/640px-Colosseo_2020.jpg', desc: '<strong>9:00开门第一批入场</strong>（提前30分钟到场排队安检）。建议参观约1.5小时，避开11点后的人潮' },
-          { time: '10:30', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Roma_Forum_Romanum.jpg/640px-Roma_Forum_Romanum.jpg', desc: '与竞技场套票通用，建议留出约2小时慢慢走，凯旋门、神庙、元老院遗址' },
+          { time: '09:00', name: '🏟️ 罗马竞技场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', fromAddr: 'Via Cairoli 61, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Colosseo_2020.jpg/640px-Colosseo_2020.jpg', desc: '<strong>从民宿步行约15分钟</strong>。9:00开门第一批入场（提前30分钟到场排队安检）。建议参观约1.5小时，避开11点后的人潮' },
+          { time: '10:30', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Roma_Forum_Romanum.jpg/640px-Roma_Forum_Romanum.jpg', fromAddr: 'Via Cairoli 61, Roma', desc: '与竞技场套票通用，建议留出约2小时慢慢走，凯旋门、神庙、元老院遗址' },
           { time: '12:30', name: '🍕 Testaccio区 午餐', mapName: 'Testaccio Market, Roma', desc: '罗马本地人美食区，远离游客陷阱。推荐 Suppli（炸饭团）或 Pizza al Taglio（罗马薄披萨）' },
-          { time: '14:30', name: '⛪ 真理之口', mapName: 'Bocca della Verità, Piazza della Bocca della Verità, Roma', desc: '10分钟即可打卡（电影《罗马假日》同款），注意入口排队约15-30分钟' },
-          { time: '17:00', name: '🌅 卡比托利欧广场看日落', mapName: 'Piazza del Campidoglio, Roma', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景。10月日落约18:20，建议17点前到达占位' },
+          { time: '14:30', name: '⛪ 真理之口', mapName: 'Bocca della Verità, Piazza della Bocca della Verità, Roma', fromAddr: 'Foro Romano, Roma', desc: '10分钟即可打卡（电影《罗马假日》同款），注意入口排队约15-30分钟' },
+          { time: '17:00', name: '🌅 卡比托利欧广场看日落', mapName: 'Piazza del Campidoglio, Roma', fromAddr: 'Bocca della Verità, Roma', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景。10月日落约18:20，建议17点前到达占位' },
           { time: '19:30', name: '🍝 Trastevere 区 Tonnarello', mapName: 'Tonnarello, Via della Lungaretta, Roma', desc: '<strong>建议19:00前到店</strong>（不接受预约，先到先得，晚到排队1小时+）。罗马最有灵魂的街区，品尝 Carbonara 培根蛋面（真正的罗马版不加奶油！）', tag: '待定' }
         ]
       }
@@ -732,12 +750,12 @@ const days = [
         header: '⛪ 行程安排',
         style: '',
         items: [
-          { time: '08:45', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vatican_Museum_Stairs.jpg/640px-Vatican_Museum_Stairs.jpg', desc: '<strong>8:45到场排队安检</strong>，9:00开门直奔西斯廷礼拜堂（逆人流走，避开团客）。重点：地图展廊→拉斐尔画室→西斯廷礼拜堂，建议游览3小时' },
-          { time: '12:00', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Basilica_San_Pietro_2009.jpg/640px-Basilica_San_Pietro_2009.jpg', desc: '中午12点人最少（团客去吃饭）。免费入场，安检排队约20分钟。贝尼尼青铜华盖、米开朗基罗圣殇像' },
+          { time: '08:45', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vatican_Museum_Stairs.jpg/640px-Vatican_Museum_Stairs.jpg', fromAddr: 'Via Cairoli 61, Roma', desc: '<strong>8:45到场排队安检</strong>，9:00开门直奔西斯廷礼拜堂（逆人流走，避开团客）。重点：地图展廊→拉斐尔画室→西斯廷礼拜堂，建议游览3小时' },
+          { time: '12:00', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Basilica_San_Pietro_2009.jpg/640px-Basilica_San_Pietro_2009.jpg', fromAddr: 'Musei Vaticani, Roma', desc: '中午12点人最少（团客去吃饭）。免费入场，安检排队约20分钟。贝尼尼青铜华盖、米开朗基罗圣殇像' },
           { time: '可选', name: '🔭 登上圣彼得穹顶', mapName: 'Cupola di San Pietro, Vaticano', desc: '穹顶开放至17:00（最后入场16:00），约8欧，步行300+台阶，俯瞰罗马全景。13:00前登顶光线最佳' },
           { time: '13:30', name: '🥗 Prati 街区午餐', mapName: 'Prati, Roma', desc: '梵蒂冈附近餐厅贵且难吃，步行10分钟到 Prati 街区（Via Candia 一带），当地人聚集，性价比高' },
-          { time: '15:30', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Lungotevere Castello 50, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Castel_Sant%27Angelo%2C_Rome.jpg/640px-Castel_Sant%27Angelo%2C_Rome.jpg', desc: '从圣彼得步行10分钟。开放至18:30（最后入场18:00），约15欧。俯瞰台伯河绝佳位置' },
-          { time: '17:30', name: '⛲ 纳沃纳广场 & 许愿池', mapName: 'Piazza Navona, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Trevi_fountain.jpg/640px-Trevi_fountain.jpg', desc: '步行前往，贝尼尼《四河喷泉》。随后步行10分钟至特雷维喷泉（许愿池），入夜后灯光更美' },
+          { time: '15:30', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Lungotevere Castello 50, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Castel_Sant%27Angelo%2C_Rome.jpg/640px-Castel_Sant%27Angelo%2C_Rome.jpg', fromAddr: 'Basilica di San Pietro, Vaticano', desc: '从圣彼得步行10分钟。开放至18:30（最后入场18:00），约15欧。俯瞰台伯河绝佳位置' },
+          { time: '17:30', name: '⛲ 纳沃纳广场 & 许愿池', mapName: 'Piazza Navona, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Trevi_fountain.jpg/640px-Trevi_fountain.jpg', fromAddr: 'Piazza San Pietro, Roma', desc: '步行前往，贝尼尼《四河喷泉》。随后步行10分钟至特雷维喷泉（许愿池），入夜后灯光更美' },
           { time: '19:00', name: '🍦 Gelateria del Teatro', mapName: 'Gelateria del Teatro, Via della Coronari, Roma', desc: '营业至23:00。手工 Gelato（认准 Artigianale 标识），介于晚餐和夜宵之间的甜蜜' }
         ]
       }
@@ -1087,6 +1105,13 @@ function renderItinerary(section) {
     const criticalAlert = isCritical ? '<div class="critical-alert">⏰ 关键时间 · 请勿错过</div>' : '';
     // 景点预览图（如有配图地址）
     const preview = item.img ? `<img class="item-preview" src="${item.img}" alt="${place}" loading="lazy" onerror="this.style.display='none'">` : '';
+    // 从民宿/上一站出发的导航按钮
+    const dirUrl = item.fromAddr
+      ? `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(item.fromAddr)}&destination=${encodeURIComponent(place + ' Italia')}&travelmode=walking`
+      : mapUrl;
+    const navBtn = item.fromAddr
+      ? `<a class="map-link nav-route" href="${dirUrl}" target="_blank">🚶 步行导航路线（点击查看）</a>`
+      : '';
     return `
     <div class="itinerary-item ${isCritical ? 'critical-item' : ''}">
       <div class="${timeClass}">${item.time}</div>
@@ -1096,6 +1121,7 @@ function renderItinerary(section) {
         <div class="item-name">${item.name}${item.tag ? `<span class="tbd-badge">${item.tag}</span>` : ''}</div>
         <div class="item-desc">${item.desc}</div>
         ${criticalAlert}
+        ${navBtn}
         <a class="map-link" href="${mapUrl}" target="_blank">📍 在地图中查看 / 导航</a>
       </div>
     </div>
@@ -1107,6 +1133,7 @@ function renderSection(section) {
   if (section.type === 'flights') body = renderFlights(section);
   else if (section.type === 'tips') body = renderTips(section);
   else if (section.type === 'itinerary') body = renderItinerary(section);
+  else if (section.type === 'image') body = renderImage(section);
 
   return `
     <div class="section">
@@ -1116,6 +1143,23 @@ function renderSection(section) {
       <div class="section-body">${body}</div>
     </div>
   `;
+}
+
+function renderImage(section) {
+  let imgHtml = '';
+  if (section.img) {
+    imgHtml = `<a href="${section.link || '#'}" target="_blank" style="text-decoration:none;display:block"><img src="${section.img}" style="width:100%;height:180px;object-fit:cover;border-radius:8px;display:block;background:var(--cream)" onerror="this.parentElement.style.display='none'"></a>`;
+  }
+  let btnHtml = '';
+  if (section.customButtons) {
+    btnHtml = '<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">' +
+      section.customButtons.map(b =>
+        `<a href="${b.url}" target="_blank" style="display:block;text-align:center;padding:12px;border-radius:10px;background:linear-gradient(135deg,#6B7C45,#4A5C2A);color:white;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)">${b.text}</a>`
+      ).join('') + '</div>';
+  }
+  return imgHtml + btnHtml +
+    (section.caption && !section.customButtons ? `<div style="font-size:11px;color:#888;margin-top:6px;text-align:center">${section.caption}</div>` : '') +
+    (section.caption && section.customButtons ? `<div style="font-size:11px;color:#999;margin:8px 0 2px;text-align:center">${section.caption}</div>` : '');
 }
 
 function renderCard(d) {
