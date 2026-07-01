@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🇮🇹 意大利之旅 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --terracotta: #C0533A;
+    --gold: #C9A84C;
+    --cream: #F7F0E6;
+    --deep: #2C1A0E;
+    --olive: #6B7C45;
+    --sky: #4A7FA5;
+    --light-terra: #E8896E;
+    --parchment: #F2E8D5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--deep);
+    color: var(--deep);
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ── 封面 ── */
+  #cover {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(160deg, #1a0a04 0%, #3d1c0a 40%, #6b3a1f 70%, #c0533a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  #cover.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+  .cover-ornament {
+    font-size: 64px;
+    margin-bottom: 16px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .cover-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--cream);
+    font-size: 18px;
+    margin-top: 8px;
+    opacity: 0.85;
+  }
+  .cover-dates {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-top: 20px;
+    opacity: 0.9;
+  }
+  .cover-divider {
+    width: 120px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px auto;
+    opacity: 0.6;
+  }
+  .cover-btn {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    padding: 12px 32px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .cover-btn:active { background: var(--gold); color: var(--deep); }
+
+  .cover-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    margin-top: 32px;
+    text-align: center;
+    padding: 0 40px;
+    line-height: 1.8;
+  }
+
+  /* ── 主界面 ── */
+  #app {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--parchment);
+  }
+
+  /* 顶部导航栏 */
+  .topbar {
+    background: linear-gradient(135deg, var(--terracotta), #8B2E15);
+    padding: 14px 20px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    padding-top: max(14px, env(safe-area-inset-top));
+  }
+  .topbar-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+  .topbar-flag { font-size: 22px; }
+  .day-counter {
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  /* 日期导航胶囊 */
+  .date-nav {
+    background: var(--deep);
+    padding: 10px 0;
+    overflow-x: auto;
+    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .date-nav::-webkit-scrollbar { display: none; }
+  .date-nav-inner {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px;
+    width: max-content;
+  }
+  .date-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.6);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .date-chip.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--deep);
+    font-weight: 700;
+  }
+  .date-chip:active { opacity: 0.7; }
+
+  /* 卡片容器 */
+  .cards-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .cards-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+  .card {
+    min-width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 16px 80px;
+  }
+
+  /* 卡片内容块 */
+  .day-header {
+    text-align: center;
+    padding: 20px 0 16px;
+    border-bottom: 1px solid rgba(192,83,58,0.2);
+    margin-bottom: 16px;
+  }
+  .day-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--terracotta);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .day-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--deep);
+    margin: 4px 0;
+  }
+  .day-location {
+    font-size: 13px;
+    color: var(--olive);
+    letter-spacing: 2px;
+  }
+  .day-emoji { font-size: 32px; margin-bottom: 6px; }
+
+  /* 信息块 */
+  .section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    background: linear-gradient(135deg, var(--terracotta), #8B2E15);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-header.gold { background: linear-gradient(135deg, #8B7335, var(--gold)); }
+  .section-header.olive { background: linear-gradient(135deg, #4A5C2A, var(--olive)); }
+  .section-header.sky { background: linear-gradient(135deg, #2A5A7A, var(--sky)); }
+  .section-header.purple { background: linear-gradient(135deg, #5A2A7A, #8B5CB5); }
+
+  .section-title {
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .section-icon { font-size: 16px; }
+
+  .section-body { padding: 14px 16px; }
+
+  /* 航班卡 */
+  .flight-card {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--terracotta);
+  }
+  .flight-card:last-child { margin-bottom: 0; }
+  .flight-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .flight-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--deep);
+    font-weight: 700;
+  }
+  .flight-arrow { color: var(--terracotta); font-size: 20px; flex: 1; text-align: center; }
+  .flight-city { font-size: 12px; color: #666; margin-top: 2px; }
+  .flight-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0,0,0,0.1);
+  }
+  .flight-badge {
+    background: var(--terracotta);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  .flight-note { font-size: 11px; color: #888; align-self: center; }
+
+  /* 行程列表 */
+  .itinerary-item {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    align-items: flex-start;
+  }
+  .itinerary-item:last-child { border-bottom: none; }
+  .item-time {
+    font-size: 12px;
+    color: var(--terracotta);
+    font-weight: 700;
+    width: 40px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .item-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .item-content { flex: 1; }
+  .item-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--deep);
+    margin-bottom: 2px;
+  }
+  .item-desc { font-size: 12px; color: #777; line-height: 1.5; }
+
+  /* 小贴士 */
+  .tip-box {
+    background: linear-gradient(135deg, #FFF8E7, #FFF3D4);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--gold);
+    display: flex;
+    gap: 10px;
+  }
+  .tip-icon { font-size: 18px; flex-shrink: 0; }
+  .tip-text { font-size: 12px; color: #5A4A2A; line-height: 1.6; }
+  .tip-text strong { color: var(--terracotta); }
+
+  /* 餐厅/住宿 */
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
+  .info-main { flex: 1; }
+  .info-name { font-size: 13px; font-weight: 700; color: var(--deep); }
+  .info-sub { font-size: 11px; color: #999; margin-top: 1px; }
+  .info-tag {
+    font-size: 10px;
+    background: var(--cream);
+    color: var(--terracotta);
+    border: 1px solid var(--terracotta);
+    padding: 2px 8px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  /* 地图按钮 */
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sky);
+    color: white;
+    font-size: 12px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  /* 底部导航 */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0; right: 0;
+    background: var(--deep);
+    display: flex;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    z-index: 50;
+  }
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 6px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.2s;
+    border: none;
+    background: transparent;
+    font-family: 'Lato', sans-serif;
+  }
+  .nav-btn:active { opacity: 0.6; }
+  .nav-btn.active { color: var(--gold); }
+  .nav-btn-icon { font-size: 20px; margin-bottom: 2px; }
+  .nav-btn-label { font-size: 10px; letter-spacing: 0.5px; }
+
+  /* 进度条 */
+  .progress-bar {
+    height: 2px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    border-radius: 1px;
+  }
+
+  /* 顾问标签 */
+  .guide-note {
+    background: linear-gradient(135deg, #1a0a04, #3d1c0a);
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  /* 待定标签 */
+  .tbd-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    border: 1px dashed var(--gold);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+  }
+
+  /* 标签 */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 4px;
+    margin-top: 4px;
+    font-weight: 700;
+  }
+  .tag-red { background: rgba(192,83,58,0.15); color: var(--terracotta); }
+  .tag-green { background: rgba(107,124,69,0.15); color: var(--olive); }
+  .tag-blue { background: rgba(74,127,165,0.15); color: var(--sky); }
+
+  /* 空白占位 */
+  .empty-note {
+    text-align: center;
+    padding: 24px 20px;
+    color: #bbb;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  /* 过渡动画 */
+  .card { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- ══ 封面 ══ -->
+<div id="cover">
+  <div class="cover-ornament">🏛️</div>
+  <div class="cover-title">ITALIA</div>
+  <div class="cover-sub">意大利·慢旅</div>
+  <div class="cover-divider"></div>
+  <div class="cover-dates">OCT 03 — OCT 12, 2025</div>
+  <div class="cover-dates" style="margin-top:6px;font-size:12px;opacity:0.6;">南京 → 罗马 → 佛罗伦萨 → 米兰</div>
+  <div class="cover-divider" style="margin-top:20px;"></div>
+  <button class="cover-btn" id="coverBtn">开始旅程 ✦</button>
+  <div class="cover-quote">
+    "Italia, il paese dove anche il caffè<br>è una poesia."<br>
+    <span style="font-size:11px;opacity:0.6;">意大利，连咖啡都是一首诗</span>
+  </div>
+</div>
+
+<!-- ══ 主应用 ══ -->
+<div id="app">
+  <!-- 顶部栏 -->
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">🇮🇹 意大利之旅</div>
+      <div class="day-counter" id="dayCounter">第 1 天 / 共 12 天</div>
+    </div>
+    <div class="topbar-flag">✈️</div>
+  </div>
+
+  <!-- 进度条 -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill" style="width:8.3%"></div>
+  </div>
+
+  <!-- 日期导航 -->
+  <div class="date-nav">
+    <div class="date-nav-inner" id="dateNav"></div>
+  </div>
+
+  <!-- 卡片区域 -->
+  <div class="cards-wrapper" id="cardsWrapper">
+    <div class="cards-track" id="cardsTrack"></div>
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="navPrev">
+      <div class="nav-btn-icon">‹</div>
+      <div class="nav-btn-label">上一天</div>
+    </button>
+    <button class="nav-btn" id="navCover">
+      <div class="nav-btn-icon">🏛️</div>
+      <div class="nav-btn-label">封面</div>
+    </button>
+    <button class="nav-btn" id="navNext">
+      <div class="nav-btn-icon">›</div>
+      <div class="nav-btn-label">下一天</div>
+    </button>
+  </div>
+</div>
+
+<script>
+// ══ 行程数据 ══
+const days = [
+  // ─── 第1天：出发日 ───
+  {
+    day: 1, date: '10月03日', weekday: '周五',
+    emoji: '✈️',
+    title: '启程·飞越云端',
+    location: '南京 → 北京 → 罗马',
+    guide: '「今日漫漫旅途，是与意大利的第一次相遇。落地罗马，先感受永恒之城的夜色吧。」',
+    sections: [
+      {
+        type: 'flights',
+        header: '✈️ 今日航班',
+        style: '',
+        flights: [
+          {
+            from: '08:45', fromCity: '南京禄口 T1', fromCode: 'NKG',
+            to: '10:35', toCity: '北京首都', toCode: 'PEK',
+            flight: 'CA1820', airline: '中国国际航空', note: '国内段'
+          },
+          {
+            from: '13:15', fromCity: '北京首都', fromCode: 'PEK',
+            to: '18:30', toCity: '罗马菲乌米奇诺', toCode: 'FCO',
+            flight: 'CA939', airline: '中国国际航空', note: '约11.5小时·次日到达当地'
+          }
+        ]
+      },
+      {
+        type: 'tips',
+        header: '💡 导游提示',
+        style: 'gold',
+        tips: [
+          { icon: '⏰', text: '<strong>北京转机</strong>：过海关取行李→重新值机约需2小时，13:15出发时间充裕，但建议全程关注航班动态。' },
+          { icon: '🌙', text: '<strong>抵达后</strong>：罗马当地18:30落地，乘Leonardo Express（14欧）直达特米尼中央火车站约30分钟，建议提前在App购票。' },
+          { icon: '🧳', text: '<strong>行李提示</strong>：北京转机为国际航班，需凭护照过边检，行李将直挂至罗马，无需中转取件。' },
+          { icon: '💊', text: '<strong>长途贴士</strong>：建议随身带颈枕、耳塞，CA939在机上有中文服务，注意时差（意大利UTC+2，比北京慢6小时）。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🌙 今夜安排',
+        style: 'olive',
+        items: [
+          { time: '落地后', name: '办理入住酒店', desc: '抵达罗马较晚，建议订靠近特米尼站的酒店方便行李拖运', tag: '待定' },
+          { time: '晚餐', name: '酒店附近餐厅', desc: '今日不宜远行，找家附近的 trattoria（小馆子），来一盘经典 Cacio e Pepe 奶酪胡椒面，感受罗马第一餐', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第2天：罗马 ───
+  {
+    day: 2, date: '10月04日', weekday: '周六',
+    emoji: '🏛️',
+    title: '永恒之城·古罗马',
+    location: '罗马 Roma',
+    guide: '「两千年前这里是世界的中心，两千年后它依然是。今天我们穿越时空，踏入古罗马的荣光。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '📋 今日概览',
+        style: 'gold',
+        tips: [
+          { icon: '🗺️', text: '<strong>区域</strong>：古罗马遗址区（Foro Romano），步行可达。' },
+          { icon: '🎟️', text: '<strong>票务提醒</strong>：竞技场+古罗马广场+帕拉蒂诺山套票，<strong>务必提前网上购买</strong>！现场排队可能超过2小时，线上约20欧/人。' },
+          { icon: '👗', text: '<strong>着装</strong>：进入梵蒂冈需遮肩盖膝，建议随身携带丝巾或薄外套。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🏛️ 行程安排',
+        style: '',
+        items: [
+          { time: '上午', name: '🏟️ 罗马竞技场（Colosseo）', desc: '世界最伟大的建筑之一，建议开门第一批入场（9:00），站在角斗场中央感受历史的震撼，参观约1.5小时' },
+          { time: '午前', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', desc: '凯旋门、神庙、元老院遗址……漫步其中仿佛回到公元前，建议留出2小时慢慢走' },
+          { time: '午餐', name: '🍕 街边小馆（推荐区域：Testaccio）', desc: '罗马本地人的美食区，远离游客陷阱。推荐 Suppli（炸饭团）或 Pizza al Taglio（论斤切的罗马薄披萨）', tag: '待定' },
+          { time: '下午', name: '⛪ 真理之口 & 马切罗剧场', desc: '把手放进真理之口，是每个到罗马的人必做之事（来自电影《罗马假日》），周边步行即是古老剧场遗址' },
+          { time: '傍晚', name: '🌅 卡比托利欧广场看日落', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景，黄昏光线下极美' },
+          { time: '晚餐', name: '🍝 特拉斯提弗列区（Trastevere）', desc: '罗马最有灵魂的街区，鹅卵石小路、爬藤墙壁、烛光餐厅。推荐 Tonnarello 餐厅品尝 Carbonara 培根蛋面（真正的罗马版本不加奶油！）', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第3天：罗马 ───
+  {
+    day: 3, date: '10月05日', weekday: '周日',
+    emoji: '⛪',
+    title: '梵蒂冈·神圣之光',
+    location: '罗马 Roma · 梵蒂冈 Città del Vaticano',
+    guide: '「梵蒂冈是世界最小的国家，却承载着全人类文明最重要的艺术遗产之一。西斯廷礼拜堂的穹顶，见过一次便终身难忘。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '📋 重要提示',
+        style: 'gold',
+        tips: [
+          { icon: '🎟️', text: '<strong>梵蒂冈博物馆必须提前网订</strong>：museivaticani.va，约20欧/人，周日有可能免费开放（最后一个周日），但届时排队数小时！建议购票入场。' },
+          { icon: '⏰', text: '<strong>开门时间</strong>：博物馆9:00开放，建议8:45到场，直奔西斯廷礼拜堂（逆人流走）。' },
+          { icon: '📵', text: '<strong>西斯廷礼拜堂</strong>：禁止拍照，请把相机放下，用眼睛好好看米开朗基罗的《创世纪》。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '⛪ 行程安排',
+        style: '',
+        items: [
+          { time: '09:00', name: '🏛️ 梵蒂冈博物馆', desc: '世界最重要的博物馆之一。重点：Gallery of Maps（地图展廊）→ Raphael Rooms（拉斐尔画室）→ 西斯廷礼拜堂，建议游览3小时' },
+          { time: '午前', name: '⛪ 圣彼得大教堂', desc: '文艺复兴与巴洛克建筑巅峰，进入免费。贝尼尼的青铜华盖、米开朗基罗的圣殇像……气势恢宏，无法言说' },
+          { time: '可选', name: '🔭 登上圣彼得穹顶', desc: '约8欧，步行300+台阶可到穹顶，俯瞰整个罗马全景，天气好时极为壮观' },
+          { time: '午餐', name: '🥗 博物馆附近觅食', desc: '梵蒂冈附近不推荐用餐（贵且难吃），建议走到 Prati 街区，当地人聚集，性价比更高', tag: '待定' },
+          { time: '下午', name: '🌉 圣天使堡', desc: '从圣彼得步行10分钟，俯瞰台伯河绝佳位置，曾是教皇的逃生通道，如今是博物馆（约15欧）' },
+          { time: '傍晚', name: '⛲ 纳沃纳广场 & 许愿池', desc: '罗马最美的广场，贝尼尼的《四河喷泉》惊为天人。随后步行至特雷维喷泉（许愿池），入夜后灯光打亮更美，别忘了向后抛硬币' },
+          { time: '晚餐', name: '🍦 冰淇淋 + 随走随吃', desc: '罗马街头 Gelato 是最好的甜品，找标有 Artigianale（手工）的店，非常不同！', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第4天：罗马→那不勒斯/庞贝 ───
+  {
+    day: 4, date: '10月06日', weekday: '周一',
+    emoji: '🌋',
+    title: '庞贝废墟·火山记忆',
+    location: '那不勒斯 Napoli · 庞贝 Pompei',
+    guide: '「公元79年维苏威火山爆发，将庞贝城完整封存。今天，我带你去看2000年前普通人的生活。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '🚄 交通提示',
+        style: 'sky',
+        tips: [
+          { icon: '🚄', text: '<strong>罗马→那不勒斯</strong>：Frecciarossa 高速列车约1小时10分，票价约30-50欧，建议trenitalia.com提前购买。出发站：Roma Termini → Napoli Centrale。' },
+          { icon: '🚉', text: '<strong>那不勒斯→庞贝</strong>：乘坐 Circumvesuviana 线（3欧，约35分钟），Pompei Scavi 站下车，步行即到遗址入口。' },
+          { icon: '💡', text: '<strong>可选方案</strong>：当天往返那不勒斯，或在那不勒斯住一晚（那不勒斯是披萨发源地！）。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🌋 行程安排',
+        style: '',
+        items: [
+          { time: '早晨', name: '🚄 高铁前往那不勒斯', desc: '建议8:00前从罗马出发，争取上午到达庞贝，避开正午烈日（10月天气约20°C，较舒适）' },
+          { time: '上午', name: '🏛️ 庞贝古城遗址', desc: '建议游览4-5小时！重点：Forum（广场）、浴场、面包店、妓院、悲剧诗人之家的犬型马赛克……整个城市被火山灰完整保留，令人震撼' },
+          { time: '午餐', name: '🍕 那不勒斯吃正宗披萨！', desc: '这是人生必吃体验。L\'Antica Pizzeria da Michele（百年老店）只卖Margherita和Marinara两种，排队1小时值得！约5欧/张' },
+          { time: '下午', name: '🏙️ 那不勒斯老城漫步', desc: '世界遗产历史中心，斯帕卡那不勒斯大街（Spaccanapoli）将城市一分为二，街边小店、教堂、集市，生活气息浓厚' },
+          { time: '可选', name: '🏰 卡波迪蒙特博物馆', desc: '收藏卡拉瓦乔真迹，艺术爱好者不可错过' },
+          { time: '晚间', name: '🚄 返回罗马或前往下一站', desc: '根据整体行程安排，本日可返罗马或继续南下', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第5天：前往佛罗伦萨 ───
+  {
+    day: 5, date: '10月07日', weekday: '周二',
+    emoji: '🌸',
+    title: '托斯卡纳·文艺复兴摇篮',
+    location: '佛罗伦萨 Firenze',
+    guide: '「佛罗伦萨是文艺复兴的诞生地。达·芬奇、米开朗基罗、波提切利……他们都在这里留下了改变人类文明的作品。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '🚄 交通提示',
+        style: 'sky',
+        tips: [
+          { icon: '🚄', text: '<strong>罗马→佛罗伦萨</strong>：Frecciarossa 约1.5小时，票价约25-45欧，全天多班次，灵活选择。' },
+          { icon: '🎒', text: '<strong>住宿建议</strong>：住在历史中心（Centro Storico），步行即可抵达所有景点。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🌸 行程安排',
+        style: '',
+        items: [
+          { time: '上午', name: '🚄 高铁抵达佛罗伦萨', desc: '建议上午抵达，办理酒店入住（部分酒店下午才可入住，可寄存行李先出发）' },
+          { time: '午前', name: '🏛️ 乌菲兹美术馆（Uffizi）', desc: '波提切利《维纳斯的诞生》《春》、达·芬奇、拉斐尔真迹！<strong>必须提前网购</strong>（uffizi.it，约25欧），现场可能等待3小时以上，建议游览2-3小时' },
+          { time: '午餐', name: '🥩 佛罗伦萨丁骨牛排', desc: 'Bistecca alla Fiorentina，佛罗伦萨特产，论重量点的丁骨牛排。Buca Mario（1886年开业的老餐厅）或 Il Latini，提前订座！', tag: '待定' },
+          { time: '下午', name: '⛪ 圣母百花大教堂（Duomo）', desc: '外观彩色大理石花纹如同梦境，布鲁内莱斯基的穹顶是工程奇迹。登顶穹顶（预约约18欧）可俯瞰红屋顶的佛罗伦萨，令人屏息' },
+          { time: '傍晚', name: '🌉 米开朗基罗广场看日落', desc: '巴士或步行上山，整个佛罗伦萨尽收眼底，是城市最美的视角，日落时分橙色天空倒映在阿尔诺河中' },
+          { time: '晚餐', name: '🍷 奥尔特拉诺区（Oltrarno）', desc: '阿尔诺河南岸，当地人区，更真实的佛罗伦萨。街角的 Enoteca（葡萄酒吧）配托斯卡纳奶酪火腿，是最棒的晚餐', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第6天：佛罗伦萨 ───
+  {
+    day: 6, date: '10月08日', weekday: '周三',
+    emoji: '🎨',
+    title: '大卫与文艺复兴',
+    location: '佛罗伦萨 Firenze',
+    guide: '「昨天我们看了绘画，今天来看雕塑。米开朗基罗用了两年时间，从一块被废弃的大理石中，解放出了大卫。」',
+    sections: [
+      {
+        type: 'itinerary',
+        header: '🎨 行程安排',
+        style: '',
+        items: [
+          { time: '09:00', name: '🗿 学院美术馆（Galleria dell\'Accademia）', desc: '米开朗基罗《大卫》真迹！5.17米高的大理石雕像，在特别为他建造的穹顶下栩栩如生。同样必须提前购票（約13欧）' },
+          { time: '上午', name: '🛍️ 圣洛伦佐市场', desc: '皮革手套、丝巾、皮包……这里是购买托斯卡纳皮革制品的好地方，记得砍价！' },
+          { time: '午餐', name: '🥩 中央市场（Mercato Centrale）', desc: '两层市场，一楼是食材，二楼是美食广场。Lampredotto（牛肚包）是佛罗伦萨最有代表性的街头食物，勇敢的你一定要试试！', tag: '待定' },
+          { time: '下午', name: '🏰 韦奇奥宫（Palazzo Vecchio）', desc: '西尼奥里亚广场上的市政厅，内有瓦萨里的湿壁画，广场上陈列着大卫复制品和其他雕塑' },
+          { time: '下午', name: '🌉 老桥（Ponte Vecchio）', desc: '欧洲现存最古老的石桥，桥上全是金银首饰店，傍晚光线下的老桥是佛罗伦萨最上镜的风景' },
+          { time: '可选', name: '🍷 托斯卡纳葡萄酒品鉴', desc: '在 Enoteca 参加 Chianti 或 Brunello 葡萄酒品鉴，是了解托斯卡纳最愉快的方式', tag: '待定' },
+          { time: '晚餐', name: '🍝 传统托斯卡纳菜', desc: '野猪肉酱宽面（Pappardelle al cinghiale）、白豆炖汤（Ribollita）……朴实但令人难忘', tag: '待定' }
+        ]
+      },
+      {
+        type: 'tips',
+        header: '🛍️ 购物提示',
+        style: 'gold',
+        tips: [
+          { icon: '🧴', text: '<strong>Santa Maria Novella 药妆店</strong>（1612年开业！）：香皂、香水、护肤品，是来佛罗伦萨必带的伴手礼，价格合理，质量上乘。' },
+          { icon: '👜', text: '<strong>皮革制品</strong>：推荐 Scuola del Cuoio（皮革学校）在圣十字教堂内，可以看到工匠现场制作，价格透明，品质有保证。' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第7天：托斯卡纳乡村 or 前往威尼斯 ───
+  {
+    day: 7, date: '10月09日', weekday: '周四',
+    emoji: '🍇',
+    title: '托斯卡纳田园 / 前往威尼斯',
+    location: '托斯卡纳乡村 或 威尼斯 Venezia',
+    guide: '「今天可以选择两条路：深入托斯卡纳的葡萄园和柏树山丘，或者直奔水城威尼斯。两个选择都是天堂。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '🗺️ 两个方案，二选一',
+        style: 'gold',
+        tips: [
+          { icon: '🍇', text: '<strong>方案A - 托斯卡纳一日游</strong>：租车或参加小团游，前往锡耶纳（Siena）+ 圣吉米尼亚诺（San Gimignano，中世纪塔楼小镇），途经葡萄园和柏树田野，是明信片上的意大利。' },
+          { icon: '🚤', text: '<strong>方案B - 前往威尼斯</strong>：佛罗伦萨乘高铁约2小时到达威尼斯，下午抵达，可赶上傍晚最美的时刻。适合希望多看威尼斯的旅行者。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🍇 方案A：托斯卡纳乡村',
+        style: 'olive',
+        items: [
+          { time: '上午', name: '🏰 锡耶纳（Siena）', desc: '中世纪最完整保存的城市，贝壳形的坎波广场（Piazza del Campo）是世界上最美的广场之一，曾举办著名的赛马节' },
+          { time: '午餐', name: '🍷 锡耶纳餐厅', desc: '猪肝香肠（Pici al ragù）配本地 Chianti Classico 葡萄酒', tag: '待定' },
+          { time: '下午', name: '🗼 圣吉米尼亚诺', desc: '14座中世纪塔楼直刺天空，小镇核心区15分钟能走完，但每一步都是历史。品尝 Vernaccia 白葡萄酒（当地特产）和世界冠军冰淇淋（Sergio Dondoli 店！）' },
+          { time: '傍晚', name: '🌄 在葡萄园看夕阳', desc: '10月正是葡萄收获季，金黄的叶子，沉甸甸的果实，托斯卡纳最美的季节', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第8天：威尼斯 ───
+  {
+    day: 8, date: '10月10日', weekday: '周五',
+    emoji: '🚤',
+    title: '水上迷宫·威尼斯',
+    location: '威尼斯 Venezia',
+    guide: '「威尼斯没有汽车，只有运河和小桥。在这里，迷路是必须的，也是最好的旅行方式。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '🚤 威尼斯须知',
+        style: 'sky',
+        tips: [
+          { icon: '⛴️', text: '<strong>交通</strong>：威尼斯岛内全靠步行和水上巴士（Vaporetto）。购买48小时或72小时通票（约25-35欧）最划算。' },
+          { icon: '🎭', text: '<strong>冈多拉</strong>：白天官方定价约80欧/船（载6人），晚上更贵。可多人拼船分摊。旅游区内随处可叫。' },
+          { icon: '🌊', text: '<strong>涨水（Acqua Alta）</strong>：10月可能偶发，建议穿防水鞋或随身带雨靴套，多数景区有临时木栈道。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🚤 行程安排',
+        style: '',
+        items: [
+          { time: '清晨', name: '🌅 黎明前的圣马可广场', desc: '早上7点前，广场几乎空无一人，这时的威尼斯属于你一个人。坐在咖啡馆台阶上喝杯浓缩咖啡，看鸽子起飞，是旅途中最安静的时刻' },
+          { time: '上午', name: '⛪ 圣马可大教堂 & 钟楼', desc: '拜占庭风格的金色马赛克教堂，钟楼（登顶约10欧）可俯瞰整个泻湖。建议早到，10点后人流极多' },
+          { time: '上午', name: '🏛️ 总督宫（Palazzo Ducale）', desc: '威尼斯共和国权力中心，叹息桥（Bridge of Sighs）就在旁边，囚犯从这里经过后就再也没有自由' },
+          { time: '午餐', name: '🦞 威尼斯海鲜', desc: '墨鱼汁意面（Spaghetti al nero di seppia）、烤蛤蜊……威尼斯的海鲜品质极高，找里巷深处的小馆子', tag: '待定' },
+          { time: '下午', name: '🎨 穿越小巷自由探索', desc: '故意不看地图，跟随本能穿行小巷，遇到桥就过，遇到运河就坐下来发呆。你会发现游客从未去过的威尼斯' },
+          { time: '傍晚', name: '🚤 冈多拉黄昏之旅', desc: '落日时分乘坐冈多拉，船夫轻摇，经过无数小桥，橙色天光倒映水中，这一刻值所有花费' },
+          { time: '晚餐', name: '🍷 Cicchetti（威尼斯小吃）', desc: '威尼斯版的 Tapas！站在酒吧（Bacaro）前，一口小食配一杯 Prosecco 起泡酒，这是当地人下班后的日常仪式', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第9天：威尼斯/米兰 ───
+  {
+    day: 9, date: '10月11日', weekday: '周六',
+    emoji: '🏙️',
+    title: '时尚之都·米兰',
+    location: '米兰 Milano',
+    guide: '「米兰是意大利最现代的城市，但古老的中心隐藏着一幅改变了世界艺术史的画——达·芬奇的《最后的晚餐》。」',
+    sections: [
+      {
+        type: 'tips',
+        header: '🚄 交通提示',
+        style: 'sky',
+        tips: [
+          { icon: '🚄', text: '<strong>威尼斯→米兰</strong>：Frecciarossa 高速列车约2.5小时，建议早班出发，让米兰多一些时间。' },
+          { icon: '⚠️', text: '<strong>最重要！</strong>：《最后的晚餐》（Cenacolo Vinciano）参观名额极为有限，需提前2-3个月预约！官网：cenacolo.it，约15欧/人。如果没有提前预约，可能无缘这幅画。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🏙️ 行程安排',
+        style: '',
+        items: [
+          { time: '上午', name: '🚄 高铁前往米兰', desc: '威尼斯圣卢西亚站出发，抵达米兰中央火车站（Milano Centrale，一座壮观的法西斯时期建筑本身就值得欣赏）' },
+          { time: '午前', name: '🎨 达·芬奇《最后的晚餐》', desc: '世界上最重要的绘画之一，每次仅允许30人入场，参观时间15分钟。在圣玛利亚感恩教堂的餐厅墙壁上，亲眼看到真迹时，所有人都会沉默', tag: '⚠️ 务必预约' },
+          { time: '午餐', name: '🥩 米兰餐厅', desc: '米兰炸小牛肉排（Cotoletta alla Milanese），地道米兰菜。或去 Peck 熟食店买各种意式熟食拼盘', tag: '待定' },
+          { time: '下午', name: '⛪ 米兰大教堂（Duomo di Milano）', desc: '世界最大的哥特式大教堂之一，135根尖塔刺向天空，顶部可俯瞰城市（登顶约15欧）。广场是米兰的灵魂中心' },
+          { time: '下午', name: '🛍️ 艾曼纽二世拱廊（Galleria Vittorio Emanuele II）', desc: '世界最古老的购物中心，玻璃穹顶壮观华美，LV、Prada、Versace……即使不买，也值得进去仰望穹顶' },
+          { time: '傍晚', name: '🏰 斯福尔扎城堡', desc: '文艺复兴时期城堡，内有米开朗基罗最后未完成的作品《隆达尼尼的圣殇》' },
+          { time: '晚餐', name: '🍝 米兰最后的意式盛宴', desc: '明天就要回家了，今晚在米兰的餐厅，好好品味最后一顿意大利餐。搭配一瓶 Barolo 或 Amarone，为这段旅程画上句号', tag: '待定' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第10天：米兰出发回国 ───
+  {
+    day: 10, date: '10月12日', weekday: '周日',
+    emoji: '🏠',
+    title: '归途·再见意大利',
+    location: '米兰 → 成都 → 南京',
+    guide: '「Arrivederci，意大利！每一次离开，都是下一次回来的开始。行李里装满的，不只是纪念品，还有记忆。」',
+    sections: [
+      {
+        type: 'flights',
+        header: '✈️ 回国航班',
+        style: '',
+        flights: [
+          {
+            from: '13:00', fromCity: '米兰马尔彭萨 T1', fromCode: 'MXP',
+            to: '次日05:45', toCity: '成都天府', toCode: 'TFU',
+            flight: 'CA446', airline: '中国国际航空', note: '约10.5小时·跨夜飞行'
+          }
+        ]
+      },
+      {
+        type: 'tips',
+        header: '📋 出发前提示',
+        style: 'gold',
+        tips: [
+          { icon: '🕙', text: '<strong>建议10:00前到达机场</strong>：米兰马尔彭萨机场（MXP）距市区约50公里，乘 Malpensa Express 火车约52分钟（13欧），或打车约80-100欧。务必留足时间！' },
+          { icon: '🛃', text: '<strong>免税购物</strong>：持有非欧盟护照，在意大利购物满154.94欧可申请退税（VAT refund），在机场出关前盖章，登机前退税窗口提交。' },
+          { icon: '📦', text: '<strong>行李注意</strong>：在意大利买的橄榄油、红酒必须托运，不能放手提行李。液体100ml限制严格执行。' },
+          { icon: '💶', text: '<strong>欧元处理</strong>：剩余欧元可在机场消费或带回国，不必急着换回人民币（兑换率机场较差）。' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🌅 今晨安排',
+        style: 'olive',
+        items: [
+          { time: '早晨', name: '☕ 米兰最后一杯咖啡', desc: '意大利人站着喝咖啡。在咖啡吧点一杯 Espresso，站在吧台，和旁边的米兰人一起开始最后一个意大利的早晨' },
+          { time: '上午', name: '🛍️ 最后的购物/散步', desc: '还有想买的纪念品？Navigli 运河区的跳蚤市场（周日）或大教堂广场周边的精品店，留出最后1-2小时' },
+          { time: '10:00', name: '🚂 前往马尔彭萨机场', desc: '乘坐 Malpensa Express，中央火车站出发，约52分钟到达T1航站楼' },
+          { time: '13:00', name: '✈️ CA446 起飞', desc: '向意大利挥手告别——Arrivederci, Italia！' }
+        ]
+      }
+    ]
+  },
+
+  // ─── 第11天：成都中转 ───
+  {
+    day: 11, date: '10月13日', weekday: '周一',
+    emoji: '🐼',
+    title: '成都中转·归家在即',
+    location: '成都 → 南京',
+    guide: '「时差调整中，还有最后一段路。天府之国欢迎你回国！」',
+    sections: [
+      {
+        type: 'flights',
+        header: '✈️ 今日航班',
+        style: '',
+        flights: [
+          {
+            from: '05:45', fromCity: '成都天府', fromCode: 'TFU',
+            to: '——', toCity: '落地', toCode: '',
+            flight: 'CA446', airline: '到达成都', note: '昨日从米兰出发的CA446落地'
+          },
+          {
+            from: '11:10', fromCity: '成都天府', fromCode: 'TFU',
+            to: '13:25', toCity: '南京禄口', toCode: 'NKG',
+            flight: 'CA3770 / ZH9562', airline: '中国国际航空（深圳航空承运）', note: '约2.5小时·返回南京'
+          }
+        ]
+      },
+      {
+        type: 'tips',
+        header: '💡 成都转机提示',
+        style: 'gold',
+        tips: [
+          { icon: '⏰', text: '<strong>转机间隔</strong>：05:45落地到11:10出发，约5.5小时，时间充裕。入境办理约需1-2小时，建议过完边检后在机场休息候机。' },
+          { icon: '🛃', text: '<strong>入境流程</strong>：健康申报→人工边检（有护照自助通道）→取行李→海关申报（无需申报直接走绿色通道）。' },
+          { icon: '🍜', text: '<strong>机场觅食</strong>：天府机场有成都本地小吃，肚子还有余量的话，来碗担担面或红油抄手也不错！' },
+          { icon: '📱', text: '<strong>网络恢复</strong>：欢迎回国！记得关闭境外流量套餐，连接国内网络，把意大利的照片发给朋友吧～' }
+        ]
+      },
+      {
+        type: 'itinerary',
+        header: '🏠 回家！',
+        style: 'olive',
+        items: [
+          { time: '13:25', name: '✅ 落地南京禄口', desc: '终于回家了！拖着行李走出航站楼的那一刻，意大利的阳光和咖啡香还在记忆里……' },
+          { time: '下午', name: '🏠 回家好好休息', desc: '时差需要1-2天调整。今晚早点睡，明天的你又是精神满满的旅行家' }
+        ]
+      }
+    ]
+  }
+];
+
+// ══ 渲染函数 ══
+let currentDay = 0;
+let startX = 0, startY = 0, isDragging = false;
+
+function renderFlights(section) {
+  return section.flights.map(f => `
+    <div class="flight-card">
+      <div class="flight-row">
+        <div>
+          <div class="flight-time">${f.from}</div>
+          <div class="flight-city">${f.fromCity}</div>
+        </div>
+        <div class="flight-arrow">✈ ─ ─</div>
+        <div style="text-align:right">
+          <div class="flight-time">${f.to}</div>
+          <div class="flight-city">${f.toCity}</div>
+        </div>
+      </div>
+      <div class="flight-info">
+        <span class="flight-badge">${f.flight}</span>
+        <span class="flight-note">${f.note}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderTips(section) {
+  return section.tips.map(t => `
+    <div class="tip-box">
+      <div class="tip-icon">${t.icon}</div>
+      <div class="tip-text">${t.text}</div>
+    </div>
+  `).join('');
+}
+
+function renderItinerary(section) {
+  return section.items.map(item => `
+    <div class="itinerary-item">
+      <div class="item-time">${item.time}</div>
+      <div class="item-dot"></div>
+      <div class="item-content">
+        <div class="item-name">${item.name}${item.tag ? `<span class="tbd-badge">${item.tag}</span>` : ''}</div>
+        <div class="item-desc">${item.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderSection(section) {
+  let body = '';
+  if (section.type === 'flights') body = renderFlights(section);
+  else if (section.type === 'tips') body = renderTips(section);
+  else if (section.type === 'itinerary') body = renderItinerary(section);
+
+  return `
+    <div class="section">
+      <div class="section-header ${section.style}">
+        <div class="section-title">${section.header}</div>
+      </div>
+      <div class="section-body">${body}</div>
+    </div>
+  `;
+}
+
+function renderCard(d) {
+  const sections = d.sections.map(renderSection).join('');
+  return `
+    <div class="card">
+      <div class="day-header">
+        <div class="day-emoji">${d.emoji}</div>
+        <div class="day-number">第 ${d.day} 天 · ${d.weekday}</div>
+        <div class="day-date">${d.date}</div>
+        <div class="day-location">${d.location}</div>
+      </div>
+      <div class="guide-note">${d.guide}</div>
+      ${sections}
+    </div>
+  `;
+}
+
+function init() {
+  const track = document.getElementById('cardsTrack');
+  const nav = document.getElementById('dateNav');
+
+  days.forEach((d, i) => {
+    track.innerHTML += renderCard(d);
+    nav.innerHTML += `<div class="date-chip ${i===0?'active':''}" onclick="goTo(${i})">${d.date.replace('月','/')}${d.emoji}</div>`;
+  });
+
+  updateUI();
+  setupSwipe();
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= days.length) return;
+  currentDay = idx;
+  updateUI();
+}
+
+function updateUI() {
+  const track = document.getElementById('cardsTrack');
+  track.style.transform = `translateX(-${currentDay * 100}%)`;
+
+  document.querySelectorAll('.date-chip').forEach((c, i) => {
+    c.classList.toggle('active', i === currentDay);
+    if (i === currentDay) c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  });
+
+  document.getElementById('dayCounter').textContent = `第 ${days[currentDay].day} 天 / 共 ${days.length} 天`;
+  document.getElementById('progressFill').style.width = `${(currentDay + 1) / days.length * 100}%`;
+
+  document.getElementById('navPrev').classList.toggle('active', currentDay > 0);
+  document.getElementById('navNext').classList.toggle('active', currentDay < days.length - 1);
+}
+
+function setupSwipe() {
+  const wrapper = document.getElementById('cardsWrapper');
+  wrapper.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isDragging = false;
+  }, { passive: true });
+
+  wrapper.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (!isDragging && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+      isDragging = true;
+    }
+    if (isDragging) e.preventDefault();
+  }, { passive: false });
+
+  wrapper.addEventListener('touchend', e => {
+    if (!isDragging) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx < -50) goTo(currentDay + 1);
+    else if (dx > 50) goTo(currentDay - 1);
+    isDragging = false;
+  });
+}
+
+function enterApp() {
+  document.getElementById('cover').classList.add('hidden');
+  setTimeout(() => document.getElementById('cover').style.display = 'none', 800);
+}
+
+function showCover() {
+  const cover = document.getElementById('cover');
+  cover.style.display = 'flex';
+  cover.style.opacity = '0';
+  cover.style.transform = 'scale(1.05)';
+  setTimeout(() => {
+    cover.classList.remove('hidden');
+    cover.style.opacity = '';
+    cover.style.transform = '';
+  }, 10);
+}
+
+// 启动
+init();
+
+// 修复 iOS 本地文件 onclick 不响应问题
+function bindTouch(id, fn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('touchend', function(e) { e.preventDefault(); fn(); });
+  el.addEventListener('click', fn);
+}
+bindTouch('coverBtn', enterApp);
+bindTouch('navPrev',  function() { goTo(currentDay - 1); });
+bindTouch('navCover', showCover);
+bindTouch('navNext',  function() { goTo(currentDay + 1); });
+</script>
+</body>
+</html>
