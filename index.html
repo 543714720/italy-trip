@@ -1205,17 +1205,18 @@ function showCover() {
 // 启动
 init();
 
-// 修复 iOS 上按钮点击不响应：多种事件兜底，点击封面任意位置均可进入
-function bindOpenTriggers() {
-  const btn = document.getElementById('coverBtn');
-  const cover = document.getElementById('cover');
-  if (!btn || !cover) return;
-  // 点击按钮或封面任意位置都能进入
-  ['click', 'touchend', 'tap'].forEach(evt => {
-    cover.addEventListener(evt, enterApp, { passive: true });
+// 封面进入：自动 + 点击/触摸/键盘 兜底，确保任何环境都能进入
+(function setupCover() {
+  var cover = document.getElementById('cover');
+  if (!cover) return;
+  function hideCover() { cover.style.display = 'none'; }
+  // 1) 任意鼠标点击、触摸、键盘都能关闭
+  ['click', 'touchend', 'touchstart', 'mousedown'].forEach(function(evt) {
+    document.addEventListener(evt, hideCover, { once: true, passive: true });
   });
-}
-bindOpenTriggers();
+  // 2) 兜底：2秒后自动关闭，避免卡在封面
+  setTimeout(hideCover, 2000);
+})();
 </script>
 </body>
 </html>
