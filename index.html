@@ -1205,14 +1205,17 @@ function showCover() {
 // 启动
 init();
 
-// 修复 iOS 本地文件 onclick 不响应问题
-function bindTouch(id, fn) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.addEventListener('touchend', function(e) { e.preventDefault(); fn(); });
-  el.addEventListener('click', fn);
+// 修复 iOS 上按钮点击不响应：多种事件兜底，点击封面任意位置均可进入
+function bindOpenTriggers() {
+  const btn = document.getElementById('coverBtn');
+  const cover = document.getElementById('cover');
+  if (!btn || !cover) return;
+  // 点击按钮或封面任意位置都能进入
+  ['click', 'touchend', 'tap'].forEach(evt => {
+    cover.addEventListener(evt, enterApp, { passive: true });
+  });
 }
-bindTouch('coverBtn', enterApp);
+bindOpenTriggers();
 </script>
 </body>
 </html>
