@@ -542,8 +542,18 @@
 </head>
 <body>
 
+<!-- 封面隐藏：独立脚本，不依赖主逻辑，确保任何情况都能进入 -->
+<script>
+window.enterApp = function() {
+  var c = document.getElementById('cover');
+  if (c) c.style.display = 'none';
+};
+// 兜底：3秒后自动进入
+setTimeout(function(){ try{ window.enterApp(); }catch(e){} }, 3000);
+</script>
+
 <!-- ══ 封面 ══ -->
-<div id="cover">
+<div id="cover" onclick="enterApp()">
   <div class="cover-ornament">🏛️</div>
   <div class="cover-title">ITALIA</div>
   <div class="cover-sub">意大利·慢旅</div>
@@ -551,7 +561,7 @@
   <div class="cover-dates">OCT 03 — OCT 12, 2025</div>
   <div class="cover-dates" style="margin-top:6px;font-size:12px;opacity:0.6;">南京 → 罗马 → 佛罗伦萨 → 米兰</div>
   <div class="cover-divider" style="margin-top:20px;"></div>
-  <button class="cover-btn" id="coverBtn">开始旅程 ✦</button>
+  <button class="cover-btn" id="coverBtn" onclick="enterApp()">开始旅程 ✦</button>
   <div class="cover-quote">
     "Italia, il paese dove anche il caffè<br>è una poesia."<br>
     <span style="font-size:11px;opacity:0.6;">意大利，连咖啡都是一首诗</span>
@@ -1185,11 +1195,6 @@ function setupSwipe() {
   });
 }
 
-function enterApp() {
-  document.getElementById('cover').classList.add('hidden');
-  setTimeout(() => document.getElementById('cover').style.display = 'none', 800);
-}
-
 function showCover() {
   const cover = document.getElementById('cover');
   cover.style.display = 'flex';
@@ -1205,18 +1210,7 @@ function showCover() {
 // 启动
 init();
 
-// 封面进入：自动 + 点击/触摸/键盘 兜底，确保任何环境都能进入
-(function setupCover() {
-  var cover = document.getElementById('cover');
-  if (!cover) return;
-  function hideCover() { cover.style.display = 'none'; }
-  // 1) 任意鼠标点击、触摸、键盘都能关闭
-  ['click', 'touchend', 'touchstart', 'mousedown'].forEach(function(evt) {
-    document.addEventListener(evt, hideCover, { once: true, passive: true });
-  });
-  // 2) 兜底：2秒后自动关闭，避免卡在封面
-  setTimeout(hideCover, 2000);
-})();
+// 封面隐藏由页面顶部的独立脚本 window.enterApp() 处理（onclick 内联调用）
 </script>
 </body>
 </html>
