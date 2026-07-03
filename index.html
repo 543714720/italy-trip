@@ -565,7 +565,7 @@ setTimeout(function(){ try{ window.enterApp(); }catch(e){} }, 3000);
   <div class="cover-sub">意大利·慢旅</div>
   <div class="cover-divider"></div>
   <div class="cover-dates">OCT 03 — OCT 12, 2025</div>
-  <div class="cover-dates" style="margin-top:6px;font-size:12px;opacity:0.6;">南京 → 罗马 → 佛罗伦萨 → 米兰</div>
+  <div class="cover-dates" style="margin-top:6px;font-size:12px;opacity:0.6;">罗马 → 比萨 → 佛罗伦萨 → 威尼斯 → 米兰</div>
   <div class="cover-divider" style="margin-top:20px;"></div>
   <button class="cover-btn" id="coverBtn" onclick="enterApp()">开始旅程 ✦</button>
   <div class="cover-quote">
@@ -580,14 +580,14 @@ setTimeout(function(){ try{ window.enterApp(); }catch(e){} }, 3000);
   <div class="topbar">
     <div>
       <div class="topbar-title">🇮🇹 意大利之旅</div>
-      <div class="day-counter" id="dayCounter">第 1 天 / 共 12 天</div>
+      <div class="day-counter" id="dayCounter">第 1 天 / 共 10 天</div>
     </div>
     <div class="topbar-flag">✈️</div>
   </div>
 
   <!-- 进度条 -->
   <div class="progress-bar">
-    <div class="progress-fill" id="progressFill" style="width:8.3%"></div>
+    <div class="progress-fill" id="progressFill" style="width:10%"></div>
   </div>
 
   <!-- 日期导航 -->
@@ -607,457 +607,446 @@ setTimeout(function(){ try{ window.enterApp(); }catch(e){} }, 3000);
 <script>
 // ══ 行程数据 ══
 const days = [
-  // ─── 第1天：出发日 ───
-  {
-    day: 1, date: '10月03日', weekday: '周五',
-    emoji: '✈️',
-    title: '启程·飞越云端',
-    location: '南京 → 北京 → 罗马',
-    guide: '「今日漫漫旅途，是与意大利的第一次相遇。落地罗马，先感受永恒之城的夜色吧。」',
-    sections: [
-      {
-        type: 'flights',
-        header: '✈️ 今日航班',
-        style: '',
-        flights: [
-          {
-            from: '08:45', fromCity: '南京禄口 T1', fromCode: 'NKG',
-            to: '10:35', toCity: '北京首都', toCode: 'PEK',
-            flight: 'CA1820', airline: '中国国际航空', note: '国内段'
-          },
-          {
-            from: '13:15', fromCity: '北京首都', fromCode: 'PEK',
-            to: '18:30', toCity: '罗马菲乌米奇诺', toCode: 'FCO',
-            flight: 'CA939', airline: '中国国际航空', note: '约11.5小时·次日到达当地'
-          }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '💡 导游提示',
-        style: 'gold',
-        tips: [
-          { icon: '⏰', text: '<strong>北京转机</strong>：过海关取行李→重新值机约需2小时，13:15出发时间充裕，但建议全程关注航班动态。' },
-          { icon: '🌙', text: '<strong>抵达后</strong>：罗马当地18:30落地，乘Leonardo Express（14欧）直达特米尼中央火车站约30分钟，建议提前在App购票。' },
-          { icon: '🧳', text: '<strong>行李提示</strong>：北京转机为国际航班，需凭护照过边检，行李将直挂至罗马，无需中转取件。' },
-          { icon: '💊', text: '<strong>长途贴士</strong>：建议随身带颈枕、耳塞，CA939在机上有中文服务，注意时差（意大利UTC+2，比北京慢6小时）。' }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '🏠 罗马住宿',
-        style: 'purple',
-        tips: [
-          { icon: '📍', text: '<strong>民宿地址</strong>：Via Cairoli 61, 00185 Roma — 位于特米尼火车站步行5分钟，Esquilino街区，交通极便利，去竞技场、梵蒂冈均在20分钟以内。' },
-          { icon: '🗓️', text: '<strong>入住时间</strong>：10月3日（今晚）~ 10月6日，共3晚。' },
-          { icon: '🗺️', text: '<strong>周边</strong>：步行即可到达特米尼站（地铁A/B线交汇）、圣母大教堂（Basilica di Santa Maria Maggiore）、迪奥克勒蒂安浴场遗址。' }
-        ]
-      },
-      {
-        type: 'image',
-        header: '🗺️ 民宿位置 & 街景',
-        style: 'purple',
-        caption: '点击下方按钮查看民宿在地图上的位置 / 实景街景',
-        img: '',
-        customButtons: [
-          { text: '📍 查看民宿地图位置', url: 'https://www.google.com/maps/search/?api=1&query=Via%20Cairoli%2061%2C%2000185%20Roma' },
-          { text: '🖼️ 查看 Google 街景', url: 'https://www.google.com/maps/@41.8995,12.5020,3a,75y,90t/data=!3m7!1e1!3m5!1s!2e!6s!7i13312!8i6656' },
-          { text: '🚶 从特米尼站步行导航', url: 'https://www.google.com/maps/dir/?api=1&origin=Roma%20Termini&destination=Via%20Cairoli%2061%2C%20Roma&travelmode=walking' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🌙 今夜安排',
-        style: 'olive',
-        items: [
-          { time: '落地后', name: '🏠 办理民宿入住', mapName: 'Via Cairoli 61, 00185 Roma, Italy', desc: 'Via Cairoli 61，从机场乘 Leonardo Express 到特米尼站后步行约5分钟即到，建议提前和房东确认晚到入住事宜' },
-          { time: '晚餐', name: '🍝 Trattoria Monti', mapName: 'Trattoria Monti, Via di San Vito, Roma', desc: '今日不宜远行，Esquilino 街区有不少地道小馆。推荐 Trattoria Monti（Via di San Vito 13，罗马马尔凯地区菜，人均约30欧），需提前订座', tag: '待定' }
-        ]
-      }
-    ]
-  },
+// 第1天：抵达罗马
+{
+  day: 1, date: '10月03日', weekday: '周五',
+  emoji: '✈️',
+  title: '落地罗马·安顿休息',
+  location: '南京 → 北京 → 罗马',
+  guide: '「长途飞行后不宜安排任何行程。今晚的唯一任务：入住、吃顿好的、好好睡一觉，为明天的探索充电。」',
+  sections: [
+    {
+      type: 'flights',
+      header: '✈️ 今日航班',
+      style: '',
+      flights: [
+        {
+          from: '08:45', fromCity: '南京禄口 T1', fromCode: 'NKG',
+          to: '10:35', toCity: '北京首都', toCode: 'PEK',
+          flight: 'CA1820', airline: '中国国际航空', note: '国内段'
+        },
+        {
+          from: '13:15', fromCity: '北京首都', fromCode: 'PEK',
+          to: '18:30', toCity: '罗马菲乌米奇诺', toCode: 'FCO',
+          flight: 'CA939', airline: '中国国际航空', note: '约11.5小时·时差-6小时'
+        }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🏠 罗马住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>民宿地址</strong>：Via Cairoli 61, 00185 Roma — 特米尼火车站步行5分钟，Esquilino街区 ｜ 入住10/3 ~ 10/6（3晚）' },
+        { icon: '🚂', text: '<strong>机场→民宿</strong>：乘 Leonardo Express 火车（14欧/人）到特米尼站，步行约5分钟即达。建议提前在Trenitalia App购票。' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '💡 今夜的导游提示',
+      style: 'gold',
+      tips: [
+        { icon: '🌙', text: '<strong>抵达18:30</strong>：出关取行李约30-40分钟，乘火车到市区约30分钟，预计20:00前抵达民宿。' },
+        { icon: '🍝', text: '<strong>晚餐建议</strong>：附近 Trattoria Monti（Via di San Vito 13，人均约30欧），罗马马尔凯地区菜，需提前订座。或在 Via Cairoli 周边随意找家 trattoria，来一盘 Cacio e Pepe。' },
+        { icon: '😴', text: '<strong>今晚不做任何游览</strong>：好好休息，倒时差，明天才是真正的开始。' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第2天：罗马 ───
-  {
-    day: 2, date: '10月04日', weekday: '周六',
-    emoji: '🏛️',
-    title: '永恒之城·古罗马',
-    location: '罗马 Roma',
-    guide: '「两千年前这里是世界的中心，两千年后它依然是。今天我们穿越时空，踏入古罗马的荣光。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🏠 今晚住宿',
-        style: 'purple',
-        tips: [
-          { icon: '📍', text: '<strong>民宿</strong>：Via Cairoli 61, 00185 Roma（第2晚，共住3晚）' }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '📋 今日概览',
-        style: 'gold',
-        tips: [
-          { icon: '🗺️', text: '<strong>区域</strong>：古罗马遗址区（Foro Romano），步行可达。' },
-          { icon: '🎟️', text: '<strong>票务提醒</strong>：竞技场+古罗马广场+帕拉蒂诺山套票，<strong>务必提前网上购买</strong>！现场排队可能超过2小时，线上约20欧/人。' },
-          { icon: '👗', text: '<strong>着装</strong>：进入梵蒂冈需遮肩盖膝，建议随身携带丝巾或薄外套。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🏛️ 行程安排',
-        style: '',
-        items: [
-          { time: '09:00', name: '🏟️ 罗马竞技场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', fromAddr: 'Via Cairoli 61, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Colosseo_2020.jpg/640px-Colosseo_2020.jpg', desc: '<strong>从民宿步行约15分钟</strong>。9:00开门第一批入场（提前30分钟到场排队安检）。建议参观约1.5小时，避开11点后的人潮' },
-          { time: '10:30', name: '🏛️ 古罗马广场 & 帕拉蒂诺山', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Roma_Forum_Romanum.jpg/640px-Roma_Forum_Romanum.jpg', fromAddr: 'Via Cairoli 61, Roma', desc: '与竞技场套票通用，建议留出约2小时慢慢走，凯旋门、神庙、元老院遗址' },
-          { time: '12:30', name: '🍕 Testaccio区 午餐', mapName: 'Testaccio Market, Roma', desc: '罗马本地人美食区，远离游客陷阱。推荐 Suppli（炸饭团）或 Pizza al Taglio（罗马薄披萨）' },
-          { time: '14:30', name: '⛪ 真理之口', mapName: 'Bocca della Verità, Piazza della Bocca della Verità, Roma', fromAddr: 'Foro Romano, Roma', desc: '10分钟即可打卡（电影《罗马假日》同款），注意入口排队约15-30分钟' },
-          { time: '17:00', name: '🌅 卡比托利欧广场看日落', mapName: 'Piazza del Campidoglio, Roma', fromAddr: 'Bocca della Verità, Roma', desc: '米开朗基罗设计的广场，俯瞰古罗马遗址全景。10月日落约18:20，建议17点前到达占位' },
-          { time: '19:30', name: '🍝 Trastevere 区 Tonnarello', mapName: 'Tonnarello, Via della Lungaretta, Roma', desc: '<strong>建议19:00前到店</strong>（不接受预约，先到先得，晚到排队1小时+）。罗马最有灵魂的街区，品尝 Carbonara 培根蛋面（真正的罗马版不加奶油！）', tag: '待定' }
-        ]
-      }
-    ]
-  },
+// 第2天：罗马经典路线（许愿池→万神殿→斗兽场→古罗马广场）
+{
+  day: 2, date: '10月04日', weekday: '周六',
+  emoji: '🏛️',
+  title: '罗马经典·一日穿越千年',
+  location: '罗马 Roma',
+  guide: '「今天是最经典的罗马路线：从巴洛克喷泉到古罗马帝国，逆时针走一圈，不走回头路，步行即可完成。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>Via Cairoli 61, 00185 Roma</strong>（第2晚，共住3晚）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🗺️ 今日路线 & 步数预估',
+      style: 'sky',
+      tips: [
+        { icon: '🚶', text: '<strong>步行路线</strong>：民宿→许愿池→万神殿→古罗马广场→斗兽场→民宿。全程步行约3.5公里，预计总步数约15,000步。' },
+        { icon: '🎟️', text: '<strong>票务</strong>：斗兽场+古罗马广场+帕拉蒂诺山套票（coopculture.it预购约20欧/人），选择下午时段（上午先逛街、下午进古迹）。' },
+        { icon: '⏰', text: '<strong>建议出门时间</strong>：9:00，上午看城市，下午看古迹，傍晚收工，节奏舒适。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🏛️ 行程安排',
+      style: '',
+      items: [
+        { time: '09:00', name: '⛲ 特雷维喷泉（许愿池）', mapName: 'Trevi Fountain, Roma', desc: '<strong>上午人最少</strong>。背对喷泉，右手过左肩向后抛硬币=重返罗马。从民宿步行约15分钟，沿途经过共和国广场' },
+        { time: '09:45', name: '🏛️ 万神殿（Pantheon）', mapName: 'Pantheon, Piazza della Rotonda, Roma', desc: '从许愿池步行5分钟。2000年历史的穹顶奇迹，免费入场。穹顶圆洞是唯一光源，雨滴穿过圆洞落在大理石地面' },
+        { time: '10:45', name: '☕ 金杯咖啡馆（Sant\'Eustachio Il Caffè）', mapName: 'Sant Eustachio Il Caffè, Roma', desc: '万神殿附近，罗马最著名的咖啡馆之一。点一杯 Gran Caffè（含糖浓缩），站着喝完，意大利式咖啡体验' },
+        { time: '11:15', name: '🍝 午餐（纳沃纳广场/鲜花广场周边）', mapName: 'Campo de Fiori, Roma', desc: '从万神殿步行8分钟。找家小馆吃 Carbonara 或 Amatriciana。推荐 Da Francesco（Piazza del Fico，人均约20欧）' },
+        { time: '13:00', name: '🏛️ 古罗马广场（Foro Romano）', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', desc: '<strong>从Via dei Fori Imperiali主入口进</strong>（套票含）。凯旋门、神庙、元老院遗址，沿主路散步约1.5小时' },
+        { time: '15:00', name: '🏟️ 罗马斗兽场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', desc: '<strong>按预约时段提前15分钟到</strong>。下午人比上午少，光线拍摄好。参观约1.5小时，站在角斗场中央感受震撼' },
+        { time: '17:30', name: '🍷 傍晚休息 / 回民宿', desc: '从斗兽场步行回民宿约12分钟。今天步数预计15,000以内，节奏舒适' },
+        { time: '19:30', name: '🍝 晚餐：Trastevere 区', mapName: 'Trastevere, Roma', desc: '<strong>建议乘出租车前往（约10欧）</strong>。鹅卵石小路、爬藤墙壁、烛光餐厅。Tonnarello 餐厅 Carbonara 培根蛋面（罗马版不加奶油）' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第3天：罗马 ───
-  {
-    day: 3, date: '10月05日', weekday: '周日',
-    emoji: '⛪',
-    title: '梵蒂冈·神圣之光',
-    location: '罗马 Roma · 梵蒂冈 Città del Vaticano',
-    guide: '「梵蒂冈是世界最小的国家，却承载着全人类文明最重要的艺术遗产之一。西斯廷礼拜堂的穹顶，见过一次便终身难忘。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🏠 今晚住宿',
-        style: 'purple',
-        tips: [
-          { icon: '📍', text: '<strong>民宿</strong>：Via Cairoli 61, 00185 Roma（第3晚，明日退房前往佛罗伦萨）' }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '📋 重要提示',
-        style: 'gold',
-        tips: [
-          { icon: '🎟️', text: '<strong>梵蒂冈博物馆必须提前网订</strong>：museivaticani.va，约20欧/人，周日有可能免费开放（最后一个周日），但届时排队数小时！建议购票入场。' },
-          { icon: '⏰', text: '<strong>开门时间</strong>：博物馆9:00开放，建议8:45到场，直奔西斯廷礼拜堂（逆人流走）。' },
-          { icon: '📵', text: '<strong>西斯廷礼拜堂</strong>：禁止拍照，请把相机放下，用眼睛好好看米开朗基罗的《创世纪》。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '⛪ 行程安排',
-        style: '',
-        items: [
-          { time: '08:45', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vatican_Museum_Stairs.jpg/640px-Vatican_Museum_Stairs.jpg', fromAddr: 'Via Cairoli 61, Roma', desc: '<strong>8:45到场排队安检</strong>，9:00开门直奔西斯廷礼拜堂（逆人流走，避开团客）。重点：地图展廊→拉斐尔画室→西斯廷礼拜堂，建议游览3小时' },
-          { time: '12:00', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Basilica_San_Pietro_2009.jpg/640px-Basilica_San_Pietro_2009.jpg', fromAddr: 'Musei Vaticani, Roma', desc: '中午12点人最少（团客去吃饭）。免费入场，安检排队约20分钟。贝尼尼青铜华盖、米开朗基罗圣殇像' },
-          { time: '可选', name: '🔭 登上圣彼得穹顶', mapName: 'Cupola di San Pietro, Vaticano', desc: '穹顶开放至17:00（最后入场16:00），约8欧，步行300+台阶，俯瞰罗马全景。13:00前登顶光线最佳' },
-          { time: '13:30', name: '🥗 Prati 街区午餐', mapName: 'Prati, Roma', desc: '梵蒂冈附近餐厅贵且难吃，步行10分钟到 Prati 街区（Via Candia 一带），当地人聚集，性价比高' },
-          { time: '15:30', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Lungotevere Castello 50, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Castel_Sant%27Angelo%2C_Rome.jpg/640px-Castel_Sant%27Angelo%2C_Rome.jpg', fromAddr: 'Basilica di San Pietro, Vaticano', desc: '从圣彼得步行10分钟。开放至18:30（最后入场18:00），约15欧。俯瞰台伯河绝佳位置' },
-          { time: '17:30', name: '⛲ 纳沃纳广场 & 许愿池', mapName: 'Piazza Navona, Roma', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Trevi_fountain.jpg/640px-Trevi_fountain.jpg', fromAddr: 'Piazza San Pietro, Roma', desc: '步行前往，贝尼尼《四河喷泉》。随后步行10分钟至特雷维喷泉（许愿池），入夜后灯光更美' },
-          { time: '19:00', name: '🍦 Gelateria del Teatro', mapName: 'Gelateria del Teatro, Via della Coronari, Roma', desc: '营业至23:00。手工 Gelato（认准 Artigianale 标识），介于晚餐和夜宵之间的甜蜜' }
-        ]
-      }
-    ]
-  },
+// 第3天：梵蒂冈
+{
+  day: 3, date: '10月05日', weekday: '周日',
+  emoji: '⛪',
+  title: '梵蒂冈·圣地巡礼',
+  location: '罗马 Roma · 梵蒂冈 Città del Vaticano',
+  guide: '「梵蒂冈虽小，却是世界最重要的艺术遗产所在地。今天只做两件事：博物馆和圣彼得大教堂，不用赶。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>Via Cairoli 61, 00185 Roma</strong>（最后一晚，明早退房）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🎟️ 提前准备',
+      style: 'gold',
+      tips: [
+        { icon: '🎟️', text: '<strong>梵蒂冈博物馆必须提前购票</strong>：museivaticani.va，约20欧/人。选早上时段（8:30-9:00进场），直奔西斯廷礼拜堂。' },
+        { icon: '🚇', text: '<strong>交通</strong>：地铁A线从 Vittorio Emanuele 站（民宿旁边）→ Ottaviano 站，约10分钟。出站步行约5分钟到博物馆入口。' },
+        { icon: '📵', text: '<strong>西斯廷禁止拍照</strong>：放下相机，用眼睛好好欣赏米开朗基罗的《创世纪》和《最后的审判》。' },
+        { icon: '👗', text: '<strong>着装</strong>：进入教堂需遮肩盖膝，带丝巾或薄外套（室内也偏凉）。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '⛪ 行程安排',
+      style: '',
+      items: [
+        { time: '08:00', name: '🚇 乘地铁出发', mapName: 'Ottaviano Metro Station, Roma', desc: '从民宿旁 Vittorio Emanuele 站乘A线，约10分钟到 Ottaviano 站。步行5分钟至博物馆入口' },
+        { time: '08:45', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', desc: '<strong>按预约时段提前到场排队安检</strong>。推荐路线：Gallery of Maps（地图展廊）→ Raphael Rooms（拉斐尔画室）→ Sistine Chapel（西斯廷）。游览约3小时' },
+        { time: '12:30', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', desc: '中午团客去吃饭，人最少。免费入场，安检约15分钟。贝尼尼青铜华盖、米开朗基罗圣殇、穹顶登顶（约8欧）' },
+        { time: '14:00', name: '🥗 Prati 街区午餐', mapName: 'Via Candia, Roma', desc: '避开梵蒂冈周边餐馆。步行到 Prati 街区 Via Candia，当地人区，推荐 Pizzarium（Bonci 的方形披萨切片，人均10欧）' },
+        { time: '15:30', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Roma', desc: '从圣彼得步行10分钟。可选入内（约15欧），或在城堡外的台伯河桥上看全景，免费' },
+        { time: '17:00', name: '🛍️ 最后还想去哪？', desc: '西班牙广场（Spanish Steps）或纳沃纳广场（Piazza Navona），离圣天使堡步行15分钟，自由选择' },
+        { time: '19:00', name: '🍝 最后一顿罗马晚餐', desc: '建议在 Monti 区（斗兽场附近，罗马最潮的美食区），适合告别罗马之夜。把行李收拾好，明早出发' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第4天：罗马→那不勒斯/庞贝 ───
-  {
-    day: 4, date: '10月06日', weekday: '周一',
-    emoji: '🌋',
-    title: '庞贝废墟·火山记忆',
-    location: '那不勒斯 Napoli · 庞贝 Pompei',
-    guide: '「公元79年维苏威火山爆发，将庞贝城完整封存。今天，我带你去看2000年前普通人的生活。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🚄 交通提示',
-        style: 'sky',
-        tips: [
-          { icon: '🚄', text: '<strong>罗马→那不勒斯</strong>：Frecciarossa 高速列车约1小时10分，票价约30-50欧，建议trenitalia.com提前购买。出发站：Roma Termini → Napoli Centrale。' },
-          { icon: '🚉', text: '<strong>那不勒斯→庞贝</strong>：乘坐 Circumvesuviana 线（3欧，约35分钟），Pompei Scavi 站下车，步行即到遗址入口。' },
-          { icon: '💡', text: '<strong>可选方案</strong>：当天往返那不勒斯，或在那不勒斯住一晚（那不勒斯是披萨发源地！）。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🌋 行程安排',
-        style: '',
-        items: [
-          { time: '早晨', name: '🚄 高铁前往那不勒斯', desc: '建议8:00前从罗马出发，争取上午到达庞贝，避开正午烈日（10月天气约20°C，较舒适）' },
-          { time: '上午', name: '🏛️ 庞贝古城遗址', desc: '建议游览4-5小时！重点：Forum（广场）、浴场、面包店、妓院、悲剧诗人之家的犬型马赛克……整个城市被火山灰完整保留，令人震撼' },
-          { time: '午餐', name: '🍕 那不勒斯吃正宗披萨！', desc: '这是人生必吃体验。L\'Antica Pizzeria da Michele（百年老店）只卖Margherita和Marinara两种，排队1小时值得！约5欧/张' },
-          { time: '下午', name: '🏙️ 那不勒斯老城漫步', desc: '世界遗产历史中心，斯帕卡那不勒斯大街（Spaccanapoli）将城市一分为二，街边小店、教堂、集市，生活气息浓厚' },
-          { time: '可选', name: '🏰 卡波迪蒙特博物馆', desc: '收藏卡拉瓦乔真迹，艺术爱好者不可错过' },
-          { time: '晚间', name: '🚄 返回罗马或前往下一站', desc: '根据整体行程安排，本日可返罗马或继续南下', tag: '待定' }
-        ]
-      }
-    ]
-  },
+// 第4天：罗马→比萨斜塔→佛罗伦萨
+{
+  day: 4, date: '10月06日', weekday: '周一',
+  emoji: '🗼',
+  title: '比萨斜塔·半日停留',
+  location: '罗马 → 比萨 Pisa → 佛罗伦萨 Firenze',
+  guide: '「今天是转场日。比萨是完美的中途站——寄存行李，看一眼斜塔，拍张经典照，继续上路。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>佛罗伦萨住宿（待定）</strong>：建议订历史中心（Centro Storico）区域，步行可达所有景点。入住10/6 ~ 10/9（3晚）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🚄 今日交通链',
+      style: 'sky',
+      tips: [
+        { icon: '🚄', text: '<strong>第1程 罗马→比萨中央站</strong>：建议乘08:50 Frecciarossa（约2.5小时），或 Intercity（约3小时更便宜）。抵达 Pisa Centrale。' },
+        { icon: '🎒', text: '<strong>行李寄存</strong>：比萨中央站内有行李寄存服务（约5欧/件），轻装去看斜塔。' },
+        { icon: '🚌', text: '<strong>站→斜塔</strong>：乘公交 LAM Rossa 线，约10分钟到奇迹广场（Piazza dei Miracoli）。' },
+        { icon: '🚄', text: '<strong>第2程 比萨→佛罗伦萨</strong>：乘 Regionale 慢车约1小时（约9欧），或 Frecciarossa 约50分钟。全天多班次，灵活。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🗼 行程安排',
+      style: '',
+      items: [
+        { time: '08:30', name: '🚄 罗马 Termini 出发', mapName: 'Roma Termini, Roma', desc: '<strong>建议乘08:50班次 Frecciarossa</strong>前往比萨。退房后直接去车站，全程不要磨蹭' },
+        { time: '11:30', name: '🗼 奇迹广场 + 比萨斜塔', mapName: 'Torre di Pisa, Piazza dei Miracoli, Pisa', desc: '<strong>从车站步行25分钟或乘LAM Rossa公交10分钟</strong>。斜塔、大教堂、洗礼堂都在奇迹广场，拍照+游览约1.5-2小时。' + '登塔需另外购票（约20欧），每天限量，建议看外观+拍照就够' },
+        { time: '13:30', name: '🍝 比萨午餐', mapName: 'Pisa Centrale, Pisa', desc: '广场周围有小吃店，或回车站附近吃简餐。比萨以 Cecina（鹰嘴豆薄饼）闻名，值得一尝' },
+        { time: '15:00', name: '🚄 比萨→佛罗伦萨', mapName: 'Firenze Santa Maria Novella, Firenze', desc: '<strong>建议乘15:00-15:30班次</strong>。慢车约1小时，沿途托斯卡纳风景宜人。抵达 Firenze SMN 站，步行至酒店' },
+        { time: '16:30', name: '🏠 办理入住', desc: '佛罗伦萨酒店入住，稍作休整。如还有精力，可以去老桥（Ponte Vecchio）散步，看个黄昏' },
+        { time: '19:30', name: '🍷 托斯卡纳晚餐', mapName: 'Mercato Centrale, Firenze', desc: '中央市场二楼美食广场，牛肚包（Lampredotto）+ 本地 Chianti 红酒。旅行中最接地气的吃法' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第5天：前往佛罗伦萨 ───
-  {
-    day: 5, date: '10月07日', weekday: '周二',
-    emoji: '🌸',
-    title: '托斯卡纳·文艺复兴摇篮',
-    location: '佛罗伦萨 Firenze',
-    guide: '「佛罗伦萨是文艺复兴的诞生地。达·芬奇、米开朗基罗、波提切利……他们都在这里留下了改变人类文明的作品。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🚄 交通提示',
-        style: 'sky',
-        tips: [
-          { icon: '🚄', text: '<strong>罗马→佛罗伦萨</strong>：Frecciarossa 约1.5小时，票价约25-45欧，全天多班次，灵活选择。' },
-          { icon: '🎒', text: '<strong>住宿建议</strong>：住在历史中心（Centro Storico），步行即可抵达所有景点。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🌸 行程安排',
-        style: '',
-        items: [
-          { time: '08:30', name: '🚄 高铁 罗马→佛罗伦萨', mapName: 'Roma Termini, Roma', desc: '<strong>建议乘08:30班次 Frecciarossa</strong>，约1.5小时抵达 Firenze SMN 站。提前15分钟到 Termini 站，核对车厢座位号。退房后行李可寄存酒店' },
-          { time: '11:00', name: '🏛️ 乌菲兹美术馆（Uffizi）', mapName: 'Galleria degli Uffizi, Piazzale degli Uffizi, Firenze', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Botticelli-primavera.jpg/640px-Botticelli-primavera.jpg', desc: '<strong>务必按预约时段提前15分钟到场</strong>（网购 uffizi.it 约25欧，错过时段可能作废！）。波提切利《维纳斯的诞生》、《春》、达·芬奇、拉斐尔真迹，建议游览2-3小时' },
-          { time: '13:30', name: '🥩 Buca Mario 丁骨牛排', mapName: 'Buca Mario, Piazza degli Ottaviani, Firenze', desc: '<strong>建议提前订座</strong>（13:30开餐）。Bistecca alla Fiorentina 佛罗伦萨特产丁骨牛排，论重量点单' },
-          { time: '15:30', name: '⛪ 圣母百花大教堂（Duomo）', mapName: 'Cattedrale di Santa Maria del Fiore, Piazza del Duomo, Firenze', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Florence_Duomo_from_Michelangelo_hill.jpg/640px-Florence_Duomo_from_Michelangelo_hill.jpg', desc: '登顶穹顶<strong>需按预约时段</strong>（约18欧，每45分钟一批）。布鲁内莱斯基的工程奇迹，俯瞰红屋顶佛罗伦萨' },
-          { time: '17:45', name: '🌉 米开朗基罗广场看日落', mapName: 'Piazzale Michelangelo, Firenze', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/View_of_Florence_from_Piazzale_Michelangelo.jpg/640px-View_of_Florence_from_Piazzale_Michelangelo.jpg', desc: '巴士12/13路约15分钟上山。10月日落约18:25，建议18:00前到达，整个佛罗伦萨尽收眼底' },
-          { time: '19:30', name: '🍷 奥尔特拉诺区（Oltrarno）', mapName: 'Oltrarno, Firenze', desc: '阿尔诺河南岸当地人区，街角 Enoteca（葡萄酒吧）配托斯卡纳奶酪火腿，更真实的佛罗伦萨' }
-        ]
-      }
-    ]
-  },
+// 第5天：佛罗伦萨 — 大卫像+百花大教堂
+{
+  day: 5, date: '10月07日', weekday: '周二',
+  emoji: '🗿',
+  title: '大卫与百花·雕塑与建筑之日',
+  location: '佛罗伦萨 Firenze',
+  guide: '「今天看两样：大卫——人类最美的雕塑；百花大教堂——布鲁内莱斯基的穹顶奇迹。都在步行范围。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>佛罗伦萨酒店（待定）</strong>（第2晚，共3晚）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🎟️ 提前准备',
+      style: 'gold',
+      tips: [
+        { icon: '🎟️', text: '<strong>学院美术馆</strong>（Galleria dell\'Accademia）：galleriaaccademiafirenze.it 预购，约13欧/人。选9:00时段（开门第一拨人最少）。' },
+        { icon: '🎟️', text: '<strong>百花大教堂穹顶登顶</strong>（Cupola del Brunelleschi）：duomo.firenze.it 预购约18欧，选下午时段。463级台阶无电梯，体力一般可不登顶，外观免费同样震撼。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🗿 行程安排',
+      style: '',
+      items: [
+        { time: '08:50', name: '🗿 学院美术馆（David真迹）', mapName: 'Galleria dell\'Accademia, Via Ricasoli, Firenze', desc: '<strong>按预约时段提前10分钟到</strong>。米开朗基罗《大卫》5.17米高，建议游览1.5小时。可以站在大卫面前静静看10分钟' },
+        { time: '11:00', name: '🛍️ 圣洛伦佐市场', mapName: 'Mercato di San Lorenzo, Firenze', desc: '皮具、丝巾、皮包——托斯卡纳皮革集散地。不买也值得逛，感受本地市井氛围' },
+        { time: '12:30', name: '🥩 中央市场午餐', mapName: 'Mercato Centrale, Via dell\'Ariento, Firenze', desc: '一楼食材市场中午前收摊，二楼美食广场全天营业。Lampredotto（牛肚包）是佛罗伦萨灵魂小吃' },
+        { time: '14:00', name: '⛪ 圣母百花大教堂（Duomo）', mapName: 'Cattedrale di Santa Maria del Fiore, Firenze', desc: '<strong>如果有预约登顶，按时段到穹顶入口</strong>。教堂内部免费参观（排队约15分钟）。彩色大理石外衣如梦似幻，是佛罗伦萨最震撼的建筑' },
+        { time: '16:00', name: '☕ 共和国广场休息', mapName: 'Piazza della Repubblica, Firenze', desc: '大教堂步行5分钟即到。百年咖啡馆 Caffè Gilli（1733年开业），点一杯 Espresso 坐下休息' },
+        { time: '18:00', name: '🌉 老桥（Ponte Vecchio）', mapName: 'Ponte Vecchio, Firenze', desc: '傍晚光线下老桥是佛罗伦萨最美的角度。桥上全是金银首饰店，步行穿过，在河对岸回望桥景' },
+        { time: '19:30', name: '🍷 Oltrarno 区晚餐', mapName: 'Oltrarno, Firenze', desc: '过老桥即到。当地人区，街角 Enoteca 配托斯卡纳奶酪火腿+Chianti红酒，完美收尾' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第6天：佛罗伦萨 ───
-  {
-    day: 6, date: '10月08日', weekday: '周三',
-    emoji: '🎨',
-    title: '大卫与文艺复兴',
-    location: '佛罗伦萨 Firenze',
-    guide: '「昨天我们看了绘画，今天来看雕塑。米开朗基罗用了两年时间，从一块被废弃的大理石中，解放出了大卫。」',
-    sections: [
-      {
-        type: 'itinerary',
-        header: '🎨 行程安排',
-        style: '',
-        items: [
-          { time: '09:00', name: '🗿 学院美术馆（大卫像）', mapName: 'Galleria dell\'Accademia, Via Ricasoli, Firenze', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Michelangelo%27s_David_2015.jpg/640px-Michelangelo%27s_David_2015.jpg', desc: '<strong>按预约时段入场</strong>（提前购票约13欧，每15分钟一批）。米开朗基罗《大卫》真迹5.17米高，建议游览1.5小时' },
-          { time: '11:00', name: '🛍️ 圣洛伦佐市场', mapName: 'Mercato di San Lorenzo, Firenze', desc: '营业至19:00。皮革手套、丝巾、皮包……托斯卡纳皮革制品集散地，记得砍价' },
-          { time: '12:30', name: '🥩 中央市场 Lampredotto', mapName: 'Mercato Centrale, Via dell\'Ariento, Firenze', desc: '一楼食材市场<strong>13:00收摊</strong>（早去！），二楼美食广场营业至深夜。牛肚包是佛罗伦萨代表性街头食物' },
-          { time: '14:00', name: '🏰 韦奇奥宫（Palazzo Vecchio）', mapName: 'Palazzo Vecchio, Piazza della Signoria, Firenze', desc: '开放至19:00。西尼奥里亚广场上的市政厅，广场上陈列大卫复制品及雕塑群' },
-          { time: '15:30', name: '🌉 老桥（Ponte Vecchio）', mapName: 'Ponte Vecchio, Firenze', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Ponte_Vecchio_-_Florence_%2814388233249%29.jpg/640px-Ponte_Vecchio_-_Florence_%281438823249%29.jpg', desc: '步行可达。欧洲现存最古老石桥，傍晚光线下的老桥是佛罗伦萨最上镜的风景' },
-          { time: '可选', name: '🍷 托斯卡纳葡萄酒品鉴', mapName: 'Le Volpi e l\'Uva, Piazza dei Rossi, Firenze', desc: '营业至21:00。Enoteca 品 Chianti 或 Brunello 葡萄酒，了解托斯卡纳最愉快的方式' },
-          { time: '19:30', name: '🍝 Trattoria Sostanza', mapName: 'Trattoria Sostanza, Via del Porcellana, Firenze', desc: '<strong>建议提前订座</strong>（百年老店，仅接受预订）。野猪肉酱宽面、白豆炖汤，传统托斯卡纳菜' }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '🛍️ 购物提示',
-        style: 'gold',
-        tips: [
-          { icon: '🧴', text: '<strong>Santa Maria Novella 药妆店</strong>（1612年开业！）：香皂、香水、护肤品，是来佛罗伦萨必带的伴手礼，价格合理，质量上乘。' },
-          { icon: '👜', text: '<strong>皮革制品</strong>：推荐 Scuola del Cuoio（皮革学校）在圣十字教堂内，可以看到工匠现场制作，价格透明，品质有保证。' }
-        ]
-      }
-    ]
-  },
+// 第6天：佛罗伦萨 — 乌菲兹+米开朗基罗广场
+{
+  day: 6, date: '10月08日', weekday: '周三',
+  emoji: '🎨',
+  title: '美术馆与日落·艺术沉浸日',
+  location: '佛罗伦萨 Firenze',
+  guide: '「上午看波提切利和达·芬奇，傍晚在米开朗基罗广场看佛罗伦萨最美的日落。今天是给眼睛的盛宴。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>佛罗伦萨酒店（待定）</strong>（最后一晚，明早退房）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🎟️ 提前准备',
+      style: 'gold',
+      tips: [
+        { icon: '🎟️', text: '<strong>乌菲兹美术馆</strong>（Uffizi）：uffizi.it 预购约25欧/人。<strong>务必按预约时段提前15分钟到场</strong>，错过时段可能作废！建议选9:00-9:30时段。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🎨 行程安排',
+      style: '',
+      items: [
+        { time: '09:15', name: '🏛️ 乌菲兹美术馆（Uffizi）', mapName: 'Galleria degli Uffizi, Firenze', desc: '<strong>按预约时段提前15分钟到</strong>。重点：波提切利《维纳斯的诞生》《春》→ 达·芬奇《天使报喜》→ 卡拉瓦乔。游览约2.5-3小时，不必每幅都看，挑自己喜欢的慢慢欣赏' },
+        { time: '12:30', name: '🍝 午餐', mapName: 'All\'Antico Vinaio, Via dei Neri, Firenze', desc: '佛罗伦萨最出名的三明治店，排队20分钟值得。新鲜现做，人均约8欧，边吃边逛' },
+        { time: '14:00', name: '🏰 韦奇奥宫 & 西尼奥里亚广场', mapName: 'Piazza della Signoria, Firenze', desc: '乌菲兹隔壁即是。露天雕塑群免费欣赏（大卫复制品、海神喷泉）。市政厅可入内参观瓦萨里湿壁画' },
+        { time: '15:30', name: '⛪ 圣十字教堂（Santa Croce）', mapName: 'Basilica di Santa Croce, Firenze', desc: '步行10分钟。米开朗基罗、伽利略、马基雅维利……意大利最伟大的灵魂安息于此。外观+内部约1小时' },
+        { time: '17:30', name: '🌅 米开朗基罗广场看日落', mapName: 'Piazzale Michelangelo, Firenze', desc: '<strong>日落约18:25，建议18:00前到达</strong>。巴士12/13路约15分钟上山，或步行（20分钟缓坡）。俯瞰红屋顶佛罗伦萨，是城市最美的视角' },
+        { time: '19:30', name: '🍝 托斯卡纳告别晚餐', mapName: 'Trattoria Sostanza, Firenze', desc: '<strong>建议提前订座</strong>。野猪肉酱宽面、白豆炖汤（Ribollita）、丁骨牛排……最地道的托斯卡纳菜。明天就要离开佛罗伦萨了' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第7天：托斯卡纳乡村 or 前往威尼斯 ───
-  {
-    day: 7, date: '10月09日', weekday: '周四',
-    emoji: '🍇',
-    title: '托斯卡纳田园 / 前往威尼斯',
-    location: '托斯卡纳乡村 或 威尼斯 Venezia',
-    guide: '「今天可以选择两条路：深入托斯卡纳的葡萄园和柏树山丘，或者直奔水城威尼斯。两个选择都是天堂。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🗺️ 两个方案，二选一',
-        style: 'gold',
-        tips: [
-          { icon: '🍇', text: '<strong>方案A - 托斯卡纳一日游</strong>：租车或参加小团游，前往锡耶纳（Siena）+ 圣吉米尼亚诺（San Gimignano，中世纪塔楼小镇），途经葡萄园和柏树田野，是明信片上的意大利。' },
-          { icon: '🚤', text: '<strong>方案B - 前往威尼斯</strong>：佛罗伦萨乘高铁约2小时到达威尼斯，下午抵达，可赶上傍晚最美的时刻。适合希望多看威尼斯的旅行者。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🍇 方案A：托斯卡纳乡村',
-        style: 'olive',
-        items: [
-          { time: '08:30', name: '🏰 锡耶纳（Siena）', mapName: 'Piazza del Campo, Siena', desc: '<strong>佛罗伦萨乘巴士约1小时15分</strong>（131路）。中世纪最完整保存的城市，贝壳形坎波广场是世界最美广场之一' },
-          { time: '13:00', name: '🍷 锡耶纳餐厅', mapName: 'Osteria Le Logge, Siena', desc: '建议提前订座。猪肝香肠（Pici al ragù）配本地 Chianti Classico 葡萄酒' },
-          { time: '15:00', name: '🗼 圣吉米尼亚诺', mapName: 'San Gimignano, Siena', desc: '锡耶纳乘巴士约1小时。14座中世纪塔楼，核心区15分钟能走完。品尝 Vernaccia 白葡萄酒和世界冠军冰淇淋（Sergio Dondoli 店）' },
-          { time: '17:30', name: '🌄 返程（葡萄园夕阳）', mapName: 'Chianti Road, Toscana', desc: '<strong>注意末班巴士时间</strong>（通常19:00前），10月日落约18:25，金黄葡萄园是托斯卡纳最美的季节' }
-        ]
-      }
-    ]
-  },
+// 第7天：佛罗伦萨→威尼斯
+{
+  day: 7, date: '10月09日', weekday: '周四',
+  emoji: '🚤',
+  title: '水城初印象·威尼斯入住',
+  location: '佛罗伦萨 → 威尼斯 Venezia',
+  guide: '「坐上高铁穿越亚平宁半岛，午后抵达水城。酒店入住后先感受威尼斯初印象——运河、小桥、傍晚的圣马可广场。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>威尼斯住宿（待定）</strong>：建议订威尼斯主岛（靠近火车站 Santa Lucia 或圣马可区均可）。入住10/9 ~ 10/10（1晚）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🚄 交通提示',
+      style: 'sky',
+      tips: [
+        { icon: '🚄', text: '<strong>佛罗伦萨→威尼斯</strong>：Santa Maria Novella → Venezia Santa Lucia，Frecciarossa 约2小时，票价约35-50欧/人。建议乘10:00左右班次。' },
+        { icon: '⛴️', text: '<strong>到达后</strong>：出站即大运河。建议买24小时水上巴士通票（约25欧/人），今天+明天早上都可用。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🚤 行程安排',
+      style: '',
+      items: [
+        { time: '09:30', name: '🚄 高铁 佛罗伦萨→威尼斯', mapName: 'Firenze Santa Maria Novella, Firenze', desc: '<strong>建议乘10:00前班次</strong>，约2小时抵达 Venezia Santa Lucia。退房行李直接带到车站' },
+        { time: '12:30', name: '🏠 威尼斯酒店入住', mapName: 'Venezia Santa Lucia, Venezia', desc: '出火车站即是大运河，第一眼震撼无言。乘水上巴士或步行至酒店，办理入住' },
+        { time: '14:00', name: '🦞 威尼斯海鲜午餐', mapName: 'Rialto, Venezia', desc: '里亚托桥附近 Bacaro 站着吃 Cicchetti（威尼斯小吃配Prosecco），或找家运河边小馆吃墨鱼汁意面' },
+        { time: '15:30', name: '🎨 午后自由探索', mapName: 'Cannaregio, Venezia', desc: '<strong>不看地图，随意穿行小巷</strong>。遇桥就过，遇运河就停。推荐 Cannaregio 区（当地人居住区，游客少）。迷路是威尼斯最好的旅行方式' },
+        { time: '17:30', name: '⛪ 圣马可广场', mapName: 'Piazza San Marco, Venezia', desc: '傍晚游客散去，光线最美。坐下喝杯咖啡，看鸽子飞起，感受这座城市的呼吸。广场上常有现场音乐' },
+        { time: '19:00', name: '🍷 威尼斯晚餐', mapName: 'Osteria alle Testiere, Venezia', desc: '<strong>建议提前订座（仅24座）</strong>。威尼斯最好的海鲜小馆。备选：Cantina Do Mori（最古老的 Bacaro，1462年开业）' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第8天：威尼斯 ───
-  {
-    day: 8, date: '10月10日', weekday: '周五',
-    emoji: '🚤',
-    title: '水上迷宫·威尼斯',
-    location: '威尼斯 Venezia',
-    guide: '「威尼斯没有汽车，只有运河和小桥。在这里，迷路是必须的，也是最好的旅行方式。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🚤 威尼斯须知',
-        style: 'sky',
-        tips: [
-          { icon: '⛴️', text: '<strong>交通</strong>：威尼斯岛内全靠步行和水上巴士（Vaporetto）。购买48小时或72小时通票（约25-35欧）最划算。' },
-          { icon: '🎭', text: '<strong>冈多拉</strong>：白天官方定价约80欧/船（载6人），晚上更贵。可多人拼船分摊。旅游区内随处可叫。' },
-          { icon: '🌊', text: '<strong>涨水（Acqua Alta）</strong>：10月可能偶发，建议穿防水鞋或随身带雨靴套，多数景区有临时木栈道。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🚤 行程安排',
-        style: '',
-        items: [
-          { time: '07:00', name: '🌅 黎明前的圣马可广场', mapName: 'Piazza San Marco, Venezia', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Venice_Piazza_San_Marco_2.jpg/640px-Venice_Piazza_San_Marco_2.jpg', desc: '7点前广场几乎空无一人，这时的威尼斯属于你一个人。坐在台阶上喝咖啡，看鸽子起飞' },
-          { time: '09:30', name: '⛪ 圣马可大教堂 & 钟楼', mapName: 'Basilica di San Marco, Piazza San Marco, Venezia', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Basilica_di_San_Marco_-_Facciata.jpg/640px-Basilica_di_San_Marco_-_Facciata.jpg', desc: '9:45开门（免费入场，排队约15分钟）。拜占庭金色马赛克教堂。钟楼登顶约10欧，俯瞰整个泻湖' },
-          { time: '11:00', name: '🏛️ 总督宫（Palazzo Ducale）', mapName: 'Palazzo Ducale, Piazza San Marco, Venezia', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Doge%27s_Palace_from_St_Mark%27s.jpg/640px-Doge%27s_Palace_from_St_Mark%27s.jpg', desc: '开放至19:00（最后入场18:00）。按预约时段入场，叹息桥就在旁边' },
-          { time: '13:00', name: '🦞 威尼斯海鲜午餐', mapName: 'Osteria al Squero, Venezia', desc: '建议提前订座。墨鱼汁意面（Spaghetti al nero di seppia）、烤蛤蜊，威尼斯海鲜品质极高' },
-          { time: '14:30', name: '🎨 穿越小巷自由探索', mapName: 'Cannaregio, Venezia', desc: '关掉导航，跟随本能穿行小巷。遇桥就过，遇运河就发呆，发现游客从未去过的威尼斯' },
-          { time: '17:30', name: '🚤 冈多拉黄昏之旅', mapName: 'Rialto Bridge, Venezia', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Gondola%2C_Venice.jpg/640px-Gondola%2C_Venice.jpg', desc: '<strong>落日前30分钟登船最佳</strong>。官方定价约€80/船（30分钟），多人可拼船。里亚托桥附近码头招手即停' },
-          { time: '19:00', name: '🍷 Cicchetti（威尼斯小吃）', mapName: 'Cantina Do Mori, Venezia', desc: 'Bacaro 酒吧站着吃，一口小食配一杯 Prosecco。当地人下班后的日常仪式' }
-        ]
-      }
-    ]
-  },
+// 第8天：威尼斯→米兰
+{
+  day: 8, date: '10月10日', weekday: '周五',
+  emoji: '🏙️',
+  title: '告别水城·时尚之都米兰',
+  location: '威尼斯 → 米兰 Milano',
+  guide: '「清晨的威尼斯醒来最早，上午感受最后的水城印象。午后高铁到米兰，下午探索大教堂和拱廊。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>米兰住宿（待定）</strong>：建议订大教堂/中央火车站附近。入住10/10 ~ 10/12（2晚）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🚄 交通提示',
+      style: 'sky',
+      tips: [
+        { icon: '🚄', text: '<strong>威尼斯→米兰</strong>：Santa Lucia → Milano Centrale，Frecciarossa 约2.5小时，票价约35-50欧/人。建议乘11:00-12:00班次。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🏙️ 行程安排',
+      style: '',
+      items: [
+        { time: '08:00', name: '🌅 威尼斯最后的清晨', mapName: 'Piazza San Marco, Venezia', desc: '早上7-8点圣马可广场几乎空无一人。坐在台阶上喝最后一杯威尼斯咖啡，看鸽子起飞——这10分钟是整个旅程最安静的时刻' },
+        { time: '09:30', name: '⛪ 圣马可大教堂（内部）', mapName: 'Basilica di San Marco, Venezia', desc: '9:45开门免费入场。拜占庭金色马赛克穹顶，排队约15分钟。如果有时间，钟楼登顶看泻湖全景（约10欧）' },
+        { time: '11:00', name: '🚄 威尼斯→米兰', mapName: 'Venezia Santa Lucia, Venezia', desc: '<strong>建议乘11:00-12:00班次</strong>，威尼斯退房，约2.5小时抵达 Milano Centrale' },
+        { time: '14:00', name: '🥩 米兰午餐', mapName: 'Peck, Via Spadari, Milano', desc: '米兰熟食店传奇，各种意式拼盘。或在附近找家店吃 Cotoletta alla Milanese（米兰炸小牛排）' },
+        { time: '15:30', name: '⛪ 米兰大教堂（Duomo）', mapName: 'Duomo di Milano, Milano', desc: '<strong>开放至18:00（最后入场17:00）</strong>。哥特式巅峰，135根尖塔。登顶约15欧（建议选电梯，步行250级台阶）' },
+        { time: '17:00', name: '🛍️ 艾曼纽二世拱廊', mapName: 'Galleria Vittorio Emanuele II, Milano', desc: '紧邻大教堂。世界最古老购物中心，玻璃穹顶极美。不购物也能仰望穹顶，免费' },
+        { time: '19:30', name: '🍝 米兰晚餐', mapName: 'Navigli, Milano', desc: 'Navigli 运河区，米兰最潮的夜生活区。运河边的 Aperitivo（意大利 Happy Hour，一杯酒配小食自助）' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第9天：威尼斯/米兰 ───
-  {
-    day: 9, date: '10月11日', weekday: '周六',
-    emoji: '🏙️',
-    title: '时尚之都·米兰',
-    location: '米兰 Milano',
-    guide: '「米兰是意大利最现代的城市，但古老的中心隐藏着一幅改变了世界艺术史的画——达·芬奇的《最后的晚餐》。」',
-    sections: [
-      {
-        type: 'tips',
-        header: '🚄 交通提示',
-        style: 'sky',
-        tips: [
-          { icon: '🚄', text: '<strong>威尼斯→米兰</strong>：Frecciarossa 高速列车约2.5小时，建议早班出发，让米兰多一些时间。' },
-          { icon: '⚠️', text: '<strong>最重要！</strong>：《最后的晚餐》（Cenacolo Vinciano）参观名额极为有限，需提前2-3个月预约！官网：cenacolo.it，约15欧/人。如果没有提前预约，可能无缘这幅画。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🏙️ 行程安排',
-        style: '',
-        items: [
-          { time: '08:15', name: '🚄 高铁 威尼斯→米兰', mapName: 'Venezia Santa Lucia, Venezia', desc: '<strong>建议乘08:15班次</strong>，约2.5小时抵达 Milano Centrale。提前15分钟到站核对车厢座位' },
-          { time: '12:00', name: '🎨 达·芬奇《最后的晚餐》', mapName: 'Santa Maria delle Grazie, Milano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/%C3%9Altima_Cena_-_Da_Vinci_5.jpg/640px-%C3%9Altima_Cena_-_Da_Vinci_5.jpg', desc: '<strong>⚠️ 务必提前2-3个月预约（cenacolo.it）</strong>！每场仅30人参观15分钟，按预约时段提前20分钟到场换票' },
-          { time: '13:30', name: '🥩 米兰午餐', mapName: 'Peck, Via Spadari, Milano', desc: '米兰炸小牛肉排（Cotoletta alla Milanese），或去 Peck 熟食店买意式熟食拼盘' },
-          { time: '15:00', name: '⛪ 米兰大教堂（Duomo）', mapName: 'Duomo di Milano, Piazza del Duomo, Milano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Milano_Duomo_01.jpg/640px-Milano_Duomo_01.jpg', desc: '开放至18:00（最后入场17:00）。登顶约15欧，可俯瞰城市。建议买"教堂+登顶+博物馆"联票' },
-          { time: '16:30', name: '🛍️ 艾曼纽二世拱廊', mapName: 'Galleria Vittorio Emanuele II, Milano', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Milan_Galleria_Vittorio_Emanuele_II.jpg/640px-Milan_Galleria_Vittorio_Emanuele_II.jpg', desc: '紧邻大教堂，玻璃穹顶壮观。即使不买，也值得进去仰望穹顶' },
-          { time: '17:30', name: '🏰 斯福尔扎城堡', mapName: 'Castello Sforzesco, Piazzale Castello, Milano', desc: '城堡及公园免费，博物馆开放至17:30（最后入场16:30）。内有米开朗基罗未完成的《隆达尼尼的圣殇》' },
-          { time: '19:30', name: '🍝 米兰最后的意式盛宴', mapName: 'Ristorante Berton, Milano', desc: '<strong>建议提前订座</strong>。最后一顿意大利餐，配一瓶 Barolo 或 Amarone，为旅程画上句号' }
-        ]
-      }
-    ]
-  },
+// 第9天：科莫湖一日游
+{
+  day: 9, date: '10月11日', weekday: '周六',
+  emoji: '⛰️',
+  title: '科莫湖·阿尔卑斯山脚下的蓝宝石',
+  location: '科莫湖 Lago di Como',
+  guide: '「从米兰出发只需40分钟火车，就能来到阿尔卑斯山脚下的仙境。碧蓝湖水、崖壁小镇、百年别墅——科莫湖是意大利的蓝宝石。」',
+  sections: [
+    {
+      type: 'tips',
+      header: '🏠 今晚住宿',
+      style: 'purple',
+      tips: [
+        { icon: '📍', text: '<strong>米兰酒店（待定）</strong>（最后一晚，明天退房回国）' }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '🚄 交通 & 攻略',
+      style: 'sky',
+      tips: [
+        { icon: '🚄', text: '<strong>米兰→科莫</strong>：Milano Centrale → Como S. Giovanni，约40分钟，车票约5-8欧，班次密集（每小时多班）。建议乘8:30左右出发的车次。' },
+        { icon: '⛴️', text: '<strong>科莫湖游船</strong>：在科莫镇乘渡轮到 Bellagio（贝拉焦），约45分钟。湖边小镇间的渡轮是科莫湖最经典的玩法。' },
+        { icon: '🍝', text: '<strong>午餐推荐</strong>：Bellagio 是科莫湖最美的小镇，湖边有很多餐厅。建议带现金，小镇有的店不收信用卡。' },
+        { icon: '👟', text: '<strong>穿着</strong>：Bellagio 的阶梯坡道很多，穿舒适平底鞋。10月科莫湖约15-18°C，带件外套。' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '⛰️ 行程安排',
+      style: '',
+      items: [
+        { time: '08:30', name: '🚄 米兰→科莫', mapName: 'Como San Giovanni, Como', desc: '<strong>约40分钟火车</strong>，科莫镇出站后步行10分钟到湖边轮渡码头。沿途雪山和湖景已在眼前' },
+        { time: '10:00', name: '⛴️ 渡轮前往 Bellagio', mapName: 'Bellagio, Lago di Como', desc: '<strong>约45-60分钟船程</strong>，途经科莫湖最精华的一段。两岸是百年别墅群，George Clooney 的别墅也在湖畔。站在甲板上，美的像明信片' },
+        { time: '11:00', name: '🏘️ Bellagio 小镇漫步', mapName: 'Bellagio, Como', desc: '科莫湖最美的小镇，被称为"湖中珍珠"。蜿蜒阶梯、鲜花小巷、湖景咖啡馆。可以不看地图，随意走走' },
+        { time: '13:00', name: '🍝 湖畔午餐', mapName: 'Ristorante La Punta, Bellagio', desc: 'Bellagio 众多湖边餐厅。推荐湖边露台座位，看湖水碧蓝、远山青翠。配一瓶本地白葡萄酒' },
+        { time: '15:00', name: '🏡 可选：Villa del Balbianello', mapName: 'Villa del Balbianello, Lenno', desc: '星球大战和007取景地。从 Lenno 码头步行15分钟上山，别墅和花园美得窒息。门票约11欧。如果体力足值得绕道一游' },
+        { time: '17:00', name: '⛴️ 渡轮返回科莫镇', mapName: 'Como, Lago di Como', desc: '<strong>注意最后一班渡轮时间（约19:00前）</strong>！搭渡轮返回科莫镇，在湖边最后看一次夕阳' },
+        { time: '18:30', name: '🚄 科莫→米兰', desc: '<strong>约19:30-20:00回到米兰</strong>。晚上在米兰简单吃一顿，早点休息——明天下午的航班' },
+        { time: '20:30', name: '🍕 米兰最后的轻松晚餐', desc: '找家附近小馆。不必隆重，Pizza Margherita + Birra 就够了。明天说再见' }
+      ]
+    }
+  ]
+},
 
-  // ─── 第10天：米兰出发回国 ───
-  {
-    day: 10, date: '10月12日', weekday: '周日',
-    emoji: '🏠',
-    title: '归途·再见意大利',
-    location: '米兰 → 成都 → 南京',
-    guide: '「Arrivederci，意大利！每一次离开，都是下一次回来的开始。行李里装满的，不只是纪念品，还有记忆。」',
-    sections: [
-      {
-        type: 'flights',
-        header: '✈️ 回国航班',
-        style: '',
-        flights: [
-          {
-            from: '13:00', fromCity: '米兰马尔彭萨 T1', fromCode: 'MXP',
-            to: '次日05:45', toCity: '成都天府', toCode: 'TFU',
-            flight: 'CA446', airline: '中国国际航空', note: '约10.5小时·跨夜飞行'
-          }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '📋 出发前提示',
-        style: 'gold',
-        tips: [
-          { icon: '🕙', text: '<strong>建议10:00前到达机场</strong>：米兰马尔彭萨机场（MXP）距市区约50公里，乘 Malpensa Express 火车约52分钟（13欧），或打车约80-100欧。务必留足时间！' },
-          { icon: '🛃', text: '<strong>免税购物</strong>：持有非欧盟护照，在意大利购物满154.94欧可申请退税（VAT refund），在机场出关前盖章，登机前退税窗口提交。' },
-          { icon: '📦', text: '<strong>行李注意</strong>：在意大利买的橄榄油、红酒必须托运，不能放手提行李。液体100ml限制严格执行。' },
-          { icon: '💶', text: '<strong>欧元处理</strong>：剩余欧元可在机场消费或带回国，不必急着换回人民币（兑换率机场较差）。' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🌅 今晨安排',
-        style: 'olive',
-        items: [
-          { time: '07:30', name: '☕ 米兰最后一杯咖啡', desc: '意大利人站着喝咖啡。咖啡吧点一杯 Espresso，和米兰人一起开始最后一个意大利早晨' },
-          { time: '09:00', name: '🛍️ 最后的散步', desc: '大教堂广场周边或 Navigli 运河区，留出最后1小时。注意时间，别耽误去机场' },
-          { time: '10:15', name: '🚂 Malpensa Express', mapName: 'Malpensa Express, Milano Centrale', desc: '<strong>⚠️ 10:15出发（务必赶上这班）</strong>！中央火车站乘 Malpensa Express，约52分钟到T1航站楼。建议提前买票' },
-          { time: '11:15', name: '🛂 机场值机', mapName: 'Aeroporto di Milano Malpensa T1', desc: '<strong>到达T1航站楼</strong>。国际航班建议提前2.5-3小时。值机+托运+退税+出境约需1.5小时' },
-          { time: '13:00', name: '✈️ CA446 起飞', desc: '<strong>米兰→成都，登机口关闭前30分钟到达</strong>。向意大利挥手告别——Arrivederci, Italia！' }
-        ]
-      }
-    ]
-  },
-
-  // ─── 第11天：成都中转 ───
-  {
-    day: 11, date: '10月13日', weekday: '周一',
-    emoji: '🐼',
-    title: '成都中转·归家在即',
-    location: '成都 → 南京',
-    guide: '「时差调整中，还有最后一段路。天府之国欢迎你回国！」',
-    sections: [
-      {
-        type: 'flights',
-        header: '✈️ 今日航班',
-        style: '',
-        flights: [
-          {
-            from: '05:45', fromCity: '成都天府', fromCode: 'TFU',
-            to: '——', toCity: '落地', toCode: '',
-            flight: 'CA446', airline: '到达成都', note: '昨日从米兰出发的CA446落地'
-          },
-          {
-            from: '11:10', fromCity: '成都天府', fromCode: 'TFU',
-            to: '13:25', toCity: '南京禄口', toCode: 'NKG',
-            flight: 'CA3770 / ZH9562', airline: '中国国际航空（深圳航空承运）', note: '约2.5小时·返回南京'
-          }
-        ]
-      },
-      {
-        type: 'tips',
-        header: '💡 成都转机提示',
-        style: 'gold',
-        tips: [
-          { icon: '⏰', text: '<strong>转机间隔</strong>：05:45落地到11:10出发，约5.5小时，时间充裕。入境办理约需1-2小时，建议过完边检后在机场休息候机。' },
-          { icon: '🛃', text: '<strong>入境流程</strong>：健康申报→人工边检（有护照自助通道）→取行李→海关申报（无需申报直接走绿色通道）。' },
-          { icon: '🍜', text: '<strong>机场觅食</strong>：天府机场有成都本地小吃，肚子还有余量的话，来碗担担面或红油抄手也不错！' },
-          { icon: '📱', text: '<strong>网络恢复</strong>：欢迎回国！记得关闭境外流量套餐，连接国内网络，把意大利的照片发给朋友吧～' }
-        ]
-      },
-      {
-        type: 'itinerary',
-        header: '🏠 回家！',
-        style: 'olive',
-        items: [
-          { time: '13:25', name: '✅ 落地南京禄口', desc: '终于回家了！拖着行李走出航站楼的那一刻，意大利的阳光和咖啡香还在记忆里……' },
-          { time: '下午', name: '🏠 回家好好休息', desc: '时差需要1-2天调整。今晚早点睡，明天的你又是精神满满的旅行家' }
-        ]
-      }
-    ]
-  }
+// 第10天：米兰回国
+{
+  day: 10, date: '10月12日 — 13日', weekday: '周日—周一',
+  emoji: '🏠',
+  title: '告别意大利·归途',
+  location: '米兰 → 成都 → 南京',
+  guide: '「Arrivederci, Italia！10天的旅程在今天画上句号。行李里装满的不只是纪念品，还有咖啡香、夕阳和千年历史的回响。」',
+  sections: [
+    {
+      type: 'flights',
+      header: '✈️ 回国航班',
+      style: '',
+      flights: [
+        {
+          from: '13:00', fromCity: '米兰马尔彭萨 T1', fromCode: 'MXP',
+          to: '次日05:45', toCity: '成都天府', toCode: 'TFU',
+          flight: 'CA446', airline: '中国国际航空', note: '约10.5小时·跨夜飞行'
+        },
+        {
+          from: '11:10', fromCity: '成都天府', fromCode: 'TFU',
+          to: '13:25', toCity: '南京禄口', toCode: 'NKG',
+          flight: 'CA3770 / ZH9562', airline: '中国国际航空（深圳航空承运）', note: '10月13日·约2.5小时'
+        }
+      ]
+    },
+    {
+      type: 'tips',
+      header: '⚠️ 出发前关键提醒',
+      style: 'gold',
+      tips: [
+        { icon: '🕙', text: '<strong>10:15前乘 Malpensa Express</strong>：米兰中央火车站出发，约52分钟到T1航站楼（13欧/人）。<strong>务必赶上这班火车！</strong>国际航班建议提前2.5-3小时到机场。' },
+        { icon: '🛃', text: '<strong>退税（VAT Refund）</strong>：持非欧盟护照，消费满154.94欧可退税。在机场出关前盖章，登机前退税窗口提交。建议把购物小票单独装袋备查。' },
+        { icon: '☕', text: '<strong>最后安排</strong>：早上7:00起床，悠闲吃早餐，8:30退房，9:00最后逛一圈大教堂广场。在机场把剩下的欧元花完（免税店/咖啡/纪念品）。' },
+        { icon: '🏠', text: '<strong>抵达南京</strong>：10月13日13:25落地禄口机场，终于回家了！' }
+      ]
+    },
+    {
+      type: 'itinerary',
+      header: '🏠 今日时间线',
+      style: 'olive',
+      items: [
+        { time: '07:30', name: '☕ 最后一杯意式 Espresso', desc: '意大利人站着喝咖啡。在酒店附近咖啡吧点一杯，和身边的米兰人一起开始最后一个意大利早晨' },
+        { time: '09:00', name: '⛪ 大教堂广场最后一眼', mapName: 'Duomo di Milano, Milano', desc: '在大教堂前拍最后一张照。和米兰说再见' },
+        { time: '10:15', name: '🚂 Malpensa Express 出发', mapName: 'Milano Centrale, Milano', desc: '<strong>⚠️ 必须赶上这班！</strong>最后一段意大利火车。约11:10到T1航站楼' },
+        { time: '11:15', name: '🛂 值机+退税+出境', mapName: 'Aeroporto di Milano Malpensa T1', desc: '预计耗时1-1.5小时。退税排队最久，建议值完机立刻冲去退税窗口' },
+        { time: '13:00', name: '✈️ CA446 起飞', desc: '窗外是阿尔卑斯雪山。Arrivederci, Italia！🇮🇹' },
+        { time: '10/13 05:45', name: '🐼 成都中转', desc: '入境+转机约5.5小时。来碗担担面醒神！' },
+        { time: '10/13 13:25', name: '🏠 落地南京禄口', desc: '回家！意大利的阳光、咖啡和千年回响都装在心里了' }
+      ]
+    }
+  ]
+}
 ];
-
 // ══ 渲染函数 ══
 let currentDay = 0;
 let startX = 0, startY = 0, isDragging = false;
