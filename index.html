@@ -3,1247 +3,381 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>🇮🇹 意大利之旅 2025</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<title>金陵特惠卡 · 套餐对比分析</title>
 <style>
   :root {
-    --terracotta: #C0533A;
-    --gold: #C9A84C;
-    --cream: #F7F0E6;
-    --deep: #2C1A0E;
-    --olive: #6B7C45;
-    --sky: #4A7FA5;
-    --light-terra: #E8896E;
-    --parchment: #F2E8D5;
+    --bg: #F5F3EF;
+    --card: #FFFFFF;
+    --h1: #7A2E1F;
+    --h2: #3D1C0A;
+    --accent: #C0533A;
+    --gold: #B8860B;
+    --green: #4A7C3F;
+    --blue: #3B6FA0;
+    --grey: #999;
+    --border: #E8E0D5;
+    --tag-basic: #E8DCC8;
+    --tag-plus: #D4E8C8;
+    --tag-pro: #C8D8E8;
+    --tag-full: #E0D0E8;
+    --tag-mri: #F0D0C8;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Lato', sans-serif;
-    background: var(--deep);
-    color: var(--deep);
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
-    -webkit-user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: #333;
+    line-height: 1.6;
+    padding: 16px 14px 40px;
   }
 
-  /* ── 封面 ── */
-  #cover {
-    position: fixed;
-    inset: 0;
-    background: linear-gradient(160deg, #1a0a04 0%, #3d1c0a 40%, #6b3a1f 70%, #c0533a 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    transition: opacity 0.8s, transform 0.8s;
-  }
-  #cover.hidden { opacity: 0; transform: scale(1.05); pointer-events: none; }
-
-  .cover-ornament {
-    font-size: 64px;
-    margin-bottom: 16px;
-    animation: float 3s ease-in-out infinite;
-  }
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  .cover-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    color: var(--gold);
-    letter-spacing: 4px;
-    text-align: center;
-    line-height: 1.2;
-  }
-  .cover-sub {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: var(--cream);
-    font-size: 18px;
-    margin-top: 8px;
-    opacity: 0.85;
-  }
-  .cover-dates {
-    color: var(--gold);
-    font-size: 14px;
-    letter-spacing: 3px;
-    margin-top: 20px;
-    opacity: 0.9;
-  }
-  .cover-divider {
-    width: 120px;
-    height: 1px;
-    background: var(--gold);
-    margin: 24px auto;
-    opacity: 0.6;
-  }
-  .cover-btn {
-    background: transparent;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Lato', sans-serif;
-    font-size: 13px;
-    letter-spacing: 3px;
-    padding: 12px 32px;
-    border-radius: 40px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  .cover-btn:active { background: var(--gold); color: var(--deep); }
-
-  .cover-quote {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    margin-top: 32px;
-    text-align: center;
-    padding: 0 40px;
-    line-height: 1.8;
-  }
-
-  /* ── 主界面 ── */
-  #app {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    background: var(--parchment);
-  }
-
-  /* 顶部导航栏 */
-  .topbar {
-    background: linear-gradient(135deg, var(--terracotta), #8B2E15);
-    padding: 8px 18px 6px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    padding-top: max(8px, env(safe-area-inset-top));
-  }
-  .topbar-title {
-    font-family: 'Playfair Display', serif;
-    color: var(--gold);
-    font-size: 15px;
-    letter-spacing: 1px;
-  }
-  .topbar-flag { font-size: 18px; }
-  .day-counter {
-    color: rgba(255,255,255,0.7);
-    font-size: 11px;
-    letter-spacing: 1px;
-  }
-
-  /* 日期导航胶囊 */
-  .date-nav {
-    background: var(--deep);
-    padding: 6px 0;
-    overflow-x: auto;
-    flex-shrink: 0;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .date-nav::-webkit-scrollbar { display: none; }
-  .date-nav-inner {
-    display: flex;
-    gap: 6px;
-    padding: 0 14px;
-    width: max-content;
-  }
-  .date-chip {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.6);
-    border-radius: 20px;
-    padding: 4px 11px;
-    font-size: 11px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .date-chip.active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--deep);
-    font-weight: 700;
-  }
-  .date-chip:active { opacity: 0.7; }
-
-  /* 卡片容器 */
-  .cards-wrapper {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-  }
-  .cards-track {
-    display: flex;
-    height: 100%;
-    transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    will-change: transform;
-  }
-  .card {
-    min-width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 14px 14px 24px;
-  }
-
-  /* 卡片内容块 */
-  .day-header {
-    text-align: center;
-    padding: 20px 0 16px;
-    border-bottom: 1px solid rgba(192,83,58,0.2);
-    margin-bottom: 16px;
-  }
-  .day-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 13px;
-    color: var(--terracotta);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-  }
-  .day-date {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    color: var(--deep);
-    margin: 4px 0;
-  }
-  .day-location {
-    font-size: 13px;
-    color: var(--olive);
-    letter-spacing: 2px;
-  }
-  .day-emoji { font-size: 32px; margin-bottom: 6px; }
-
-  /* 信息块 */
-  .section {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
+  /* 顶部标题 */
+  .header {
+    background: linear-gradient(135deg, var(--h1), #5A1A0C);
+    color: white;
+    padding: 18px 20px 14px;
+    border-radius: 14px;
     margin-bottom: 14px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-  .section-header {
-    background: linear-gradient(135deg, var(--terracotta), #8B2E15);
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .section-header.gold { background: linear-gradient(135deg, #8B7335, var(--gold)); }
-  .section-header.olive { background: linear-gradient(135deg, #4A5C2A, var(--olive)); }
-  .section-header.sky { background: linear-gradient(135deg, #2A5A7A, var(--sky)); }
-  .section-header.purple { background: linear-gradient(135deg, #5A2A7A, #8B5CB5); }
-
-  .section-title {
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-  .section-icon { font-size: 16px; }
-
-  .section-body { padding: 14px 16px; }
-
-  /* 航班卡 */
-  .flight-card {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 10px;
-    border-left: 3px solid var(--terracotta);
-  }
-  .flight-card:last-child { margin-bottom: 0; }
-  .flight-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .flight-time {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    color: var(--deep);
-    font-weight: 700;
-  }
-  .flight-arrow { color: var(--terracotta); font-size: 20px; flex: 1; text-align: center; }
-  .flight-city { font-size: 12px; color: #666; margin-top: 2px; }
-  .flight-info {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px dashed rgba(0,0,0,0.1);
-  }
-  .flight-badge {
-    background: var(--terracotta);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-  }
-  .flight-note { font-size: 11px; color: #888; align-self: center; }
-
-  /* 行程列表 */
-  .itinerary-item {
-    display: flex;
-    gap: 14px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    align-items: flex-start;
-  }
-  .itinerary-item:last-child { border-bottom: none; }
-  .item-time {
-    font-size: 12px;
-    color: var(--terracotta);
-    font-weight: 700;
-    width: 40px;
-    flex-shrink: 0;
-    padding-top: 2px;
-  }
-  .item-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-  .item-content { flex: 1; }
-  .item-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--deep);
-    margin-bottom: 2px;
-  }
-  .item-desc { font-size: 12px; color: #777; line-height: 1.5; }
-  .item-preview {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    display: block;
-    background: var(--cream);
-  }
-  /* 关键时间节点高亮 */
-  .itinerary-item.critical-item {
-    background: linear-gradient(90deg, rgba(192,83,58,0.06), transparent);
-    margin: 4px -8px;
-    padding: 4px 8px;
-    border-radius: 8px;
-    border-left: 3px solid var(--terracotta);
-  }
-  .item-time.critical {
-    color: white;
-    background: var(--terracotta);
-    font-size: 13px;
-    padding: 3px 6px;
-    border-radius: 6px;
     text-align: center;
-    line-height: 1.3;
-    font-weight: 800;
-    box-shadow: 0 1px 4px rgba(192,83,58,0.4);
   }
-  .item-dot.critical {
-    background: var(--terracotta);
-    width: 10px; height: 10px;
-    margin-top: 4px;
-    box-shadow: 0 0 0 3px rgba(192,83,58,0.2);
-  }
-  .critical-alert {
-    margin-top: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--terracotta);
-    background: rgba(192,83,58,0.1);
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-  .map-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 6px;
-    font-size: 11px;
-    color: var(--sky);
-    text-decoration: none;
-    font-weight: 700;
-    border: 1px solid var(--sky);
-    padding: 3px 10px;
-    border-radius: 12px;
-    background: rgba(74,127,165,0.06);
-  }
-  .map-link:active { background: rgba(74,127,165,0.2); }
-  .map-link.nav-route {
-    color: white;
-    background: var(--olive);
-    border-color: var(--olive);
-    margin-right: 6px;
-  }
+  .header h1 { font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+  .header .sub { font-size: 12px; opacity: 0.75; margin-top: 2px; }
 
-  /* 小贴士 */
-  .tip-box {
-    background: linear-gradient(135deg, #FFF8E7, #FFF3D4);
-    border-radius: 10px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border-left: 3px solid var(--gold);
+  /* 套餐速览卡片行 */
+  .price-row {
     display: flex;
-    gap: 10px;
-  }
-  .tip-icon { font-size: 18px; flex-shrink: 0; }
-  .tip-text { font-size: 12px; color: #5A4A2A; line-height: 1.6; }
-  .tip-text strong { color: var(--terracotta); }
-
-  /* 餐厅/住宿 */
-  .info-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-  .info-row:last-child { border-bottom: none; }
-  .info-icon { font-size: 20px; width: 32px; text-align: center; flex-shrink: 0; }
-  .info-main { flex: 1; }
-  .info-name { font-size: 13px; font-weight: 700; color: var(--deep); }
-  .info-sub { font-size: 11px; color: #999; margin-top: 1px; }
-  .info-tag {
-    font-size: 10px;
-    background: var(--cream);
-    color: var(--terracotta);
-    border: 1px solid var(--terracotta);
-    padding: 2px 8px;
-    border-radius: 10px;
-    white-space: nowrap;
-  }
-
-  /* 地图按钮 */
-  .map-btn {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
-    background: var(--sky);
-    color: white;
-    font-size: 12px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    text-decoration: none;
+    margin-bottom: 14px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .price-card {
+    flex: 1 0 auto;
+    min-width: 62px;
+    text-align: center;
+    background: var(--card);
+    border-radius: 10px;
+    padding: 10px 6px;
+    border: 2px solid var(--border);
+    transition: all 0.2s;
+  }
+  .price-card .price { font-size: 17px; font-weight: 800; color: var(--h1); }
+  .price-card .name { font-size: 9px; color: var(--grey); margin-top: 2px; line-height: 1.3; }
+  .price-card:nth-child(1) { border-color: #D4C4A8; }
+  .price-card:nth-child(2) { border-color: #B8D4A8; }
+  .price-card:nth-child(3) { border-color: #A8C4D4; }
+  .price-card:nth-child(4) { border-color: #C4B0D4; }
+  .price-card:nth-child(5) { border-color: #F0C0B0; }
+
+  /* 段落卡片 */
+  .section {
+    background: var(--card);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .section-head {
+    padding: 10px 14px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
   }
+  .section-head.overview { background: linear-gradient(90deg, #FFF5EC, white); color: var(--h1); }
+  .section-head.check { background: linear-gradient(90deg, #F0F8EC, white); color: var(--green); }
+  .section-head.special { background: linear-gradient(90deg, #FFF0E8, white); color: var(--accent); }
+  .section-head.reco { background: linear-gradient(90deg, var(--h1), #8B2E15); color: white; }
+  .section-body { padding: 10px 14px; }
 
-  /* 底部导航 */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0; right: 0;
-    background: var(--deep);
-    display: flex;
-    padding-bottom: max(6px, env(safe-area-inset-bottom));
-    border-top: 1px solid rgba(255,255,255,0.1);
-    flex-shrink: 0;
-    z-index: 50;
+  /* 对比表格 */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
   }
-  .nav-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 6px 0 3px;
-    cursor: pointer;
-    color: rgba(255,255,255,0.4);
-    transition: color 0.2s;
-    border: none;
-    background: transparent;
-    font-family: 'Lato', sans-serif;
-  }
-  .nav-btn:active { opacity: 0.6; }
-  .nav-btn.active { color: var(--gold); }
-  .nav-btn-icon { font-size: 16px; margin-bottom: 1px; }
-  .nav-btn-label { font-size: 9px; letter-spacing: 0.5px; }
-
-  /* 进度条 */
-  .progress-bar {
-    height: 2px;
-    background: rgba(255,255,255,0.1);
-    position: relative;
-    flex-shrink: 0;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--gold);
-    transition: width 0.35s ease;
-    border-radius: 1px;
-  }
-
-  /* 顾问标签 */
-  .guide-note {
-    background: linear-gradient(135deg, #1a0a04, #3d1c0a);
-    color: var(--gold);
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 13px;
+  th, td {
+    padding: 7px 4px;
     text-align: center;
-    padding: 12px 20px;
-    border-radius: 10px;
-    margin-bottom: 14px;
-    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
   }
-
-  /* 待定标签 */
-  .tbd-badge {
-    display: inline-block;
-    background: rgba(201,168,76,0.15);
-    color: var(--gold);
-    border: 1px dashed var(--gold);
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-left: 6px;
+  th {
+    background: #FAF7F0;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+    white-space: nowrap;
   }
+  td:first-child {
+    text-align: left;
+    font-weight: 600;
+    padding-left: 6px;
+  }
+  td:first-child .sub { font-weight: 400; font-size: 10px; color: var(--grey); display: block; }
+  .yes { color: var(--green); font-weight: 700; }
+  .no  { color: #CCC; }
+  .partial { color: var(--gold); font-weight: 700; }
+  .highlight { background: #FFF9E6; }
 
   /* 标签 */
   .tag {
     display: inline-block;
     font-size: 10px;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 10px;
-    margin-right: 4px;
-    margin-top: 4px;
     font-weight: 700;
+    margin: 2px 2px;
   }
-  .tag-red { background: rgba(192,83,58,0.15); color: var(--terracotta); }
-  .tag-green { background: rgba(107,124,69,0.15); color: var(--olive); }
-  .tag-blue { background: rgba(74,127,165,0.15); color: var(--sky); }
+  .tag-B  { background: #F5EDE0; color: #8B6D3A; }
+  .tag-P  { background: #E0F0D8; color: #4A7C3F; }
+  .tag-Pro{ background: #D8E8F0; color: #3B6FA0; }
+  .tag-F  { background: #E8D8F0; color: #6B3FA0; }
+  .tag-M  { background: #F8E0D8; color: #A04530; }
 
-  /* 空白占位 */
-  .empty-note {
+  /* 摘要行 */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .summary-item {
+    background: #FAF7F0;
+    border-radius: 10px;
+    padding: 10px;
     text-align: center;
-    padding: 24px 20px;
-    color: #bbb;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 14px;
-    line-height: 1.8;
   }
+  .summary-item .num { font-size: 22px; font-weight: 800; color: var(--h1); }
+  .summary-item .lbl { font-size: 10px; color: var(--grey); margin-top: 1px; }
 
-  /* 过渡动画 */
-  .card { scroll-behavior: smooth; }
+  /* 推荐列表 */
+  .reco-list { list-style: none; }
+  .reco-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .reco-list li:last-child { border-bottom: none; }
+  .reco-list .icon { font-size: 18px; flex-shrink: 0; }
+
+  .note { font-size: 10px; color: var(--grey); margin-top: 6px; }
 </style>
 </head>
 <body>
 
-<!-- 封面隐藏：独立脚本，不依赖主逻辑，确保任何情况都能进入 -->
-<script>
-window.enterApp = function() {
-  var c = document.getElementById('cover');
-  if (c) c.style.display = 'none';
-};
-// 兜底：3秒后自动进入
-setTimeout(function(){ try{ window.enterApp(); }catch(e){} }, 3000);
-</script>
+<!-- 标题 -->
+<div class="header">
+  <h1>🔬 金陵特惠卡 · 套餐对比</h1>
+  <div class="sub">五档套餐 · 一图看懂哪个更值</div>
+</div>
 
-<!-- ══ 封面 ══ -->
-<div id="cover" onclick="enterApp()">
-  <div class="cover-ornament">🏛️</div>
-  <div class="cover-title">ITALIA</div>
-  <div class="cover-sub">意大利·慢旅</div>
-  <div class="cover-divider"></div>
-  <div class="cover-dates">OCT 03 — OCT 12, 2025</div>
-  <div class="cover-dates" style="margin-top:6px;font-size:12px;opacity:0.6;">罗马 → 比萨 → 佛罗伦萨 → 威尼斯 → 米兰</div>
-  <div class="cover-divider" style="margin-top:20px;"></div>
-  <button class="cover-btn" id="coverBtn" onclick="enterApp()">开始旅程 ✦</button>
-  <div class="cover-quote">
-    "Italia, il paese dove anche il caffè<br>è una poesia."<br>
-    <span style="font-size:11px;opacity:0.6;">意大利，连咖啡都是一首诗</span>
+<!-- 价签速览 -->
+<div class="price-row">
+  <div class="price-card"><div class="price">¥1,600</div><div class="name">基础筛查</div></div>
+  <div class="price-card"><div class="price">¥2,100</div><div class="name">加强筛查</div></div>
+  <div class="price-card"><div class="price">¥3,000</div><div class="name">深度筛查</div></div>
+  <div class="price-card"><div class="price">¥4,200</div><div class="name">全面筛查<br>无核磁</div></div>
+  <div class="price-card"><div class="price">¥4,200</div><div class="name">含头部<br>核磁MRI</div></div>
+</div>
+
+<!-- 一句话总结 -->
+<div class="section">
+  <div class="section-head overview">📋 一句话看懂</div>
+  <div class="section-body">
+  <table><thead><tr><th></th><th>¥1600</th><th>¥2100</th><th>¥3000</th><th>¥4200无MRI</th><th>¥4200含MRI</th></tr></thead>
+  <tbody>
+  <tr>
+    <td>定位</td>
+    <td><span class="tag tag-B">基础</span></td>
+    <td><span class="tag tag-P">加强</span></td>
+    <td><span class="tag tag-Pro">深度</span></td>
+    <td><span class="tag tag-F">全面</span></td>
+    <td><span class="tag tag-M">脑部加强</span></td>
+  </tr>
+  <tr>
+    <td>适合谁</td>
+    <td style="font-size:10px">年轻人年度</td>
+    <td style="font-size:10px">常规筛查</td>
+    <td style="font-size:10px">中年深度</td>
+    <td style="font-size:10px">40+ 全面</td>
+    <td style="font-size:10px">有脑卒中<br>家族史</td>
+  </tr>
+  <tr>
+    <td>核心卖点</td>
+    <td style="font-size:10px">血尿+CT</td>
+    <td style="font-size:10px">加眼/颈/骨</td>
+    <td style="font-size:10px">化验升级</td>
+    <td style="font-size:10px">7项肿瘤+心超</td>
+    <td style="font-size:10px">MRI+动脉硬化</td>
+  </tr>
+  </tbody></table>
   </div>
 </div>
 
-<!-- ══ 主应用 ══ -->
-<div id="app">
-  <!-- 顶部栏 -->
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">🇮🇹 意大利之旅</div>
-      <div class="day-counter" id="dayCounter">第 1 天 / 共 10 天</div>
-    </div>
-    <div class="topbar-flag">✈️</div>
+<!-- 第一类：基础检查 -->
+<div class="section">
+  <div class="section-head check">🩺 第一类：体格检查</div>
+  <div class="section-body">
+  <table><thead><tr><th>项目</th><th>1600</th><th>2100</th><th>3000</th><th>4200无</th><th>4200含</th></tr></thead>
+  <tbody>
+  <tr><td>一般/内科/外科</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>眼科（视力+眼底+裂隙灯）</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>眼压检查</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td></tr>
+  <tr><td>眼底照相</td><td class="no">✗</td><td class="partial">仅男</td><td class="yes">✓</td><td class="yes">男女</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>耳鼻喉检查</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>口腔科检查</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>妇科内诊（女已婚）</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  </tbody></table>
+  <div class="note">▲ 2100起加眼科增强（眼压+眼底照相），3000起加口腔科</div>
   </div>
-
-  <!-- 进度条 -->
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill" style="width:10%"></div>
-  </div>
-
-  <!-- 日期导航 -->
-  <div class="date-nav">
-    <div class="date-nav-inner" id="dateNav"></div>
-  </div>
-
-  <!-- 卡片区域 -->
-  <div class="cards-wrapper" id="cardsWrapper">
-    <div class="cards-track" id="cardsTrack"></div>
-  </div>
-
-  <!-- 底部导航已移除（改用左右滑动 + 顶部日期胶囊切换） -->
-
 </div>
 
-<script>
-// ══ 行程数据 ══
-const days = [
-// 第1天：抵达罗马
-{
-  day: 1, date: '10月03日', weekday: '周五',
-  emoji: '✈️',
-  title: '落地罗马·安顿休息',
-  location: '南京 → 北京 → 罗马',
-  guide: '「长途飞行后不宜安排任何行程。今晚的唯一任务：入住、吃顿好的、好好睡一觉，为明天的探索充电。」',
-  sections: [
-    {
-      type: 'flights',
-      header: '✈️ 今日航班',
-      style: '',
-      flights: [
-        {
-          from: '08:45', fromCity: '南京禄口 T1', fromCode: 'NKG',
-          to: '10:35', toCity: '北京首都', toCode: 'PEK',
-          flight: 'CA1820', airline: '中国国际航空', note: '国内段'
-        },
-        {
-          from: '13:15', fromCity: '北京首都', fromCode: 'PEK',
-          to: '18:30', toCity: '罗马菲乌米奇诺', toCode: 'FCO',
-          flight: 'CA939', airline: '中国国际航空', note: '约11.5小时·时差-6小时'
-        }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🏠 罗马住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>民宿地址</strong>：Via Cairoli 61, 00185 Roma — 特米尼火车站步行5分钟，Esquilino街区 ｜ 入住10/3 ~ 10/6（3晚）' },
-        { icon: '🚂', text: '<strong>机场→民宿</strong>：乘 Leonardo Express 火车（14欧/人）到特米尼站，步行约5分钟即达。建议提前在Trenitalia App购票。' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '💡 今夜的导游提示',
-      style: 'gold',
-      tips: [
-        { icon: '🌙', text: '<strong>抵达18:30</strong>：出关取行李约30-40分钟，乘火车到市区约30分钟，预计20:00前抵达民宿。' },
-        { icon: '🍝', text: '<strong>晚餐建议</strong>：附近 Trattoria Monti（Via di San Vito 13，人均约30欧），罗马马尔凯地区菜，需提前订座。或在 Via Cairoli 周边随意找家 trattoria，来一盘 Cacio e Pepe。' },
-        { icon: '😴', text: '<strong>今晚不做任何游览</strong>：好好休息，倒时差，明天才是真正的开始。' }
-      ]
-    }
-  ]
-},
+<!-- 第二类：化验 -->
+<div class="section">
+  <div class="section-head check">🧪 第二类：化验检查</div>
+  <div class="section-body">
+  <table><thead><tr><th>项目</th><th>1600</th><th>2100</th><th>3000</th><th>4200无</th><th>4200含</th></tr></thead>
+  <tbody>
+  <tr><td>血常规</td><td>五分类</td><td>五分类</td><td class="yes">22项</td><td class="yes">22项</td><td class="yes">22项</td></tr>
+  <tr><td>尿常规</td><td class="yes">15项</td><td class="yes">15项</td><td class="yes">15项</td><td class="yes">15项</td><td class="yes">15项</td></tr>
+  <tr><td>空腹血糖</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>糖化血红蛋白</td><td class="partial">仅男</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>肝功能</td><td>九项</td><td>九项</td><td class="yes">十五项</td><td class="yes">十五项</td><td>九项</td></tr>
+  <tr><td>肾功能</td><td class="yes">3项</td><td class="yes">3项</td><td class="yes">3项</td><td class="yes">3项</td><td class="yes">3项</td></tr>
+  <tr><td>血脂</td><td>四项</td><td>四项</td><td>四项</td><td class="yes">七项</td><td class="yes">八项</td></tr>
+  <tr class="highlight"><td>肿瘤标志物</td><td>TM5(5项)</td><td>TM5(5项)</td><td>TM5(5项)</td><td class="yes">TM7 2.0</td><td class="yes">TM7 2.0</td></tr>
+  <tr><td>甲状腺功能</td><td class="no">✗</td><td class="no">✗</td><td>三项</td><td class="yes">七项</td><td class="yes">五项</td></tr>
+  <tr class="highlight"><td>胃蛋白酶原（胃癌初筛）</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td></tr>
+  <tr class="highlight"><td>同型半胱氨酸HCY</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>超敏C反应蛋白</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+  <tr><td>免疫球蛋白三项</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>血清胱抑素C</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="partial">仅男</td><td class="no">✗</td></tr>
+  </tbody></table>
+  <div class="note">▲ 核心升级点：3000→血常规22项+糖化全量；4200→肿瘤标志物从5项变7项、甲功升七项/五项、血脂升七/八项</div>
+  </div>
+</div>
 
-// 第2天：罗马经典路线（许愿池→万神殿→斗兽场→古罗马广场）
-{
-  day: 2, date: '10月04日', weekday: '周六',
-  emoji: '🏛️',
-  title: '罗马经典·一日穿越千年',
-  location: '罗马 Roma',
-  guide: '「今天是最经典的罗马路线：从巴洛克喷泉到古罗马帝国，逆时针走一圈，不走回头路，步行即可完成。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>Via Cairoli 61, 00185 Roma</strong>（第2晚，共住3晚）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🗺️ 今日路线 & 步数预估',
-      style: 'sky',
-      tips: [
-        { icon: '🚶', text: '<strong>步行路线</strong>：民宿→许愿池→万神殿→古罗马广场→斗兽场→民宿。全程步行约3.5公里，预计总步数约15,000步。' },
-        { icon: '🎟️', text: '<strong>票务</strong>：斗兽场+古罗马广场+帕拉蒂诺山套票（coopculture.it预购约20欧/人），选择下午时段（上午先逛街、下午进古迹）。' },
-        { icon: '⏰', text: '<strong>建议出门时间</strong>：9:00，上午看城市，下午看古迹，傍晚收工，节奏舒适。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🏛️ 行程安排',
-      style: '',
-      items: [
-        { time: '09:00', name: '⛲ 特雷维喷泉（许愿池）', mapName: 'Trevi Fountain, Roma', desc: '<strong>上午人最少</strong>。背对喷泉，右手过左肩向后抛硬币=重返罗马。从民宿步行约15分钟，沿途经过共和国广场' },
-        { time: '09:45', name: '🏛️ 万神殿（Pantheon）', mapName: 'Pantheon, Piazza della Rotonda, Roma', desc: '从许愿池步行5分钟。2000年历史的穹顶奇迹，免费入场。穹顶圆洞是唯一光源，雨滴穿过圆洞落在大理石地面' },
-        { time: '10:45', name: '☕ 金杯咖啡馆（Sant\'Eustachio Il Caffè）', mapName: 'Sant Eustachio Il Caffè, Roma', desc: '万神殿附近，罗马最著名的咖啡馆之一。点一杯 Gran Caffè（含糖浓缩），站着喝完，意大利式咖啡体验' },
-        { time: '11:15', name: '🍝 午餐（纳沃纳广场/鲜花广场周边）', mapName: 'Campo de Fiori, Roma', desc: '从万神殿步行8分钟。找家小馆吃 Carbonara 或 Amatriciana。推荐 Da Francesco（Piazza del Fico，人均约20欧）' },
-        { time: '13:00', name: '🏛️ 古罗马广场（Foro Romano）', mapName: 'Foro Romano, Via della Salara Vecchia, Roma', desc: '<strong>从Via dei Fori Imperiali主入口进</strong>（套票含）。凯旋门、神庙、元老院遗址，沿主路散步约1.5小时' },
-        { time: '15:00', name: '🏟️ 罗马斗兽场（Colosseo）', mapName: 'Colosseo, Piazza del Colosseo 1, Roma', desc: '<strong>按预约时段提前15分钟到</strong>。下午人比上午少，光线拍摄好。参观约1.5小时，站在角斗场中央感受震撼' },
-        { time: '17:30', name: '🍷 傍晚休息 / 回民宿', desc: '从斗兽场步行回民宿约12分钟。今天步数预计15,000以内，节奏舒适' },
-        { time: '19:30', name: '🍝 晚餐：Trastevere 区', mapName: 'Trastevere, Roma', desc: '<strong>建议乘出租车前往（约10欧）</strong>。鹅卵石小路、爬藤墙壁、烛光餐厅。Tonnarello 餐厅 Carbonara 培根蛋面（罗马版不加奶油）' }
-      ]
-    }
-  ]
-},
+<!-- 女性专项 -->
+<div class="section">
+  <div class="section-head check">🚺 女性专项（宫颈/HPV）</div>
+  <div class="section-body">
+  <table><thead><tr><th>项目</th><th>1600</th><th>2100</th><th>3000</th><th>4200无</th><th>4200含</th></tr></thead>
+  <tbody>
+  <tr><td>TCT</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>HPV分型</td><td class="no">✗</td><td class="partial">16/18型</td><td class="partial">16/18型</td><td class="yes">23型</td><td class="yes">23型</td></tr>
+  <tr><td>白带常规</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>乳房超声</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>妇科超声</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  </tbody></table>
+  </div>
+</div>
 
-// 第3天：梵蒂冈
-{
-  day: 3, date: '10月05日', weekday: '周日',
-  emoji: '⛪',
-  title: '梵蒂冈·圣地巡礼',
-  location: '罗马 Roma · 梵蒂冈 Città del Vaticano',
-  guide: '「梵蒂冈虽小，却是世界最重要的艺术遗产所在地。今天只做两件事：博物馆和圣彼得大教堂，不用赶。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>Via Cairoli 61, 00185 Roma</strong>（最后一晚，明早退房）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🎟️ 提前准备',
-      style: 'gold',
-      tips: [
-        { icon: '🎟️', text: '<strong>梵蒂冈博物馆必须提前购票</strong>：museivaticani.va，约20欧/人。选早上时段（8:30-9:00进场），直奔西斯廷礼拜堂。' },
-        { icon: '🚇', text: '<strong>交通</strong>：地铁A线从 Vittorio Emanuele 站（民宿旁边）→ Ottaviano 站，约10分钟。出站步行约5分钟到博物馆入口。' },
-        { icon: '📵', text: '<strong>西斯廷禁止拍照</strong>：放下相机，用眼睛好好欣赏米开朗基罗的《创世纪》和《最后的审判》。' },
-        { icon: '👗', text: '<strong>着装</strong>：进入教堂需遮肩盖膝，带丝巾或薄外套（室内也偏凉）。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '⛪ 行程安排',
-      style: '',
-      items: [
-        { time: '08:00', name: '🚇 乘地铁出发', mapName: 'Ottaviano Metro Station, Roma', desc: '从民宿旁 Vittorio Emanuele 站乘A线，约10分钟到 Ottaviano 站。步行5分钟至博物馆入口' },
-        { time: '08:45', name: '🏛️ 梵蒂冈博物馆', mapName: 'Musei Vaticani, Viale Vaticano, Roma', desc: '<strong>按预约时段提前到场排队安检</strong>。推荐路线：Gallery of Maps（地图展廊）→ Raphael Rooms（拉斐尔画室）→ Sistine Chapel（西斯廷）。游览约3小时' },
-        { time: '12:30', name: '⛪ 圣彼得大教堂', mapName: 'Basilica di San Pietro, Piazza San Pietro, Città del Vaticano', desc: '中午团客去吃饭，人最少。免费入场，安检约15分钟。贝尼尼青铜华盖、米开朗基罗圣殇、穹顶登顶（约8欧）' },
-        { time: '14:00', name: '🥗 Prati 街区午餐', mapName: 'Via Candia, Roma', desc: '避开梵蒂冈周边餐馆。步行到 Prati 街区 Via Candia，当地人区，推荐 Pizzarium（Bonci 的方形披萨切片，人均10欧）' },
-        { time: '15:30', name: '🌉 圣天使堡', mapName: 'Castel Sant\'Angelo, Roma', desc: '从圣彼得步行10分钟。可选入内（约15欧），或在城堡外的台伯河桥上看全景，免费' },
-        { time: '17:00', name: '🛍️ 最后还想去哪？', desc: '西班牙广场（Spanish Steps）或纳沃纳广场（Piazza Navona），离圣天使堡步行15分钟，自由选择' },
-        { time: '19:00', name: '🍝 最后一顿罗马晚餐', desc: '建议在 Monti 区（斗兽场附近，罗马最潮的美食区），适合告别罗马之夜。把行李收拾好，明早出发' }
-      ]
-    }
-  ]
-},
+<!-- 第三类：影像检查 -->
+<div class="section">
+  <div class="section-head check">🖥️ 第三类：影像 & 设备检查</div>
+  <div class="section-body">
+  <table><thead><tr><th>项目</th><th>1600</th><th>2100</th><th>3000</th><th>4200无</th><th>4200含</th></tr></thead>
+  <tbody>
+  <tr><td>心电图</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>甲状腺超声</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>肝胆脾胰肾超声</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>肺部CT（低剂量）</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>颈动脉超声</td><td class="no">✗</td><td class="partial">仅男/女未</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr><td>骨密度检测</td><td class="no">✗</td><td class="partial">仅男/女未</td><td class="partial">仅男/女已</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>心脏超声</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="no">✗</td></tr>
+  <tr class="highlight"><td>上腹部CT平扫</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="partial">男+女未</td><td class="no">✗</td></tr>
+  <tr><td>冠状动脉钙化</td><td class="no">✗</td><td class="no">✗</td><td class="partial">仅男</td><td class="no">✗</td><td class="no">✗</td></tr>
+  <tr class="highlight"><td>TCD 经颅多普勒</td><td class="no">✗</td><td class="no">✗</td><td class="partial">仅男</td><td class="no">✗</td><td class="partial">男+女未</td></tr>
+  <tr class="highlight"><td>动脉硬化检测</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="partial">仅男</td></tr>
+  <tr><td>C13幽门螺杆菌</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+  <tr class="highlight"><td>头部核磁MRI</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+  </tbody></table>
+  </div>
+</div>
 
-// 第4天：罗马→比萨斜塔→佛罗伦萨
-{
-  day: 4, date: '10月06日', weekday: '周一',
-  emoji: '🗼',
-  title: '比萨斜塔·半日停留',
-  location: '罗马 → 比萨 Pisa → 佛罗伦萨 Firenze',
-  guide: '「今天是转场日。比萨是完美的中途站——寄存行李，看一眼斜塔，拍张经典照，继续上路。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>佛罗伦萨住宿（待定）</strong>：建议订历史中心（Centro Storico）区域，步行可达所有景点。入住10/6 ~ 10/9（3晚）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🚄 今日交通链',
-      style: 'sky',
-      tips: [
-        { icon: '🚄', text: '<strong>第1程 罗马→比萨中央站</strong>：建议乘08:50 Frecciarossa（约2.5小时），或 Intercity（约3小时更便宜）。抵达 Pisa Centrale。' },
-        { icon: '🎒', text: '<strong>行李寄存</strong>：比萨中央站内有行李寄存服务（约5欧/件），轻装去看斜塔。' },
-        { icon: '🚌', text: '<strong>站→斜塔</strong>：乘公交 LAM Rossa 线，约10分钟到奇迹广场（Piazza dei Miracoli）。' },
-        { icon: '🚄', text: '<strong>第2程 比萨→佛罗伦萨</strong>：乘 Regionale 慢车约1小时（约9欧），或 Frecciarossa 约50分钟。全天多班次，灵活。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🗼 行程安排',
-      style: '',
-      items: [
-        { time: '08:30', name: '🚄 罗马 Termini 出发', mapName: 'Roma Termini, Roma', desc: '<strong>建议乘08:50班次 Frecciarossa</strong>前往比萨。退房后直接去车站，全程不要磨蹭' },
-        { time: '11:30', name: '🗼 奇迹广场 + 比萨斜塔', mapName: 'Torre di Pisa, Piazza dei Miracoli, Pisa', desc: '<strong>从车站步行25分钟或乘LAM Rossa公交10分钟</strong>。斜塔、大教堂、洗礼堂都在奇迹广场，拍照+游览约1.5-2小时。' + '登塔需另外购票（约20欧），每天限量，建议看外观+拍照就够' },
-        { time: '13:30', name: '🍝 比萨午餐', mapName: 'Pisa Centrale, Pisa', desc: '广场周围有小吃店，或回车站附近吃简餐。比萨以 Cecina（鹰嘴豆薄饼）闻名，值得一尝' },
-        { time: '15:00', name: '🚄 比萨→佛罗伦萨', mapName: 'Firenze Santa Maria Novella, Firenze', desc: '<strong>建议乘15:00-15:30班次</strong>。慢车约1小时，沿途托斯卡纳风景宜人。抵达 Firenze SMN 站，步行至酒店' },
-        { time: '16:30', name: '🏠 办理入住', desc: '佛罗伦萨酒店入住，稍作休整。如还有精力，可以去老桥（Ponte Vecchio）散步，看个黄昏' },
-        { time: '19:30', name: '🍷 托斯卡纳晚餐', mapName: 'Mercato Centrale, Firenze', desc: '中央市场二楼美食广场，牛肚包（Lampredotto）+ 本地 Chianti 红酒。旅行中最接地气的吃法' }
-      ]
-    }
-  ]
-},
+<!-- 核心差异总结 -->
+<div class="section">
+  <div class="section-head special">🔑 每个档位加了什么？</div>
+  <div class="section-body">
+  <table><thead><tr><th>档位</th><th>价格</th><th>相比低一档新增的亮点</th></tr></thead>
+  <tbody>
+  <tr>
+    <td><span class="tag tag-B">基础</span></td>
+    <td>¥1,600</td>
+    <td style="text-align:left;font-size:10px">五分类血常规+血生化+肿瘤5项+肺部CT+超声</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-P">加强</span></td>
+    <td>¥2,100</td>
+    <td style="text-align:left;font-size:10px">⬆ 眼压+眼底照相+耳鼻喉+糖化全量<br>⬆ 颈动脉+骨密度+肺功能+HPV(16/18)</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-Pro">深度</span></td>
+    <td>¥3,000</td>
+    <td style="text-align:left;font-size:10px">⬆ 血常规22项+肝功能十五项+口腔科+眼底全量<br>⬆ 甲功三项+胃癌初筛+C13呼气+骨密度扩容</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-F">全面无MRI</span></td>
+    <td>¥4,200</td>
+    <td style="text-align:left;font-size:10px">⬆ 肿瘤→TM7+甲功→七项+血脂→七项<br>⬆ 超敏CRP+同型半胱氨酸+心脏超声+上腹CT</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-M">全面含MRI</span></td>
+    <td>¥4,200</td>
+    <td style="text-align:left;font-size:10px">⬆ 头部核磁+动脉硬化检测+TCD+免疫球蛋白<br>⬇ 但肝功能退到九项/眼压去掉/心超无/上腹CT无</td>
+  </tr>
+  </tbody></table>
+  </div>
+</div>
 
-// 第5天：佛罗伦萨 — 大卫像+百花大教堂
-{
-  day: 5, date: '10月07日', weekday: '周二',
-  emoji: '🗿',
-  title: '大卫与百花·雕塑与建筑之日',
-  location: '佛罗伦萨 Firenze',
-  guide: '「今天看两样：大卫——人类最美的雕塑；百花大教堂——布鲁内莱斯基的穹顶奇迹。都在步行范围。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>佛罗伦萨酒店（待定）</strong>（第2晚，共3晚）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🎟️ 提前准备',
-      style: 'gold',
-      tips: [
-        { icon: '🎟️', text: '<strong>学院美术馆</strong>（Galleria dell\'Accademia）：galleriaaccademiafirenze.it 预购，约13欧/人。选9:00时段（开门第一拨人最少）。' },
-        { icon: '🎟️', text: '<strong>百花大教堂穹顶登顶</strong>（Cupola del Brunelleschi）：duomo.firenze.it 预购约18欧，选下午时段。463级台阶无电梯，体力一般可不登顶，外观免费同样震撼。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🗿 行程安排',
-      style: '',
-      items: [
-        { time: '08:50', name: '🗿 学院美术馆（David真迹）', mapName: 'Galleria dell\'Accademia, Via Ricasoli, Firenze', desc: '<strong>按预约时段提前10分钟到</strong>。米开朗基罗《大卫》5.17米高，建议游览1.5小时。可以站在大卫面前静静看10分钟' },
-        { time: '11:00', name: '🛍️ 圣洛伦佐市场', mapName: 'Mercato di San Lorenzo, Firenze', desc: '皮具、丝巾、皮包——托斯卡纳皮革集散地。不买也值得逛，感受本地市井氛围' },
-        { time: '12:30', name: '🥩 中央市场午餐', mapName: 'Mercato Centrale, Via dell\'Ariento, Firenze', desc: '一楼食材市场中午前收摊，二楼美食广场全天营业。Lampredotto（牛肚包）是佛罗伦萨灵魂小吃' },
-        { time: '14:00', name: '⛪ 圣母百花大教堂（Duomo）', mapName: 'Cattedrale di Santa Maria del Fiore, Firenze', desc: '<strong>如果有预约登顶，按时段到穹顶入口</strong>。教堂内部免费参观（排队约15分钟）。彩色大理石外衣如梦似幻，是佛罗伦萨最震撼的建筑' },
-        { time: '16:00', name: '☕ 共和国广场休息', mapName: 'Piazza della Repubblica, Firenze', desc: '大教堂步行5分钟即到。百年咖啡馆 Caffè Gilli（1733年开业），点一杯 Espresso 坐下休息' },
-        { time: '18:00', name: '🌉 老桥（Ponte Vecchio）', mapName: 'Ponte Vecchio, Firenze', desc: '傍晚光线下老桥是佛罗伦萨最美的角度。桥上全是金银首饰店，步行穿过，在河对岸回望桥景' },
-        { time: '19:30', name: '🍷 Oltrarno 区晚餐', mapName: 'Oltrarno, Firenze', desc: '过老桥即到。当地人区，街角 Enoteca 配托斯卡纳奶酪火腿+Chianti红酒，完美收尾' }
-      ]
-    }
-  ]
-},
+<!-- ⚠️ 注意 -->
+<div class="section">
+  <div class="section-head special">⚠️ 值得注意的异常项</div>
+  <div class="section-body">
+    <table><thead><tr><th>问题</th><th>涉及套餐</th><th>说明</th></tr></thead>
+    <tbody>
+    <tr><td style="font-weight:700">肝功能倒退</td><td>¥4200含核磁</td><td style="font-size:10px">由十五项退回九项，成本让给MRI了</td></tr>
+    <tr><td style="font-weight:700">眼压检查缺失</td><td>¥4200含核磁</td><td style="font-size:10px">可能排版遗漏或主动砍掉，需确认</td></tr>
+    <tr><td style="font-weight:700">女未婚骨密度标记为"删除"</td><td>¥3000</td><td style="font-size:10px">是否真的剔除还是文字标注异常</td></tr>
+    <tr><td style="font-weight:700">4200含核磁版缺少心脏超声</td><td>¥4200含核磁</td><td style="font-size:10px">心超被MRI替代，但检查价值不同（心脏≠脑部）</td></tr>
+    </tbody></table>
+  </div>
+</div>
 
-// 第6天：佛罗伦萨 — 乌菲兹+米开朗基罗广场
-{
-  day: 6, date: '10月08日', weekday: '周三',
-  emoji: '🎨',
-  title: '美术馆与日落·艺术沉浸日',
-  location: '佛罗伦萨 Firenze',
-  guide: '「上午看波提切利和达·芬奇，傍晚在米开朗基罗广场看佛罗伦萨最美的日落。今天是给眼睛的盛宴。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>佛罗伦萨酒店（待定）</strong>（最后一晚，明早退房）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🎟️ 提前准备',
-      style: 'gold',
-      tips: [
-        { icon: '🎟️', text: '<strong>乌菲兹美术馆</strong>（Uffizi）：uffizi.it 预购约25欧/人。<strong>务必按预约时段提前15分钟到场</strong>，错过时段可能作废！建议选9:00-9:30时段。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🎨 行程安排',
-      style: '',
-      items: [
-        { time: '09:15', name: '🏛️ 乌菲兹美术馆（Uffizi）', mapName: 'Galleria degli Uffizi, Firenze', desc: '<strong>按预约时段提前15分钟到</strong>。重点：波提切利《维纳斯的诞生》《春》→ 达·芬奇《天使报喜》→ 卡拉瓦乔。游览约2.5-3小时，不必每幅都看，挑自己喜欢的慢慢欣赏' },
-        { time: '12:30', name: '🍝 午餐', mapName: 'All\'Antico Vinaio, Via dei Neri, Firenze', desc: '佛罗伦萨最出名的三明治店，排队20分钟值得。新鲜现做，人均约8欧，边吃边逛' },
-        { time: '14:00', name: '🏰 韦奇奥宫 & 西尼奥里亚广场', mapName: 'Piazza della Signoria, Firenze', desc: '乌菲兹隔壁即是。露天雕塑群免费欣赏（大卫复制品、海神喷泉）。市政厅可入内参观瓦萨里湿壁画' },
-        { time: '15:30', name: '⛪ 圣十字教堂（Santa Croce）', mapName: 'Basilica di Santa Croce, Firenze', desc: '步行10分钟。米开朗基罗、伽利略、马基雅维利……意大利最伟大的灵魂安息于此。外观+内部约1小时' },
-        { time: '17:30', name: '🌅 米开朗基罗广场看日落', mapName: 'Piazzale Michelangelo, Firenze', desc: '<strong>日落约18:25，建议18:00前到达</strong>。巴士12/13路约15分钟上山，或步行（20分钟缓坡）。俯瞰红屋顶佛罗伦萨，是城市最美的视角' },
-        { time: '19:30', name: '🍝 托斯卡纳告别晚餐', mapName: 'Trattoria Sostanza, Firenze', desc: '<strong>建议提前订座</strong>。野猪肉酱宽面、白豆炖汤（Ribollita）、丁骨牛排……最地道的托斯卡纳菜。明天就要离开佛罗伦萨了' }
-      ]
-    }
-  ]
-},
+<!-- 推荐 -->
+<div class="section">
+  <div class="section-head reco">💡 选哪个？</div>
+  <div class="section-body">
+  <ul class="reco-list">
+    <li>
+      <span class="icon">👤</span>
+      <div><strong>35岁以下·年度常规</strong><br><span style="font-size:11px;color:var(--grey)">选 ¥2,100。基础套餐差点意思，2100加的眼底/颈动脉/骨密度/HPV都是实际有用的，比1600多了 ¥500，值。</span></div>
+    </li>
+    <li>
+      <span class="icon">🧑‍💼</span>
+      <div><strong>35-45岁·深度筛查</strong><br><span style="font-size:11px;color:var(--grey)">选 ¥3,000。化验指标升到全量（22项血常规+十五项肝功），加了甲功、胃癌初筛和C13呼气，这个年龄最实用的补强。</span></div>
+    </li>
+    <li>
+      <span class="icon">👴</span>
+      <div><strong>45岁以上·全面防癌</strong><br><span style="font-size:11px;color:var(--grey)">选 ¥4,200无核磁。肿瘤标志物升7项+甲功七项+心超+上腹CT+血脂七项+心血管风险筛查——中年后最该查的全在这了。</span></div>
+    </li>
+    <li>
+      <span class="icon">🧠</span>
+      <div><strong>有脑卒中/神经疾病家族史</strong><br><span style="font-size:11px;color:var(--grey)">选 ¥4,200含核磁。头部核磁+TCD+动脉硬化检测是这档独有的，别的档都给不了。但注意心超和上腹CT被砍了，看个人侧重点。</span></div>
+    </li>
+    <li>
+      <span class="icon">👫</span>
+      <div><strong>夫妻一起做（女+男）</strong><br><span style="font-size:11px;color:var(--grey)">两人同选 ¥3,000，共 ¥6,000。女方多了HPV+TCT+乳房超声，男方多了前列腺超声，各取所需。如果预算充裕选4200无核磁，两人 ¥8,400，覆盖面最全。</span></div>
+    </li>
+  </ul>
+  </div>
+</div>
 
-// 第7天：佛罗伦萨→威尼斯
-{
-  day: 7, date: '10月09日', weekday: '周四',
-  emoji: '🚤',
-  title: '水城初印象·威尼斯入住',
-  location: '佛罗伦萨 → 威尼斯 Venezia',
-  guide: '「坐上高铁穿越亚平宁半岛，午后抵达水城。酒店入住后先感受威尼斯初印象——运河、小桥、傍晚的圣马可广场。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>威尼斯住宿（待定）</strong>：建议订威尼斯主岛（靠近火车站 Santa Lucia 或圣马可区均可）。入住10/9 ~ 10/10（1晚）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🚄 交通提示',
-      style: 'sky',
-      tips: [
-        { icon: '🚄', text: '<strong>佛罗伦萨→威尼斯</strong>：Santa Maria Novella → Venezia Santa Lucia，Frecciarossa 约2小时，票价约35-50欧/人。建议乘10:00左右班次。' },
-        { icon: '⛴️', text: '<strong>到达后</strong>：出站即大运河。建议买24小时水上巴士通票（约25欧/人），今天+明天早上都可用。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🚤 行程安排',
-      style: '',
-      items: [
-        { time: '09:30', name: '🚄 高铁 佛罗伦萨→威尼斯', mapName: 'Firenze Santa Maria Novella, Firenze', desc: '<strong>建议乘10:00前班次</strong>，约2小时抵达 Venezia Santa Lucia。退房行李直接带到车站' },
-        { time: '12:30', name: '🏠 威尼斯酒店入住', mapName: 'Venezia Santa Lucia, Venezia', desc: '出火车站即是大运河，第一眼震撼无言。乘水上巴士或步行至酒店，办理入住' },
-        { time: '14:00', name: '🦞 威尼斯海鲜午餐', mapName: 'Rialto, Venezia', desc: '里亚托桥附近 Bacaro 站着吃 Cicchetti（威尼斯小吃配Prosecco），或找家运河边小馆吃墨鱼汁意面' },
-        { time: '15:30', name: '🎨 午后自由探索', mapName: 'Cannaregio, Venezia', desc: '<strong>不看地图，随意穿行小巷</strong>。遇桥就过，遇运河就停。推荐 Cannaregio 区（当地人居住区，游客少）。迷路是威尼斯最好的旅行方式' },
-        { time: '17:30', name: '⛪ 圣马可广场', mapName: 'Piazza San Marco, Venezia', desc: '傍晚游客散去，光线最美。坐下喝杯咖啡，看鸽子飞起，感受这座城市的呼吸。广场上常有现场音乐' },
-        { time: '19:00', name: '🍷 威尼斯晚餐', mapName: 'Osteria alle Testiere, Venezia', desc: '<strong>建议提前订座（仅24座）</strong>。威尼斯最好的海鲜小馆。备选：Cantina Do Mori（最古老的 Bacaro，1462年开业）' }
-      ]
-    }
-  ]
-},
-
-// 第8天：威尼斯→米兰
-{
-  day: 8, date: '10月10日', weekday: '周五',
-  emoji: '🏙️',
-  title: '告别水城·时尚之都米兰',
-  location: '威尼斯 → 米兰 Milano',
-  guide: '「清晨的威尼斯醒来最早，上午感受最后的水城印象。午后高铁到米兰，下午探索大教堂和拱廊。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>米兰住宿（待定）</strong>：建议订大教堂/中央火车站附近。入住10/10 ~ 10/12（2晚）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🚄 交通提示',
-      style: 'sky',
-      tips: [
-        { icon: '🚄', text: '<strong>威尼斯→米兰</strong>：Santa Lucia → Milano Centrale，Frecciarossa 约2.5小时，票价约35-50欧/人。建议乘11:00-12:00班次。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🏙️ 行程安排',
-      style: '',
-      items: [
-        { time: '08:00', name: '🌅 威尼斯最后的清晨', mapName: 'Piazza San Marco, Venezia', desc: '早上7-8点圣马可广场几乎空无一人。坐在台阶上喝最后一杯威尼斯咖啡，看鸽子起飞——这10分钟是整个旅程最安静的时刻' },
-        { time: '09:30', name: '⛪ 圣马可大教堂（内部）', mapName: 'Basilica di San Marco, Venezia', desc: '9:45开门免费入场。拜占庭金色马赛克穹顶，排队约15分钟。如果有时间，钟楼登顶看泻湖全景（约10欧）' },
-        { time: '11:00', name: '🚄 威尼斯→米兰', mapName: 'Venezia Santa Lucia, Venezia', desc: '<strong>建议乘11:00-12:00班次</strong>，威尼斯退房，约2.5小时抵达 Milano Centrale' },
-        { time: '14:00', name: '🥩 米兰午餐', mapName: 'Peck, Via Spadari, Milano', desc: '米兰熟食店传奇，各种意式拼盘。或在附近找家店吃 Cotoletta alla Milanese（米兰炸小牛排）' },
-        { time: '15:30', name: '⛪ 米兰大教堂（Duomo）', mapName: 'Duomo di Milano, Milano', desc: '<strong>开放至18:00（最后入场17:00）</strong>。哥特式巅峰，135根尖塔。登顶约15欧（建议选电梯，步行250级台阶）' },
-        { time: '17:00', name: '🛍️ 艾曼纽二世拱廊', mapName: 'Galleria Vittorio Emanuele II, Milano', desc: '紧邻大教堂。世界最古老购物中心，玻璃穹顶极美。不购物也能仰望穹顶，免费' },
-        { time: '19:30', name: '🍝 米兰晚餐', mapName: 'Navigli, Milano', desc: 'Navigli 运河区，米兰最潮的夜生活区。运河边的 Aperitivo（意大利 Happy Hour，一杯酒配小食自助）' }
-      ]
-    }
-  ]
-},
-
-// 第9天：科莫湖一日游
-{
-  day: 9, date: '10月11日', weekday: '周六',
-  emoji: '⛰️',
-  title: '科莫湖·阿尔卑斯山脚下的蓝宝石',
-  location: '科莫湖 Lago di Como',
-  guide: '「从米兰出发只需40分钟火车，就能来到阿尔卑斯山脚下的仙境。碧蓝湖水、崖壁小镇、百年别墅——科莫湖是意大利的蓝宝石。」',
-  sections: [
-    {
-      type: 'tips',
-      header: '🏠 今晚住宿',
-      style: 'purple',
-      tips: [
-        { icon: '📍', text: '<strong>米兰酒店（待定）</strong>（最后一晚，明天退房回国）' }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '🚄 交通 & 攻略',
-      style: 'sky',
-      tips: [
-        { icon: '🚄', text: '<strong>米兰→科莫</strong>：Milano Centrale → Como S. Giovanni，约40分钟，车票约5-8欧，班次密集（每小时多班）。建议乘8:30左右出发的车次。' },
-        { icon: '⛴️', text: '<strong>科莫湖游船</strong>：在科莫镇乘渡轮到 Bellagio（贝拉焦），约45分钟。湖边小镇间的渡轮是科莫湖最经典的玩法。' },
-        { icon: '🍝', text: '<strong>午餐推荐</strong>：Bellagio 是科莫湖最美的小镇，湖边有很多餐厅。建议带现金，小镇有的店不收信用卡。' },
-        { icon: '👟', text: '<strong>穿着</strong>：Bellagio 的阶梯坡道很多，穿舒适平底鞋。10月科莫湖约15-18°C，带件外套。' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '⛰️ 行程安排',
-      style: '',
-      items: [
-        { time: '08:30', name: '🚄 米兰→科莫', mapName: 'Como San Giovanni, Como', desc: '<strong>约40分钟火车</strong>，科莫镇出站后步行10分钟到湖边轮渡码头。沿途雪山和湖景已在眼前' },
-        { time: '10:00', name: '⛴️ 渡轮前往 Bellagio', mapName: 'Bellagio, Lago di Como', desc: '<strong>约45-60分钟船程</strong>，途经科莫湖最精华的一段。两岸是百年别墅群，George Clooney 的别墅也在湖畔。站在甲板上，美的像明信片' },
-        { time: '11:00', name: '🏘️ Bellagio 小镇漫步', mapName: 'Bellagio, Como', desc: '科莫湖最美的小镇，被称为"湖中珍珠"。蜿蜒阶梯、鲜花小巷、湖景咖啡馆。可以不看地图，随意走走' },
-        { time: '13:00', name: '🍝 湖畔午餐', mapName: 'Ristorante La Punta, Bellagio', desc: 'Bellagio 众多湖边餐厅。推荐湖边露台座位，看湖水碧蓝、远山青翠。配一瓶本地白葡萄酒' },
-        { time: '15:00', name: '🏡 可选：Villa del Balbianello', mapName: 'Villa del Balbianello, Lenno', desc: '星球大战和007取景地。从 Lenno 码头步行15分钟上山，别墅和花园美得窒息。门票约11欧。如果体力足值得绕道一游' },
-        { time: '17:00', name: '⛴️ 渡轮返回科莫镇', mapName: 'Como, Lago di Como', desc: '<strong>注意最后一班渡轮时间（约19:00前）</strong>！搭渡轮返回科莫镇，在湖边最后看一次夕阳' },
-        { time: '18:30', name: '🚄 科莫→米兰', desc: '<strong>约19:30-20:00回到米兰</strong>。晚上在米兰简单吃一顿，早点休息——明天下午的航班' },
-        { time: '20:30', name: '🍕 米兰最后的轻松晚餐', desc: '找家附近小馆。不必隆重，Pizza Margherita + Birra 就够了。明天说再见' }
-      ]
-    }
-  ]
-},
-
-// 第10天：米兰回国
-{
-  day: 10, date: '10月12日 — 13日', weekday: '周日—周一',
-  emoji: '🏠',
-  title: '告别意大利·归途',
-  location: '米兰 → 成都 → 南京',
-  guide: '「Arrivederci, Italia！10天的旅程在今天画上句号。行李里装满的不只是纪念品，还有咖啡香、夕阳和千年历史的回响。」',
-  sections: [
-    {
-      type: 'flights',
-      header: '✈️ 回国航班',
-      style: '',
-      flights: [
-        {
-          from: '13:00', fromCity: '米兰马尔彭萨 T1', fromCode: 'MXP',
-          to: '次日05:45', toCity: '成都天府', toCode: 'TFU',
-          flight: 'CA446', airline: '中国国际航空', note: '约10.5小时·跨夜飞行'
-        },
-        {
-          from: '11:10', fromCity: '成都天府', fromCode: 'TFU',
-          to: '13:25', toCity: '南京禄口', toCode: 'NKG',
-          flight: 'CA3770 / ZH9562', airline: '中国国际航空（深圳航空承运）', note: '10月13日·约2.5小时'
-        }
-      ]
-    },
-    {
-      type: 'tips',
-      header: '⚠️ 出发前关键提醒',
-      style: 'gold',
-      tips: [
-        { icon: '🕙', text: '<strong>10:15前乘 Malpensa Express</strong>：米兰中央火车站出发，约52分钟到T1航站楼（13欧/人）。<strong>务必赶上这班火车！</strong>国际航班建议提前2.5-3小时到机场。' },
-        { icon: '🛃', text: '<strong>退税（VAT Refund）</strong>：持非欧盟护照，消费满154.94欧可退税。在机场出关前盖章，登机前退税窗口提交。建议把购物小票单独装袋备查。' },
-        { icon: '☕', text: '<strong>最后安排</strong>：早上7:00起床，悠闲吃早餐，8:30退房，9:00最后逛一圈大教堂广场。在机场把剩下的欧元花完（免税店/咖啡/纪念品）。' },
-        { icon: '🏠', text: '<strong>抵达南京</strong>：10月13日13:25落地禄口机场，终于回家了！' }
-      ]
-    },
-    {
-      type: 'itinerary',
-      header: '🏠 今日时间线',
-      style: 'olive',
-      items: [
-        { time: '07:30', name: '☕ 最后一杯意式 Espresso', desc: '意大利人站着喝咖啡。在酒店附近咖啡吧点一杯，和身边的米兰人一起开始最后一个意大利早晨' },
-        { time: '09:00', name: '⛪ 大教堂广场最后一眼', mapName: 'Duomo di Milano, Milano', desc: '在大教堂前拍最后一张照。和米兰说再见' },
-        { time: '10:15', name: '🚂 Malpensa Express 出发', mapName: 'Milano Centrale, Milano', desc: '<strong>⚠️ 必须赶上这班！</strong>最后一段意大利火车。约11:10到T1航站楼' },
-        { time: '11:15', name: '🛂 值机+退税+出境', mapName: 'Aeroporto di Milano Malpensa T1', desc: '预计耗时1-1.5小时。退税排队最久，建议值完机立刻冲去退税窗口' },
-        { time: '13:00', name: '✈️ CA446 起飞', desc: '窗外是阿尔卑斯雪山。Arrivederci, Italia！🇮🇹' },
-        { time: '10/13 05:45', name: '🐼 成都中转', desc: '入境+转机约5.5小时。来碗担担面醒神！' },
-        { time: '10/13 13:25', name: '🏠 落地南京禄口', desc: '回家！意大利的阳光、咖啡和千年回响都装在心里了' }
-      ]
-    }
-  ]
-}
-];
-// ══ 渲染函数 ══
-let currentDay = 0;
-let startX = 0, startY = 0, isDragging = false;
-
-function renderFlights(section) {
-  return section.flights.map(f => `
-    <div class="flight-card">
-      <div class="flight-row">
-        <div>
-          <div class="flight-time">${f.from}</div>
-          <div class="flight-city">${f.fromCity}</div>
-        </div>
-        <div class="flight-arrow">✈ ─ ─</div>
-        <div style="text-align:right">
-          <div class="flight-time">${f.to}</div>
-          <div class="flight-city">${f.toCity}</div>
-        </div>
-      </div>
-      <div class="flight-info">
-        <span class="flight-badge">${f.flight}</span>
-        <span class="flight-note">${f.note}</span>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderTips(section) {
-  return section.tips.map(t => `
-    <div class="tip-box">
-      <div class="tip-icon">${t.icon}</div>
-      <div class="tip-text">${t.text}</div>
-    </div>
-  `).join('');
-}
-
-function renderItinerary(section) {
-  return section.items.map(item => {
-    // 提取地点用于地图搜索（去掉emoji和括号内的中文说明）
-    let place = item.mapName || item.name.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}]/gu, '').trim();
-    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place + ' Italia')}`;
-    // 精确时间（HH:MM 格式）= 关键节点，需重点提醒
-    const isCritical = /\d{1,2}:\d{2}/.test(item.time);
-    const timeClass = isCritical ? 'item-time critical' : 'item-time';
-    const dotClass = isCritical ? 'item-dot critical' : 'item-dot';
-    const criticalAlert = isCritical ? '<div class="critical-alert">⏰ 关键时间 · 请勿错过</div>' : '';
-    // 景点预览图（如有配图地址）
-    const preview = item.img ? `<img class="item-preview" src="${item.img}" alt="${place}" loading="lazy" onerror="this.style.display='none'">` : '';
-    // 从民宿/上一站出发的导航按钮
-    const dirUrl = item.fromAddr
-      ? `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(item.fromAddr)}&destination=${encodeURIComponent(place + ' Italia')}&travelmode=walking`
-      : mapUrl;
-    const navBtn = item.fromAddr
-      ? `<a class="map-link nav-route" href="${dirUrl}" target="_blank">🚶 步行导航路线（点击查看）</a>`
-      : '';
-    return `
-    <div class="itinerary-item ${isCritical ? 'critical-item' : ''}">
-      <div class="${timeClass}">${item.time}</div>
-      <div class="${dotClass}"></div>
-      <div class="item-content">
-        ${preview}
-        <div class="item-name">${item.name}${item.tag ? `<span class="tbd-badge">${item.tag}</span>` : ''}</div>
-        <div class="item-desc">${item.desc}</div>
-        ${criticalAlert}
-        ${navBtn}
-        <a class="map-link" href="${mapUrl}" target="_blank">📍 在地图中查看 / 导航</a>
-      </div>
-    </div>
-  `;}).join('');
-}
-
-function renderSection(section) {
-  let body = '';
-  if (section.type === 'flights') body = renderFlights(section);
-  else if (section.type === 'tips') body = renderTips(section);
-  else if (section.type === 'itinerary') body = renderItinerary(section);
-  else if (section.type === 'image') body = renderImage(section);
-
-  return `
-    <div class="section">
-      <div class="section-header ${section.style}">
-        <div class="section-title">${section.header}</div>
-      </div>
-      <div class="section-body">${body}</div>
-    </div>
-  `;
-}
-
-function renderImage(section) {
-  let imgHtml = '';
-  if (section.img) {
-    imgHtml = `<a href="${section.link || '#'}" target="_blank" style="text-decoration:none;display:block"><img src="${section.img}" style="width:100%;height:180px;object-fit:cover;border-radius:8px;display:block;background:var(--cream)" onerror="this.parentElement.style.display='none'"></a>`;
-  }
-  let btnHtml = '';
-  if (section.customButtons) {
-    btnHtml = '<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">' +
-      section.customButtons.map(b =>
-        `<a href="${b.url}" target="_blank" style="display:block;text-align:center;padding:12px;border-radius:10px;background:linear-gradient(135deg,#6B7C45,#4A5C2A);color:white;font-size:13px;font-weight:700;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,0.15)">${b.text}</a>`
-      ).join('') + '</div>';
-  }
-  return imgHtml + btnHtml +
-    (section.caption && !section.customButtons ? `<div style="font-size:11px;color:#888;margin-top:6px;text-align:center">${section.caption}</div>` : '') +
-    (section.caption && section.customButtons ? `<div style="font-size:11px;color:#999;margin:8px 0 2px;text-align:center">${section.caption}</div>` : '');
-}
-
-function renderCard(d) {
-  const sections = d.sections.map(renderSection).join('');
-  return `
-    <div class="card">
-      <div class="day-header">
-        <div class="day-emoji">${d.emoji}</div>
-        <div class="day-number">第 ${d.day} 天 · ${d.weekday}</div>
-        <div class="day-date">${d.date}</div>
-        <div class="day-location">${d.location}</div>
-      </div>
-      <div class="guide-note">${d.guide}</div>
-      ${sections}
-    </div>
-  `;
-}
-
-function init() {
-  const track = document.getElementById('cardsTrack');
-  const nav = document.getElementById('dateNav');
-
-  days.forEach((d, i) => {
-    track.innerHTML += renderCard(d);
-    nav.innerHTML += `<div class="date-chip ${i===0?'active':''}" onclick="goTo(${i})">${d.date.replace('月','/')}${d.emoji}</div>`;
-  });
-
-  updateUI();
-  setupSwipe();
-}
-
-function goTo(idx) {
-  if (idx < 0 || idx >= days.length) return;
-  currentDay = idx;
-  updateUI();
-}
-
-function updateUI() {
-  const track = document.getElementById('cardsTrack');
-  track.style.transform = `translateX(-${currentDay * 100}%)`;
-
-  document.querySelectorAll('.date-chip').forEach((c, i) => {
-    c.classList.toggle('active', i === currentDay);
-    if (i === currentDay) c.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-  });
-
-  document.getElementById('dayCounter').textContent = `第 ${days[currentDay].day} 天 / 共 ${days.length} 天`;
-  document.getElementById('progressFill').style.width = `${(currentDay + 1) / days.length * 100}%`;
-
-  document.getElementById('navPrev').classList.toggle('active', currentDay > 0);
-  document.getElementById('navNext').classList.toggle('active', currentDay < days.length - 1);
-}
-
-function setupSwipe() {
-  const wrapper = document.getElementById('cardsWrapper');
-  wrapper.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = false;
-  }, { passive: true });
-
-  wrapper.addEventListener('touchmove', e => {
-    const dx = e.touches[0].clientX - startX;
-    const dy = e.touches[0].clientY - startY;
-    if (!isDragging && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
-      isDragging = true;
-    }
-    if (isDragging) e.preventDefault();
-  }, { passive: false });
-
-  wrapper.addEventListener('touchend', e => {
-    if (!isDragging) return;
-    const dx = e.changedTouches[0].clientX - startX;
-    if (dx < -50) goTo(currentDay + 1);
-    else if (dx > 50) goTo(currentDay - 1);
-    isDragging = false;
-  });
-}
-
-function showCover() {
-  const cover = document.getElementById('cover');
-  cover.style.display = 'flex';
-  cover.style.opacity = '0';
-  cover.style.transform = 'scale(1.05)';
-  setTimeout(() => {
-    cover.classList.remove('hidden');
-    cover.style.opacity = '';
-    cover.style.transform = '';
-  }, 10);
-}
-
-// 启动
-init();
-
-// 封面隐藏由页面顶部的独立脚本 window.enterApp() 处理（onclick 内联调用）
-</script>
 </body>
 </html>
